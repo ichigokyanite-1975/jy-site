@@ -29,7 +29,7 @@
       font-family: 'DM Sans', sans-serif;
       font-weight: 300;
       overflow-x: hidden;
-      cursor: none;
+      cursor: auto;
     }
 
     /* ── Custom cursor ── */
@@ -477,13 +477,15 @@
     }
 
     /* Scroll reveal */
-    .reveal {
-      opacity: 0; transform: translateY(32px);
-      transition: opacity 0.75s ease, transform 0.75s ease;
-    }
-    .reveal.visible {
-      opacity: 1; transform: translateY(0);
-    }
+  .reveal {
+  opacity: 1;
+  transform: translateY(0);
+  transition: none;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
@@ -503,10 +505,6 @@
   </style>
 </head>
 <body>
-
-  <!-- Cursor -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
 
   <!-- NAV -->
   <nav>
