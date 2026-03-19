@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ICHIGO Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@200;300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink:        #0e0c0c;
+      --off-white:  #f7f4f0;
+      --warm-white: #fdfbf8;
+      --blush:      #e8a2ad;
+      --blush-light:#f3d5da;
+      --muted:      #8a8480;
+      --border:     rgba(14,12,12,0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--warm-white);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── Custom cursor ── */
+    .cursor {
+      position: fixed; width: 10px; height: 10px;
+      background: var(--blush); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: transform 0.15s ease, width 0.2s ease, height 0.2s ease;
+    }
+    .cursor-ring {
+      position: fixed; width: 36px; height: 36px;
+      border: 1px solid var(--ink); border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%,-50%);
+      transition: transform 0.35s cubic-bezier(.23,1,.32,1),
+                  width 0.25s ease, height 0.25s ease, border-color 0.2s;
+    }
+    body:hover .cursor-ring { opacity: 1; }
+    a:hover ~ .cursor, button:hover ~ .cursor { width: 16px; height: 16px; }
+
+    /* ── Noise overlay ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 56px;
+      background: transparent;
+      mix-blend-mode: normal;
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--blush); }
+
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a {
+      font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none; opacity: 0.55;
+      transition: opacity 0.2s;
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+    }
+    .nav-links a:hover { opacity: 1; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 0 56px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 100px;
+      position: relative; z-index: 2;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--blush); margin-bottom: 24px;
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.3s ease forwards;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 7vw, 7.5rem);
+      font-weight: 300; line-height: 0.92;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      opacity: 0;
+      animation: fadeUp 1s 0.5s ease forwards;
+    }
+    .hero-title em {
+      font-style: italic; color: var(--blush);
+    }
+
+    .hero-subtitle {
+      margin-top: 36px;
+      font-size: 0.88rem; line-height: 1.8;
+      color: var(--muted); max-width: 380px;
+      opacity: 0;
+      animation: fadeUp 1s 0.75s ease forwards;
+    }
+
+    .hero-cta {
+      margin-top: 52px;
+      display: inline-flex; align-items: center; gap: 16px;
+      opacity: 0;
+      animation: fadeUp 1s 0.95s ease forwards;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 36px;
+      background: var(--ink); color: var(--off-white);
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      text-decoration: none; font-family: 'DM Sans', sans-serif; font-weight: 400;
+      border: 1px solid var(--ink);
+      transition: background 0.25s, color 0.25s;
+    }
+    .btn-primary:hover { background: transparent; color: var(--ink); }
+
+    .btn-ghost {
+      font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      font-family: 'DM Sans', sans-serif;
+      border-bottom: 1px solid var(--muted);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
+
+    /* Hero right — decorative */
+    .hero-right {
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+
+    .hero-deco {
+      position: relative; width: 420px; height: 520px;
+    }
+
+    .deco-circle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0;
+      animation: scaleIn 1.2s ease forwards;
+    }
+
+    .deco-circle-1 {
+      width: 320px; height: 320px;
+      background: var(--blush-light);
+      top: 60px; left: 50px;
+      animation-delay: 0.4s;
+    }
+    .deco-circle-2 {
+      width: 180px; height: 180px;
+      background: var(--blush); opacity: 0;
+      bottom: 60px; right: 30px;
+      animation-delay: 0.7s; animation-duration: 1.4s;
+    }
+    .deco-circle-3 {
+      width: 60px; height: 60px;
+      background: var(--ink);
+      top: 40px; right: 80px;
+      animation-delay: 0.9s;
+    }
+
+    .deco-kanji {
+      position: absolute;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 9rem; font-weight: 200;
+      color: rgba(14,12,12,0.06);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1; user-select: none;
+      opacity: 0;
+      animation: fadeIn 1.5s 0.8s ease forwards;
+    }
+
+    .deco-line {
+      position: absolute;
+      background: var(--blush);
+      opacity: 0;
+      animation: growLine 1s ease forwards;
+    }
+    .deco-line-1 { width: 1px; height: 160px; top: 0; left: 50%; animation-delay: 1s; }
+    .deco-line-2 { width: 100px; height: 1px; bottom: 40px; left: 50px; animation-delay: 1.1s; }
+
+    /* ── MARQUEE ── */
+    .marquee-strip {
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+      background: var(--off-white);
+    }
+
+    .marquee-track {
+      display: flex; gap: 60px;
+      animation: marquee 22s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-item {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; font-weight: 300;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--ink); white-space: nowrap;
+      display: flex; align-items: center; gap: 60px;
+    }
+    .marquee-item::after {
+      content: '✦';
+      font-size: 0.5rem; color: var(--blush);
+    }
+
+    /* ── SERVICES ── */
+    .services {
+      padding: 140px 56px;
+      position: relative; z-index: 2;
+    }
+
+    .section-label {
+      font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--blush); margin-bottom: 60px;
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .section-label::before {
+      content: ''; display: block;
+      width: 40px; height: 1px; background: var(--blush);
+    }
+
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      border: 1px solid var(--border);
+    }
+
+    .service-card {
+      padding: 56px 44px;
+      border-right: 1px solid var(--border);
+      position: relative; overflow: hidden;
+      transition: background 0.3s;
+    }
+    .service-card:last-child { border-right: none; }
+    .service-card:hover { background: var(--off-white); }
+
+    .service-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--blush);
+      transition: width 0.4s ease;
+    }
+    .service-card:hover::after { width: 100%; }
+
+    .service-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem; color: var(--blush);
+      letter-spacing: 0.15em; margin-bottom: 28px;
+    }
+
+    .service-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.75rem; font-weight: 400;
+      line-height: 1.25; margin-bottom: 20px;
+      color: var(--ink);
+    }
+
+    .service-desc {
+      font-size: 0.82rem; line-height: 1.9;
+      color: var(--muted);
+    }
+
+    .service-tag {
+      display: inline-block;
+      margin-top: 28px;
+      font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+      border: 1px solid var(--blush); color: var(--blush);
+      padding: 5px 12px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      padding: 120px 56px;
+      display: grid; grid-template-columns: 1fr 1.6fr;
+      gap: 100px; align-items: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .about-left { position: relative; }
+
+    .about-img-placeholder {
+      width: 100%; aspect-ratio: 3/4;
+      background: var(--blush-light);
+      position: relative; overflow: hidden;
+    }
+
+    .about-img-placeholder::before {
+      content: 'ICHIGO';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem; font-weight: 300;
+      color: rgba(232,162,173,0.3);
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      letter-spacing: 0.3em;
+    }
+
+    .about-tag {
+      position: absolute;
+      bottom: -20px; right: -20px;
+      width: 100px; height: 100px;
+      background: var(--ink);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .about-tag span {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.8rem; font-weight: 200; color: var(--blush);
+    }
+
+    .about-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+      font-weight: 300; line-height: 1.3;
+      margin-bottom: 28px;
+    }
+    .about-title em { font-style: italic; color: var(--blush); }
+
+    .about-text {
+      font-size: 0.88rem; line-height: 2;
+      color: var(--muted); margin-bottom: 20px;
+    }
+
+    .about-divider {
+      width: 60px; height: 1px;
+      background: var(--blush); margin: 36px 0;
+    }
+
+    .about-meta {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 32px; margin-top: 40px;
+    }
+
+    .meta-item {}
+    .meta-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; font-weight: 300; color: var(--ink);
+      line-height: 1;
+    }
+    .meta-label {
+      font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); margin-top: 6px;
+    }
+
+    /* ── CONTACT ── */
+    .contact {
+      padding: 120px 56px;
+      background: var(--ink); color: var(--off-white);
+      position: relative; overflow: hidden;
+    }
+
+    .contact::before {
+      content: '';
+      position: absolute; top: -200px; right: -200px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(232,162,173,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .contact-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 100px; align-items: end;
+    }
+
+    .contact-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 300; line-height: 1.05;
+    }
+    .contact-title em { font-style: italic; color: var(--blush); }
+
+    .contact-sub {
+      font-size: 0.82rem; line-height: 1.9;
+      color: rgba(247,244,240,0.5);
+      margin-top: 20px;
+    }
+
+    .contact-links { display: flex; flex-direction: column; gap: 28px; }
+
+    .contact-link-item {}
+    .contact-link-label {
+      font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--blush); margin-bottom: 8px;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .contact-link {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; color: var(--off-white);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(247,244,240,0.15);
+      padding-bottom: 12px; display: block;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .contact-link:hover { color: var(--blush); border-color: var(--blush); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 28px 56px;
+      border-top: 1px solid rgba(247,244,240,0.08);
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--ink); color: rgba(247,244,240,0.3);
+    }
+
+    .footer-copy {
+      font-size: 0.65rem; letter-spacing: 0.15em;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem; letter-spacing: 0.25em;
+      color: rgba(247,244,240,0.4);
+    }
+    .footer-logo span { color: var(--blush); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.85); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    @keyframes growLine {
+      from { opacity: 0; transform: scaleY(0); }
+      to   { opacity: 1; transform: scaleY(1); }
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .reveal.visible {
+      opacity: 1; transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 22px 28px; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 0 28px; padding-top: 100px; }
+      .hero-right { display: none; }
+      .hero-left { padding-bottom: 80px; justify-content: flex-end; min-height: 100vh; }
+      .services { padding: 80px 28px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .service-card { border-right: none; border-bottom: 1px solid var(--border); }
+      .about { grid-template-columns: 1fr; padding: 80px 28px; gap: 60px; }
+      .contact { padding: 80px 28px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 60px; }
+      footer { padding: 22px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#"><img src="BG removed logo.png" alt="ICHIGO Studio" style="height:38px; display:block;" /></a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Creative Studio · Singapore</p>
+      <h1 class="hero-title">
+        Creative<br>
+        <em>Studio</em> for<br>
+        AI, Systems<br>&amp; Business<br>Design.
+      </h1>
+      <p class="hero-subtitle">
+        Focused on AI workflow design, business process solutions, and creative direction — built for companies ready to move smarter.
+      </p>
+      <div class="hero-cta">
+        <a href="#services" class="btn-primary">Our Services</a>
+        <a href="#contact" class="btn-ghost">Get in touch</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-deco">
+        <div class="deco-circle deco-circle-1"></div>
+        <div class="deco-circle deco-circle-2"></div>
+        <div class="deco-circle deco-circle-3"></div>
+        <div class="deco-kanji">一</div>
+        <div class="deco-line deco-line-1"></div>
+        <div class="deco-line deco-line-2"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <span class="marquee-item">AI Workflow & Automation</span>
+      <span class="marquee-item">Business Process Design</span>
+      <span class="marquee-item">Creative & Digital Solutions</span>
+      <span class="marquee-item">Systems Thinking</span>
+      <span class="marquee-item">Brand Strategy</span>
+      <span class="marquee-item">Digital Experience</span>
+      <span class="marquee-item">AI Workflow & Automation</span>
+      <span class="marquee-item">Business Process Design</span>
+      <span class="marquee-item">Creative & Digital Solutions</span>
+      <span class="marquee-item">Systems Thinking</span>
+      <span class="marquee-item">Brand Strategy</span>
+      <span class="marquee-item">Digital Experience</span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="section-label">What We Do</div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-number">01</div>
+        <h3 class="service-title">AI Workflow & Automation</h3>
+        <p class="service-desc">We design and implement AI-powered workflows that reduce friction, cut manual effort, and help your team operate at full capacity.</p>
+        <span class="service-tag">AI · Systems</span>
+      </div>
+      <div class="service-card reveal" style="transition-delay:0.12s">
+        <div class="service-number">02</div>
+        <h3 class="service-title">Business Process Design</h3>
+        <p class="service-desc">From audit to execution — we map, redesign, and streamline your business operations so every process works with intention and efficiency.</p>
+        <span class="service-tag">Operations</span>
+      </div>
+      <div class="service-card reveal" style="transition-delay:0.24s">
+        <div class="service-number">03</div>
+        <h3 class="service-title">Creative & Digital Solutions</h3>
+        <p class="service-desc">Brand, content, and digital presence — crafted with a clear point of view. We build the creative layer that makes your business memorable.</p>
+        <span class="service-tag">Creative</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-left reveal">
+      <div class="about-img-placeholder"></div>
+      <div class="about-tag"><span>一</span></div>
+    </div>
+    <div class="about-right">
+      <p class="section-label">About the Studio</p>
+      <h2 class="about-title reveal">Where precision<br>meets <em>artistry.</em></h2>
+      <p class="about-text reveal">ICHIGO Studio is an independent creative practice based in Singapore. We partner with businesses — from emerging brands to established companies — to sharpen their identity and amplify their reach.</p>
+      <p class="about-text reveal">The name ICHIGO (一期) draws from the Japanese philosophy of <em>ichigo ichie</em> — each moment, unique and unrepeatable. We bring that same intentionality to every client engagement.</p>
+      <div class="about-divider reveal"></div>
+      <div class="about-meta">
+        <div class="meta-item reveal">
+          <div class="meta-value">SG</div>
+          <div class="meta-label">Based in Singapore</div>
+        </div>
+        <div class="meta-item reveal" style="transition-delay:0.1s">
+          <div class="meta-value">B2B</div>
+          <div class="meta-label">Business Clients</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <div>
+        <p class="section-label" style="color:var(--blush); border-color:var(--blush)">Let's Work Together</p>
+        <h2 class="contact-title reveal">Ready to<br><em>begin</em><br>something?</h2>
+        <p class="contact-sub reveal">We're always open to meaningful collaborations — whether you're a business looking to grow, or a brand ready for its next chapter.</p>
+      </div>
+      <div class="contact-links reveal">
+        <div class="contact-link-item">
+          <div class="contact-link-label">Email</div>
+          <a href="/cdn-cgi/l/email-protection#8fe6ece7e6e8e0a1e4f6eee1e6fbeacfe8e2eee6e3a1ece0e2" class="contact-link"><span class="__cf_email__" data-cfemail="a6cfc5cecfc1c988cddfc7c8cfd2c3e6c1cbc7cfca88c5c9cb">[email&#160;protected]</span></a>
+        </div>
+        <div class="contact-link-item">
+          <div class="contact-link-label">Based In</div>
+          <a href="#" class="contact-link">Singapore</a>
+        </div>
+        <div class="contact-link-item">
+          <div class="contact-link-label">Availability</div>
+          <a href="/cdn-cgi/l/email-protection#cfa6aca7a6a8a0e1a4b6aea1a6bbaa8fa8a2aea6a3e1aca0a2" class="contact-link">Currently accepting new clients →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">© 2026 ICHIGO Studio. All rights reserved.</span>
+    <img src="BG removed logo.png" alt="ICHIGO Studio" style="height:28px; opacity:0.6;" />
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+      ring.style.left   = e.clientX + 'px';
+      ring.style.top    = e.clientY + 'px';
+    });
+
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.width  = '18px';
+        cursor.style.height = '18px';
+        ring.style.width    = '52px';
+        ring.style.height   = '52px';
+        ring.style.borderColor = 'var(--blush)';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.width  = '10px';
+   
