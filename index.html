@@ -646,25 +646,45 @@
     <img src="BG removed logo.png" alt="ICHIGO Studio" style="height:28px; opacity:0.6;" />
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // Custom cursor
-    const cursor = document.getElementById('cursor');
-    const ring = document.getElementById('cursorRing');
+  <script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+
+  if (cursor && ring) {
     document.addEventListener('mousemove', e => {
       cursor.style.left = e.clientX + 'px';
-      cursor.style.top  = e.clientY + 'px';
-      ring.style.left   = e.clientX + 'px';
-      ring.style.top    = e.clientY + 'px';
+      cursor.style.top = e.clientY + 'px';
+      ring.style.left = e.clientX + 'px';
+      ring.style.top = e.clientY + 'px';
     });
 
     document.querySelectorAll('a, button').forEach(el => {
       el.addEventListener('mouseenter', () => {
-        cursor.style.width  = '18px';
+        cursor.style.width = '18px';
         cursor.style.height = '18px';
-        ring.style.width    = '52px';
-        ring.style.height   = '52px';
+        ring.style.width = '52px';
+        ring.style.height = '52px';
         ring.style.borderColor = 'var(--blush)';
       });
       el.addEventListener('mouseleave', () => {
-        cursor.style.width  = '10px';
-   
+        cursor.style.width = '10px';
+        cursor.style.height = '10px';
+        ring.style.width = '36px';
+        ring.style.height = '36px';
+        ring.style.borderColor = 'var(--ink)';
+      });
+    });
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
