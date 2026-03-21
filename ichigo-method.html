@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The ICHIGO Method — ICHIGO Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@200;300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink:        #0e0c0c;
+      --off-white:  #f7f4f0;
+      --warm-white: #fdfbf8;
+      --blush:      #e8a2ad;
+      --blush-light:#f3d5da;
+      --muted:      #8a8480;
+      --border:     rgba(14,12,12,0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--warm-white);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: auto;
+    }
+
+    /* ── Noise overlay ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 56px;
+      background: rgba(253,251,248,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a {
+      font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none; opacity: 0.55;
+      transition: opacity 0.2s;
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .nav-links a.active { opacity: 1; color: var(--blush); }
+
+    /* ── DIAGRAM ── */
+    .diagram-section {
+      padding: 100px 56px;
+      background: var(--off-white);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .diagram-eyebrow {
+      font-size: 0.62rem; letter-spacing: 0.32em; text-transform: uppercase;
+      color: var(--blush); font-family: 'DM Sans', sans-serif; margin-bottom: 56px;
+    }
+    .diagram-wrap { width: 100%; max-width: 680px; display: flex; flex-direction: column; align-items: stretch; }
+    .diagram-layer { border: 1px solid var(--border); background: var(--warm-white); transition: background 0.25s, border-color 0.25s; }
+    .diagram-layer:hover { background: #fff; border-color: var(--blush); }
+    .diagram-layer--output { border-color: var(--blush); background: var(--blush-light); }
+    .diagram-layer--output:hover { background: var(--blush-light); }
+    .diagram-layer-inner { display: flex; align-items: center; justify-content: space-between; padding: 24px 32px; gap: 24px; }
+    .diagram-meta { display: flex; align-items: center; gap: 20px; flex-shrink: 0; }
+    .diagram-index { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; color: var(--blush); letter-spacing: 0.1em; font-weight: 400; width: 28px; }
+    .diagram-tag { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-family: 'DM Sans', sans-serif; border: 1px solid var(--border); padding: 3px 10px; white-space: nowrap; }
+    .diagram-content { text-align: right; }
+    .diagram-name { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 400; color: var(--ink); margin-bottom: 3px; }
+    .diagram-note { font-size: 0.72rem; color: var(--muted); font-family: 'DM Sans', sans-serif; }
+    .diagram-connector { display: flex; flex-direction: column; align-items: center; }
+    .diagram-line { width: 1px; height: 20px; background: var(--blush); opacity: 0.4; }
+    .diagram-arrow { font-size: 0.65rem; color: var(--blush); opacity: 0.6; line-height: 1; }
+    .diagram-caption { margin-top: 40px; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--muted); font-family: 'DM Sans', sans-serif; text-align: center; font-style: italic; }
+
+    .diagram-top-label,
+    .diagram-bottom-label {
+      font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif; color: var(--muted);
+      padding: 6px 0 10px;
+    }
+    .diagram-top-label { border-bottom: 1px dashed var(--border); margin-bottom: 0; padding-bottom: 8px; }
+    .diagram-bottom-label { border-top: 1px dashed var(--border); margin-top: 0; padding-top: 10px; }
+
+    /* ── IN PRACTICE ── */
+    .in-practice-section {
+      padding: 80px 56px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--warm-white);
+    }
+    .in-practice-inner { max-width: 640px; }
+    .in-practice-statement {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+      font-weight: 300; line-height: 1.4;
+      color: var(--ink); margin-bottom: 20px;
+      font-style: italic;
+    }
+    .in-practice-body {
+      font-size: 0.88rem; line-height: 2.1;
+      color: var(--muted);
+    }
+
+    /* ── PROCESS CTA ── */
+    .process-cta { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border); }
+
+    /* ── SHARED UTILITIES ── */
+    .eyebrow {
+      color: var(--blush); font-family: 'DM Sans', sans-serif; font-weight: 400;
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 24px;
+    }
+    .eyebrow::before {
+      content: ''; display: block;
+      width: 32px; height: 1px; background: var(--blush);
+    }
+
+    .section-divider {
+      width: 100%; height: 1px;
+      background: var(--border);
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 36px;
+      background: var(--ink); color: var(--off-white);
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      text-decoration: none; font-family: 'DM Sans', sans-serif; font-weight: 400;
+      border: 1px solid var(--ink);
+      transition: background 0.25s, color 0.25s;
+    }
+    .btn-primary:hover { background: transparent; color: var(--ink); }
+
+    .btn-ghost {
+      display: inline-block;
+      font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      font-family: 'DM Sans', sans-serif;
+      border-bottom: 1px solid var(--muted);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      padding: 0 56px;
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 100px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-bg-kanji {
+      position: absolute;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 40vw; font-weight: 200;
+      color: rgba(14,12,12,0.025);
+      top: 50%; right: -5vw;
+      transform: translateY(-50%);
+      user-select: none; pointer-events: none;
+      z-index: 0; line-height: 1;
+    }
+
+    .hero-inner { position: relative; z-index: 1; max-width: 780px; }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 7vw, 8rem);
+      font-weight: 300; line-height: 0.92;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 40px;
+      animation: fadeUp 1s 0.3s ease both;
+    }
+    .hero-title em { font-style: italic; color: var(--blush); }
+
+    .hero-subheading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      font-weight: 300; line-height: 1.6;
+      color: var(--ink); max-width: 560px;
+      margin-bottom: 28px;
+      animation: fadeUp 1s 0.5s ease both;
+    }
+
+    .hero-position {
+      font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--muted); font-family: 'DM Sans', sans-serif;
+      animation: fadeUp 1s 0.7s ease both;
+    }
+
+    /* ── WHY THIS EXISTS ── */
+    .why-section {
+      padding: 120px 56px;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 100px;
+      align-items: start;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .why-left { position: sticky; top: 120px; }
+
+    .section-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem; font-weight: 300;
+      color: rgba(14,12,12,0.06);
+      line-height: 1; margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+      font-weight: 300; line-height: 1.2;
+      color: var(--ink);
+    }
+    .section-title em { font-style: italic; color: var(--blush); }
+
+    .why-right { display: flex; flex-direction: column; gap: 28px; }
+
+    .why-statement {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem; font-weight: 300;
+      line-height: 1.7; color: var(--ink);
+      font-style: italic;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .why-body {
+      font-size: 0.88rem; line-height: 2.1;
+      color: var(--muted);
+    }
+
+    .why-contrast {
+      padding: 28px 32px;
+      border-left: 2px solid var(--blush);
+      background: var(--off-white);
+    }
+    .why-contrast p {
+      font-size: 0.86rem; line-height: 1.9;
+      color: var(--ink);
+    }
+
+    /* ── HOW IT WORKS — LAYERS ── */
+    .layers-section {
+      padding: 120px 56px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .layers-header {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 100px;
+      margin-bottom: 80px;
+    }
+
+    .layers-intro {
+      font-size: 0.88rem; line-height: 2.1;
+      color: var(--muted);
+      align-self: end;
+    }
+
+    .layers-stack {
+      display: flex; flex-direction: column;
+      gap: 0;
+    }
+
+    .layer-row {
+      display: grid;
+      grid-template-columns: 56px 220px 1fr auto;
+      gap: 40px;
+      align-items: center;
+      padding: 36px 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      transition: background 0.2s;
+    }
+    .layer-row:first-child { border-top: 1px solid var(--border); }
+    .layer-row:hover { background: var(--off-white); margin: 0 -56px; padding: 36px 56px; }
+
+    .layer-index {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-weight: 300;
+      color: var(--blush); letter-spacing: 0.1em;
+    }
+
+    .layer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem; font-weight: 400;
+      color: var(--ink);
+    }
+
+    .layer-desc {
+      font-size: 0.82rem; line-height: 1.9;
+      color: var(--muted);
+    }
+
+    .layer-tag {
+      font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase;
+      border: 1px solid var(--border); color: var(--muted);
+      padding: 4px 10px; white-space: nowrap;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ── WHAT THIS MEANS FOR YOU ── */
+    .benefits-section {
+      padding: 120px 56px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .benefits-header {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 100px;
+      margin-bottom: 80px;
+    }
+
+    .benefits-intro {
+      font-size: 0.88rem; line-height: 2.1;
+      color: var(--muted); align-self: end;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      border: 1px solid var(--border);
+    }
+
+    .benefit-card {
+      padding: 48px 40px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+      transition: background 0.25s;
+    }
+    .benefit-card:hover { background: var(--off-white); }
+    .benefit-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0;
+      width: 0; height: 2px; background: var(--blush);
+      transition: width 0.4s ease;
+    }
+    .benefit-card:hover::after { width: 100%; }
+
+    .benefit-icon {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.6rem; font-weight: 200;
+      color: var(--blush); margin-bottom: 20px;
+      display: block;
+    }
+
+    .benefit-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 400;
+      color: var(--ink); margin-bottom: 14px;
+      line-height: 1.2;
+    }
+
+    .benefit-desc {
+      font-size: 0.82rem; line-height: 1.9;
+      color: var(--muted);
+    }
+
+    /* ── HOW WE WORK ── */
+    .process-section {
+      padding: 120px 56px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .process-header {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 100px;
+      margin-bottom: 80px;
+    }
+
+    .process-intro {
+      font-size: 0.88rem; line-height: 2.1;
+      color: var(--muted); align-self: end;
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1px solid var(--border);
+    }
+
+    .process-step {
+      padding: 48px 36px;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+    .process-step:last-child { border-right: none; }
+
+    .step-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem; font-weight: 300;
+      color: rgba(14,12,12,0.06);
+      line-height: 1; margin-bottom: 20px;
+    }
+
+    .step-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 400;
+      color: var(--ink); margin-bottom: 14px;
+    }
+
+    .step-desc {
+      font-size: 0.8rem; line-height: 1.9;
+      color: var(--muted);
+    }
+
+    .step-connector {
+      position: absolute;
+      top: 48px; right: -12px;
+      font-size: 0.7rem; color: var(--blush);
+      z-index: 1;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 140px 56px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+      background: var(--ink);
+      color: var(--off-white);
+      position: relative; overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute; bottom: -200px; left: -200px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(232,162,173,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 4vw, 4.5rem);
+      font-weight: 300; line-height: 1.05;
+    }
+    .cta-title em { font-style: italic; color: var(--blush); }
+
+    .cta-right { display: flex; flex-direction: column; gap: 28px; }
+
+    .cta-body {
+      font-size: 0.88rem; line-height: 2;
+      color: rgba(247,244,240,0.55);
+    }
+
+    .cta-options { display: flex; flex-direction: column; gap: 16px; }
+
+    .cta-options { display: flex; flex-direction: column; gap: 0; }
+    .contact-link-item {}
+    .contact-link-label {
+      font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--blush); margin-bottom: 8px;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .contact-link {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; color: var(--off-white);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(247,244,240,0.15);
+      padding-bottom: 12px; margin-bottom: 28px; display: block;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .contact-link:hover { color: var(--blush); border-color: var(--blush); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 28px 56px;
+      border-top: 1px solid rgba(247,244,240,0.08);
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--ink); color: rgba(247,244,240,0.3);
+    }
+    .footer-copy { font-size: 0.65rem; letter-spacing: 0.15em; font-family: 'DM Sans', sans-serif; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 22px 28px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 28px 80px; }
+      .why-section,
+      .layers-header,
+      .benefits-header,
+      .process-header,
+      .cta-section { grid-template-columns: 1fr; gap: 48px; padding: 80px 28px; }
+      .why-left { position: static; }
+      .layers-section,
+      .benefits-section,
+      .process-section { padding: 80px 28px; }
+      .layer-row { grid-template-columns: 40px 1fr; gap: 20px; }
+      .layer-row:hover { margin: 0; padding: 36px 0; }
+      .layer-desc, .layer-tag { display: none; }
+      .layer-desc { display: block; grid-column: 2; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr 1fr; }
+      footer { padding: 22px 28px; flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/index.html"><img src="BG removed logo.png" alt="ICHIGO Studio" style="height:38px; display:block;" /></a>
+    <ul class="nav-links">
+      <li><a href="/index.html#services">Services</a></li>
+      <li><a href="/ichigo-method.html" class="active">The Method</a></li>
+      <li><a href="/index.html#about">About</a></li>
+      <li><a href="/index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ①  HERO -->
+  <section class="hero">
+    <div class="hero-bg-kanji">法</div>
+    <div class="hero-inner">
+      <div class="eyebrow" style="animation: fadeUp 0.9s 0.1s ease both; opacity:0;">A Framework for Integrated Business Design</div>
+      <h1 class="hero-title">
+        The ICHIGO<br><em>Method</em>
+      </h1>
+      <p class="hero-subheading">
+        A structured system where AI, operations, and creative are not three services — but three layers of one designed whole.
+      </p>
+      <p class="hero-position">Built from practice. Refined through every client engagement.</p>
+    </div>
+  </section>
+
+  <!-- ②  WHY THIS EXISTS -->
+  <section class="why-section">
+    <div class="why-left">
+      <div class="section-number">01</div>
+      <h2 class="section-title">Why this<br><em>exists</em></h2>
+    </div>
+    <div class="why-right">
+      <p class="why-statement">Most businesses don't have a capability problem. They have a coherence problem.</p>
+      <p class="why-body">The default approach to growing a business is to add tools and services as problems arise. A CRM here. An automation plugin there. A freelancer for content, another for ads, another for operations. Each piece is functional in isolation. None of them speak to each other.</p>
+      <p class="why-body">The result is a business that works — but only in fragments. Decisions get made without full context. Processes break at the handoff points. The brand voice shifts depending on who wrote the last post. Effort gets duplicated. Energy leaks out through the gaps.</p>
+      <div class="why-contrast">
+        <p>The ICHIGO Method was built to address this directly. Not by adding more tools — but by designing the logic that holds them together. Strategy, automation, and creative expression, architected as a single coherent system from the ground up.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIAGRAM -->
+  <section class="diagram-section">
+    <div class="diagram-eyebrow">System Architecture</div>
+    <div class="diagram-wrap">
+
+      <div class="diagram-top-label">Human Layer</div>
+
+      <div class="diagram-layer" data-layer="1">
+        <div class="diagram-layer-inner">
+          <div class="diagram-meta">
+            <span class="diagram-index">L1</span>
+            <span class="diagram-tag">Human · Strategy</span>
+          </div>
+          <div class="diagram-content">
+            <h4 class="diagram-name">Governance</h4>
+            <p class="diagram-note">Human judgment, context, intent</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="diagram-connector">
+        <div class="diagram-line"></div>
+        <div class="diagram-arrow">↓</div>
+      </div>
+
+      <div class="diagram-bottom-label">System Layers</div>
+
+      <div class="diagram-layer" data-layer="2">
+        <div class="diagram-layer-inner">
+          <div class="diagram-meta">
+            <span class="diagram-index">L2</span>
+            <span class="diagram-tag">Automation · Logic</span>
+          </div>
+          <div class="diagram-content">
+            <h4 class="diagram-name">Orchestration</h4>
+            <p class="diagram-note">Workflows, triggers, routing</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="diagram-connector">
+        <div class="diagram-line"></div>
+        <div class="diagram-arrow">↓</div>
+      </div>
+
+      <div class="diagram-layer" data-layer="3">
+        <div class="diagram-layer-inner">
+          <div class="diagram-meta">
+            <span class="diagram-index">L3</span>
+            <span class="diagram-tag">AI · Models</span>
+          </div>
+          <div class="diagram-content">
+            <h4 class="diagram-name">Intelligence</h4>
+            <p class="diagram-note">Multi-model AI, task execution</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="diagram-connector">
+        <div class="diagram-line"></div>
+        <div class="diagram-arrow">↓</div>
+      </div>
+
+      <div class="diagram-layer" data-layer="4">
+        <div class="diagram-layer-inner">
+          <div class="diagram-meta">
+            <span class="diagram-index">L4</span>
+            <span class="diagram-tag">Data · Context</span>
+          </div>
+          <div class="diagram-content">
+            <h4 class="diagram-name">Memory</h4>
+            <p class="diagram-note">Brand knowledge, client history, context</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="diagram-connector">
+        <div class="diagram-line"></div>
+        <div class="diagram-arrow">↓</div>
+      </div>
+
+      <div class="diagram-layer diagram-layer--output" data-layer="5">
+        <div class="diagram-layer-inner">
+          <div class="diagram-meta">
+            <span class="diagram-index">L5</span>
+            <span class="diagram-tag">Delivery · Experience</span>
+          </div>
+          <div class="diagram-content">
+            <h4 class="diagram-name">Output</h4>
+            <p class="diagram-note">Content, website, client deliverables</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <p class="diagram-caption">From human judgment to system execution — this is how the ICHIGO Method operates.</p>
+  </section>
+
+  <!-- IN PRACTICE -->
+  <section class="in-practice-section">
+    <div class="in-practice-inner">
+      <div class="eyebrow">In Practice</div>
+      <p class="in-practice-statement">The system you see here is not theoretical.</p>
+      <p class="in-practice-body">It is the same structure used to operate ICHIGO Studio itself — across content, communication, and delivery. What we build for clients is not an experiment, but an extension of a system already in motion.</p>
+    </div>
+  </section>
+
+  <!-- ③  HOW IT WORKS — LAYERS -->
+  <section class="layers-section">
+    <div class="layers-header">
+      <div>
+        <div class="section-number">02</div>
+        <h2 class="section-title">How the<br>method<br><em>works</em></h2>
+      </div>
+      <p class="layers-intro">The ICHIGO Method operates across five distinct layers. Each layer has a clear role. Together, they form a system that thinks, acts, and communicates as one unified operation — from the decision at the top to the output delivered to a client.</p>
+    </div>
+
+    <div class="layers-stack">
+
+      <div class="layer-row">
+        <span class="layer-index">L1</span>
+        <span class="layer-name">Governance Layer</span>
+        <p class="layer-desc">Human strategy sits at the top. This is where context is held, decisions are made, and the system is directed. No automation runs without this layer defining the intent.</p>
+        <span class="layer-tag">Human · Strategy</span>
+      </div>
+
+      <div class="layer-row">
+        <span class="layer-index">L2</span>
+        <span class="layer-name">Orchestration Layer</span>
+        <p class="layer-desc">The automation logic that connects everything. Workflows, triggers, routing rules, and handoffs — designed so the right information reaches the right place at the right time, without manual intervention.</p>
+        <span class="layer-tag">Automation · Logic</span>
+      </div>
+
+      <div class="layer-row">
+        <span class="layer-index">L3</span>
+        <span class="layer-name">Intelligence Layer</span>
+        <p class="layer-desc">AI models assigned to specific tasks — drafting, analysing, generating, classifying. Each model operates within a defined role, guided by the layers above and informed by the layer below.</p>
+        <span class="layer-tag">AI · Models</span>
+      </div>
+
+      <div class="layer-row">
+        <span class="layer-index">L4</span>
+        <span class="layer-name">Memory Layer</span>
+        <p class="layer-desc">The system's long-term awareness. Brand guidelines, client history, operational data, and accumulated context — structured so that every output reflects what the business actually knows about itself.</p>
+        <span class="layer-tag">Data · Context</span>
+      </div>
+
+      <div class="layer-row">
+        <span class="layer-index">L5</span>
+        <span class="layer-name">Output Layer</span>
+        <p class="layer-desc">What reaches the world. Website copy, social content, client deliverables, internal reports, brand communications. Consistent in voice, aligned with strategy, and produced with far less friction than before.</p>
+        <span class="layer-tag">Delivery · Experience</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ④  WHAT THIS MEANS FOR YOU -->
+  <section class="benefits-section">
+    <div class="benefits-header">
+      <div>
+        <div class="section-number">03</div>
+        <h2 class="section-title">What this<br>means for<br><em>you</em></h2>
+      </div>
+      <p class="benefits-intro">The value of a system is not in its architecture — it is in what becomes possible once it is running. These are the shifts clients typically experience once the method is in place.</p>
+    </div>
+
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <span class="benefit-icon">一</span>
+        <h3 class="benefit-title">Less time on execution</h3>
+        <p class="benefit-desc">Repetitive tasks — content drafts, reporting, data routing, follow-ups — are handled by the system. Your team's attention returns to the work that actually requires judgment.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">二</span>
+        <h3 class="benefit-title">Clearer decision-making</h3>
+        <p class="benefit-desc">When your operations are structured, decisions become easier to make. You know what the business knows. You can see where things are. Ambiguity reduces.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">三</span>
+        <h3 class="benefit-title">A consistent brand voice</h3>
+        <p class="benefit-desc">Brand guidelines embedded into the memory layer mean every piece of output — regardless of who or what produced it — sounds like your business. Not like a different person each time.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">四</span>
+        <h3 class="benefit-title">Operations that scale</h3>
+        <p class="benefit-desc">A system grows with your business in a way that a collection of disconnected tools cannot. Adding a new channel, a new market, or a new team member plugs into existing structure — rather than creating new chaos.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑤  HOW WE WORK WITH CLIENTS -->
+  <section class="process-section">
+    <div class="process-header">
+      <div>
+        <div class="section-number">04</div>
+        <h2 class="section-title">How we<br>work with<br><em>clients</em></h2>
+      </div>
+      <p class="process-intro">Every engagement follows the same four-phase structure. The depth of each phase varies by context — but the sequence does not. We do not build before we understand, and we do not hand over before we have refined.</p>
+    </div>
+
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-number">01</div>
+        <h3 class="step-title">Audit</h3>
+        <p class="step-desc">We begin by understanding how your business currently operates — where the workflows are, where decisions stall, and where energy is being spent on things a system could handle.</p>
+        <span class="step-connector">→</span>
+      </div>
+      <div class="process-step">
+        <div class="step-number">02</div>
+        <h3 class="step-title">Design</h3>
+        <p class="step-desc">We map the architecture of your system — which layers are needed, how they connect, and what the logic of each handoff looks like. Nothing is built until the design is clear.</p>
+        <span class="step-connector">→</span>
+      </div>
+      <div class="process-step">
+        <div class="step-number">03</div>
+        <h3 class="step-title">Build</h3>
+        <p class="step-desc">We implement — workflows, automations, AI model configurations, brand memory, output templates. Built to be usable from day one, not handed over as a project file.</p>
+        <span class="step-connector">→</span>
+      </div>
+      <div class="process-step">
+        <div class="step-number">04</div>
+        <h3 class="step-title">Refine</h3>
+        <p class="step-desc">Systems improve with use. We review outputs, tighten logic, and adjust the layers as your business evolves. This is not a one-time delivery — it is an ongoing relationship.</p>
+      </div>
+    </div>
+    <div class="process-cta">
+      <p class="cta-body" style="color:var(--muted); font-size:0.86rem; line-height:2; margin-bottom:20px;">If you'd like to see how this method operates in practice, you can explore selected work from ICHIGO Studio.</p>
+      <a href="/work.html" class="btn-ghost">View selected work →</a>
+    </div>
+  </section>
+  <section class="cta-section">
+    <div>
+      <div class="eyebrow" style="color:var(--blush); margin-bottom:28px;">Start a Conversation</div>
+      <h2 class="cta-title">See if this<br>applies to<br><em>your business.</em></h2>
+    </div>
+    <div class="cta-right">
+      <p class="cta-body">The ICHIGO Method is not a template — it is designed around how your business actually operates. The best way to understand whether it fits is to have a conversation about where your current friction is.</p>
+      <p class="cta-body">No pitch deck. No pressure. Just a structured conversation about what a more coherent version of your business could look like.</p>
+      <div class="cta-options">
+        <div class="contact-link-item">
+          <div class="contact-link-label">Email</div>
+          <a href="mailto:ichigo.kyanite@gmail.com" class="contact-link">ichigo.kyanite@gmail.com</a>
+        </div>
+        <div class="contact-link-item">
+          <div class="contact-link-label">WhatsApp</div>
+          <a href="https://wa.me/6580978928?text=Hello%20ICHIGO%20Studio%2C%20I%27d%20like%20to%20learn%20more%20about%20the%20ICHIGO%20Method." class="contact-link">Start your ICHIGO Method journey</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">© 2026 ICHIGO Studio. All rights reserved.</span>
+    <img src="BG removed logo.png" alt="ICHIGO Studio" style="height:28px; opacity:0.5;" />
+  </footer>
+
+</body>
+</html>
