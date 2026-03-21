@@ -487,8 +487,89 @@
   transform: translateY(0);
 }
 
+    /* ── ICHIGO METHOD ── */
+    .method-block {
+      display: grid;
+      grid-template-columns: 1fr 1.8fr;
+      gap: 80px;
+      padding: 72px 0 80px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 60px;
+    }
+    .method-eyebrow {
+      font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--blush); margin-bottom: 20px;
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+    }
+    .method-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 3.5vw, 3.6rem);
+      font-weight: 300; line-height: 1.1;
+      color: var(--ink);
+    }
+    .method-title em { font-style: italic; color: var(--blush); }
+    .method-right { display: flex; flex-direction: column; justify-content: center; gap: 20px; }
+    .method-opening {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 300;
+      line-height: 1.6; color: var(--ink);
+      font-style: italic;
+    }
+    .method-body {
+      font-size: 0.86rem; line-height: 2;
+      color: var(--muted);
+    }
+    .method-position {
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--ink); font-family: 'DM Sans', sans-serif;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+    .layer-label {
+      font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 28px;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .service-layer {
+      font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--blush); opacity: 0.7;
+      font-family: 'DM Sans', sans-serif;
+      margin-bottom: 10px;
+    }
+
+    /* ── CROSS-LINK BLOCK ── */
+    .cross-link-block {
+      padding: 100px 56px;
+      background: var(--off-white);
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .cross-eyebrow {
+      font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--blush); margin-bottom: 20px;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .cross-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300; line-height: 1.2;
+      color: var(--ink); margin-bottom: 20px;
+    }
+    .cross-title em { font-style: italic; color: var(--blush); }
+    .cross-desc {
+      font-size: 0.86rem; line-height: 1.9;
+      color: var(--muted); max-width: 520px;
+      margin: 0 auto 40px;
+    }
+    .cross-links {
+      display: flex; gap: 40px;
+      justify-content: center; flex-wrap: wrap;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
+      .method-block { grid-template-columns: 1fr; gap: 36px; padding: 48px 0; }
       nav { padding: 22px 28px; }
       .nav-links { display: none; }
       .hero { grid-template-columns: 1fr; padding: 0 28px; padding-top: 100px; }
@@ -508,9 +589,9 @@
 
   <!-- NAV -->
   <nav>
-    <a href="#"><img src="BG removed logo.png" alt="ICHIGO Studio" style="height:38px; display:block;" /></a>
+    <a href="/index.html"><img src="BG removed logo.png" alt="ICHIGO Studio" style="height:38px; display:block;" /></a>
     <ul class="nav-links">
-      <li><a href="#services">Services</a></li>
+      <li><a href="/ichigo-method.html">The Method</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -521,17 +602,19 @@
     <div class="hero-left">
       <p class="hero-eyebrow">Creative Studio · Singapore</p>
       <h1 class="hero-title">
-        Creative<br>
-        <em>Studio</em> for<br>
-        AI, Systems<br>&amp; Business<br>Design.
+        A studio for<br>
+        <em>AI systems,</em><br>
+        business design,<br>
+        &amp; structured<br>
+        growth.
       </h1>
       <p class="hero-subtitle">
-        Focused on AI workflow design, business process solutions, and creative direction — built for companies ready to move smarter.
+        We design integrated systems where AI, operations, and creative work as one — built for companies ready to move with intention.
       </p>
       <div class="hero-cta">
-        <a href="#services" class="btn-primary">Our Services</a>
+        <a href="#services" class="btn-primary">The Method</a>
         <a href="#contact" class="btn-ghost">Get in touch</a>
-      </div>
+      </div
     </div>
     <div class="hero-right">
       <div class="hero-deco">
@@ -564,25 +647,46 @@
   </div>
 
   <!-- SERVICES -->
-  <section class="services" id="services">
-    <div class="section-label">What We Do</div>
+  <section class="The Method" id="services">
+    <div class="section-label">The Method</div>
+
+    <!-- THE ICHIGO METHOD -->
+    <div class="method-block reveal">
+      <div class="method-left">
+        <div class="method-eyebrow">A Unified Framework</div>
+        <h3 class="method-title">The ICHIGO<br><em>Method</em></h3>
+      </div>
+      <div class="method-right">
+        <p class="method-opening">Most businesses don't have a capability problem. They have a coherence problem.</p>
+        <p class="method-body">The ICHIGO Method is a structured approach to building businesses that think and operate as integrated systems. We work across three interconnected layers — execution, structure, and experience — treating AI, operations, and creative not as separate disciplines, but as a single designed whole. Each engagement begins with understanding how your business currently moves, where energy is lost, and what a more coherent version of it could look like. From there, we design and deploy — with intention at every step.</p>
+        <p class="method-position">This is not a service menu. It is a methodology.</p>
+        <a href="/ichigo-method.html" class="btn-primary">Explore the ICHIGO Method →</a>
+      </div>
+    </div>
+
+    <!-- LAYER DIVIDER -->
+    <div class="layer-label reveal">System Layers</div>
+
     <div class="services-grid">
       <div class="service-card reveal">
         <div class="service-number">01</div>
+        <div class="service-layer">Execution Layer</div>
         <h3 class="service-title">AI Workflow & Automation</h3>
-        <p class="service-desc">We design and implement AI-powered workflows that reduce friction, cut manual effort, and help your team operate at full capacity.</p>
+        <p class="service-desc">As part of a broader system, we design AI workflows that reduce manual overhead and embed intelligence where it matters most — so your team can focus their energy on what only humans can do.</p>
         <span class="service-tag">AI · Systems</span>
       </div>
       <div class="service-card reveal" style="transition-delay:0.12s">
         <div class="service-number">02</div>
+        <div class="service-layer">Structure Layer</div>
         <h3 class="service-title">Business Process Design</h3>
-        <p class="service-desc">From audit to execution — we map, redesign, and streamline your business operations so every process works with intention and efficiency.</p>
+        <p class="service-desc">Before we automate, we clarify. We map your existing processes, surface the friction points, and rebuild the underlying structure so that every system — human or AI — operates with precision and purpose.</p>
         <span class="service-tag">Operations</span>
       </div>
       <div class="service-card reveal" style="transition-delay:0.24s">
         <div class="service-number">03</div>
+        <div class="service-layer">Experience Layer</div>
         <h3 class="service-title">Creative & Digital Solutions</h3>
-        <p class="service-desc">Brand, content, and digital presence — crafted with a clear point of view. We build the creative layer that makes your business memorable.</p>
+        <p class="service-desc">A well-designed system still needs a face. We shape the brand identity, content presence, and digital experience that communicates your value clearly — and leaves the kind of impression that compounds over time.</p>
         <span class="service-tag">Creative</span>
       </div>
     </div>
@@ -600,6 +704,7 @@
       <p class="section-label">About the Studio</p>
       <h2 class="about-title reveal">Where precision<br>meets <em>artistry.</em></h2>
       <p class="about-text reveal">ICHIGO Studio is an independent creative practice based in Singapore. We partner with businesses — from emerging brands to established companies — to sharpen their identity and amplify their reach.</p>
+      <p class="about-text reveal">Our work is grounded in systems thinking — where strategy, automation, and creative are designed together, not in isolation.</p>
       <p class="about-text reveal">The name ICHIGO (一期) draws from the Japanese philosophy of <em>ichigo ichie</em> — each moment, unique and unrepeatable. We bring that same intentionality to every client engagement.</p>
       <div class="about-divider reveal"></div>
       <div class="about-meta">
@@ -621,7 +726,7 @@
       <div>
         <p class="section-label" style="color:var(--blush); border-color:var(--blush)">Let's Work Together</p>
         <h2 class="contact-title reveal">Ready to<br><em>begin</em><br>something?</h2>
-        <p class="contact-sub reveal">We're always open to meaningful collaborations — whether you're a business looking to grow, or a brand ready for its next chapter.</p>
+        <p class="contact-sub reveal">Whether you're exploring the ICHIGO Method or refining your current systems, we’d be glad to begin the conversation.</p>
       </div>
       <div class="contact-links reveal">
         <div class="contact-link-item">
@@ -638,11 +743,22 @@
         </div>
         <div class="contact-link-item">
           <div class="contact-link-label">Availability</div>
-          <a href="/cdn-cgi/l/email-protection#cfa6aca7a6a8a0e1a4b6aea1a6bbaa8fa8a2aea6a3e1aca0a2" class="contact-link">Currently accepting new clients →</a>
+          <a href="mailto:ichigo.kyanite@gmail.com" class="contact-link">Currently accepting new clients →</a>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- CROSS-LINK -->
+  <div class="cross-link-block">
+    <p class="cross-eyebrow">Beyond the System</p>
+    <h3 class="cross-title">Beyond logic, into <em>artistry</em>.</h3>
+    <p class="cross-desc">While we design systems for clarity and efficiency, ICHIGO also explores the emotional layer of creation — through florals, scent, and sound.</p>
+    <div class="cross-links">
+      <a href="/gallery.html" class="btn-ghost">Explore ICHIGO Gallery &amp; Retail →</a>
+      <a href="/music.html" class="btn-ghost">Listen to the Symphony →</a>
+    </div>
+  </div>
 
   <!-- FOOTER -->
   <footer>
@@ -670,25 +786,4 @@
         ring.style.height = '52px';
         ring.style.borderColor = 'var(--blush)';
       });
-      el.addEventListener('mouseleave', () => {
-        cursor.style.width = '10px';
-        cursor.style.height = '10px';
-        ring.style.width = '36px';
-        ring.style.height = '36px';
-        ring.style.borderColor = 'var(--ink)';
-      });
-    });
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.12 });
-
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
-</body>
-</html>
+      el.addEventListener('m
