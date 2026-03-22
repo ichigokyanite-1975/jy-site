@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work — ICHIGO Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@200;300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink:        #0e0c0c;
+      --off-white:  #f7f4f0;
+      --warm-white: #fdfbf8;
+      --blush:      #e8a2ad;
+      --blush-light:#f3d5da;
+      --muted:      #8a8480;
+      --border:     rgba(14,12,12,0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--warm-white);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: auto;
+    }
+
+    /* ── Noise overlay ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 56px;
+      background: rgba(253,251,248,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a {
+      font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none; opacity: 0.55;
+      transition: opacity 0.2s;
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .nav-links a.active { opacity: 1; color: var(--blush); }
+
+    /* ── SHARED ── */
+    .eyebrow {
+      font-size: 0.65rem; letter-spacing: 0.32em; text-transform: uppercase;
+      color: var(--blush); font-family: 'DM Sans', sans-serif; font-weight: 400;
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 24px;
+    }
+    .eyebrow::before {
+      content: ''; display: block;
+      width: 32px; height: 1px; background: var(--blush);
+    }
+
+    .btn-primary {
+      display: inline-block; padding: 14px 36px;
+      background: var(--ink); color: var(--off-white);
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      text-decoration: none; font-family: 'DM Sans', sans-serif; font-weight: 400;
+      border: 1px solid var(--ink);
+      transition: background 0.25s, color 0.25s;
+    }
+    .btn-primary:hover { background: transparent; color: var(--ink); }
+
+    .btn-ghost {
+      display: inline-block;
+      font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      font-family: 'DM Sans', sans-serif;
+      border-bottom: 1px solid var(--muted);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 60vh;
+      padding: 160px 56px 100px;
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 36vw; font-weight: 200;
+      color: rgba(14,12,12,0.025);
+      bottom: -4vw; right: -2vw;
+      user-select: none; pointer-events: none;
+      line-height: 1;
+    }
+
+    .hero-inner { position: relative; z-index: 1; max-width: 700px; }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.2rem, 6vw, 7rem);
+      font-weight: 300; line-height: 0.95;
+      letter-spacing: -0.02em; color: var(--ink);
+      margin-bottom: 36px;
+      animation: fadeUp 1s 0.3s ease both;
+    }
+    .hero-title em { font-style: italic; color: var(--blush); }
+
+    .hero-sub {
+      font-size: 0.88rem; line-height: 1.9;
+      color: var(--muted); max-width: 480px;
+      animation: fadeUp 1s 0.55s ease both;
+    }
+
+    /* ── INTRO ── */
+    .intro-section {
+      padding: 100px 56px;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 100px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .intro-left {
+      position: sticky; top: 120px; align-self: start;
+    }
+
+    .section-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem; font-weight: 300;
+      color: rgba(14,12,12,0.06); line-height: 1; margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 2.6vw, 2.4rem);
+      font-weight: 300; line-height: 1.2; color: var(--ink);
+    }
+    .section-title em { font-style: italic; color: var(--blush); }
+
+    .intro-right { display: flex; flex-direction: column; gap: 24px; }
+
+    .intro-statement {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 300;
+      line-height: 1.7; color: var(--ink); font-style: italic;
+      padding-bottom: 24px; border-bottom: 1px solid var(--border);
+    }
+
+    .intro-body {
+      font-size: 0.88rem; line-height: 2.1; color: var(--muted);
+    }
+
+    /* ── CASE ── */
+    .case-section {
+      padding: 100px 56px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .case-header {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 100px;
+      padding-bottom: 64px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 64px;
+    }
+
+    .case-tag-row {
+      display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;
+    }
+
+    .case-tag {
+      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+      border: 1px solid var(--border); color: var(--muted);
+      padding: 4px 10px; font-family: 'DM Sans', sans-serif;
+    }
+    .case-tag--active {
+      border-color: var(--blush); color: var(--blush);
+    }
+
+    .case-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.2vw, 3rem);
+      font-weight: 300; line-height: 1.1; color: var(--ink);
+      margin-bottom: 16px;
+    }
+    .case-title em { font-style: italic; color: var(--blush); }
+
+    .case-subtitle {
+      font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); font-family: 'DM Sans', sans-serif;
+    }
+
+    .case-meta {
+      display: flex; flex-direction: column;
+      justify-content: flex-end; gap: 20px;
+    }
+
+    .meta-row {
+      display: flex; justify-content: space-between;
+      align-items: baseline;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .meta-label {
+      font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--muted); font-family: 'DM Sans', sans-serif;
+    }
+    .meta-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem; color: var(--ink);
+    }
+
+    /* ── CASE BODY ── */
+    .case-body {
+      display: flex; flex-direction: column; gap: 64px;
+    }
+
+    .case-block {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 60px;
+      padding-bottom: 64px;
+      border-bottom: 1px solid var(--border);
+    }
+    .case-block:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .case-block-label {
+      font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--blush); font-family: 'DM Sans', sans-serif;
+      padding-top: 4px;
+    }
+
+    .case-block-content { display: flex; flex-direction: column; gap: 20px; }
+
+    .case-block-text {
+      font-size: 0.88rem; line-height: 2.1; color: var(--muted);
+    }
+
+    /* Layers applied table */
+    .layers-applied {
+      display: flex; flex-direction: column; gap: 0;
+      border: 1px solid var(--border);
+    }
+
+    .layer-applied-row {
+      display: grid;
+      grid-template-columns: 40px 180px 1fr;
+      gap: 28px; align-items: start;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+    .layer-applied-row:last-child { border-bottom: none; }
+    .layer-applied-row:hover { background: var(--off-white); }
+
+    .la-index {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem; color: var(--blush); letter-spacing: 0.1em;
+    }
+    .la-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; font-weight: 400; color: var(--ink);
+    }
+    .la-desc {
+      font-size: 0.78rem; line-height: 1.8; color: var(--muted);
+    }
+
+    /* What changed — outcome list */
+    .outcomes {
+      display: flex; flex-direction: column; gap: 0;
+    }
+
+    .outcome-item {
+      display: flex; gap: 20px; align-items: baseline;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .outcome-item:first-child { border-top: 1px solid var(--border); }
+
+    .outcome-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; color: var(--blush);
+      flex-shrink: 0; width: 16px;
+    }
+
+    .outcome-text {
+      font-size: 0.86rem; line-height: 1.8; color: var(--ink);
+    }
+    .outcome-text span {
+      display: block; font-size: 0.76rem; color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── FUTURE CASES ── */
+    .future-section {
+      padding: 100px 56px;
+      border-bottom: 1px solid var(--border);
+      background: var(--off-white);
+    }
+
+    .future-header {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 100px; margin-bottom: 56px;
+    }
+
+    .future-intro {
+      font-size: 0.86rem; line-height: 2.1;
+      color: var(--muted); align-self: end;
+    }
+
+    .future-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .future-card {
+      padding: 44px 36px;
+      border: 1px solid var(--border);
+      background: var(--warm-white);
+      display: flex; flex-direction: column;
+      justify-content: space-between;
+      min-height: 220px;
+    }
+
+    .future-card-label {
+      font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--muted); font-family: 'DM Sans', sans-serif;
+      margin-bottom: 20px;
+    }
+
+    .future-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 300; color: var(--ink);
+      line-height: 1.3;
+    }
+
+    .future-card-status {
+      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--blush); font-family: 'DM Sans', sans-serif;
+      margin-top: 28px; display: flex; align-items: center; gap: 8px;
+    }
+    .future-card-status::before {
+      content: ''; display: block;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--blush); opacity: 0.5;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 140px 56px;
+      background: var(--ink); color: var(--off-white);
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 100px; align-items: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute; bottom: -200px; right: -200px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(232,162,173,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-eyebrow {
+      font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--blush); font-family: 'DM Sans', sans-serif; margin-bottom: 24px;
+    }
+
+    .cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 4vw, 4.2rem);
+      font-weight: 300; line-height: 1.05;
+    }
+    .cta-title em { font-style: italic; color: var(--blush); }
+
+    .cta-right { display: flex; flex-direction: column; gap: 28px; }
+
+    .cta-body {
+      font-size: 0.86rem; line-height: 2; color: rgba(247,244,240,0.5);
+    }
+
+    .contact-link-label {
+      font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--blush); margin-bottom: 8px; font-family: 'DM Sans', sans-serif;
+    }
+    .contact-link {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; color: var(--off-white);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(247,244,240,0.15);
+      padding-bottom: 12px; margin-bottom: 24px; display: block;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .contact-link:hover { color: var(--blush); border-color: var(--blush); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 28px 56px;
+      border-top: 1px solid rgba(247,244,240,0.08);
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--ink); color: rgba(247,244,240,0.3);
+    }
+    .footer-copy { font-size: 0.65rem; letter-spacing: 0.15em; font-family: 'DM Sans', sans-serif; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 22px 28px; }
+      .nav-links { display: none; }
+      .hero { padding: 120px 28px 80px; }
+      .intro-section,
+      .case-header,
+      .future-header,
+      .cta-section { grid-template-columns: 1fr; gap: 48px; padding: 80px 28px; }
+      .intro-left { position: static; }
+      .case-section { padding: 80px 28px; }
+      .case-block { grid-template-columns: 1fr; gap: 24px; }
+      .layer-applied-row { grid-template-columns: 36px 1fr; }
+      .la-desc { grid-column: 2; }
+      .future-section { padding: 80px 28px; }
+      .future-grid { grid-template-columns: 1fr; }
+      footer { padding: 22px 28px; flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/index.html"><img src="BG removed logo.png" alt="ICHIGO Studio" style="height:38px; display:block;" /></a>
+    <ul class="nav-links">
+      <li><a href="/index.html#services">Services</a></li>
+      <li><a href="/ichigo-method.html">The Method</a></li>
+      <li><a href="/work.html" class="active">Work</a></li>
+      <li><a href="/index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ① HERO -->
+  <section class="hero">
+    <div class="hero-bg">事</div>
+    <div class="hero-inner">
+      <div class="eyebrow" style="animation: fadeUp 0.9s 0.1s ease both; opacity:0;">Selected Work</div>
+      <h1 class="hero-title">
+        Not a portfolio.<br>
+        <em>Proof of system.</em>
+      </h1>
+      <p class="hero-sub">
+        These are not showcase pieces. They are operational records — documentation of how the ICHIGO Method has been applied, what was built, and what changed as a result.
+      </p>
+    </div>
+  </section>
+
+  <!-- ② INTRO -->
+  <section class="intro-section">
+    <div class="intro-left">
+      <div class="section-number">—</div>
+      <h2 class="section-title">On this<br><em>page</em></h2>
+    </div>
+    <div class="intro-right">
+      <p class="intro-statement">A system is only credible when it can be observed in operation.</p>
+      <p class="intro-body">The cases documented here are not curated highlights. They are structured records of how the ICHIGO Method was applied — what the context was, which layers of the system were engaged, and what concretely shifted as a result.</p>
+      <p class="intro-body">We begin with the most complete example available: ICHIGO Studio itself. This is the case where the method was not designed for a client, but built and refined through the daily operation of our own business. It is the most honest account we can offer of what the system actually does.</p>
+    </div>
+  </section>
+
+  <!-- ③ CASE 01 -->
+  <section class="case-section" id="case-01">
+
+    <div class="case-header">
+      <div>
+        <div class="case-tag-row">
+          <span class="case-tag case-tag--active">Case 01</span>
+          <span class="case-tag">Internal</span>
+          <span class="case-tag">Live System</span>
+          <span class="case-tag">Multi-Agent</span>
+        </div>
+        <h2 class="case-title">ICHIGO <em>Studio</em></h2>
+        <p class="case-subtitle">Multi-agent operating system for a creative studio</p>
+      </div>
+      <div class="case-meta">
+        <div class="meta-row">
+          <span class="meta-label">Entity</span>
+          <span class="meta-value">ICHIGO Studio, Singapore</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">Type</span>
+          <span class="meta-value">Internal operations</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">Status</span>
+          <span class="meta-value">Active · Continuously refined</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">Layers engaged</span>
+          <span class="meta-value">All five</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-body">
+
+      <!-- CONTEXT -->
+      <div class="case-block">
+        <div class="case-block-label">Context</div>
+        <div class="case-block-content">
+          <p class="case-block-text">ICHIGO Studio operates across multiple disciplines simultaneously — creative direction, client work, brand management, content production, and business development. For a small studio, the operational surface area is wide. Without a system, this kind of spread creates constant context-switching, inconsistent output, and energy lost to coordination overhead.</p>
+          <p class="case-block-text">The challenge was not a lack of tools. It was coherence — getting strategy, execution, and creative expression to operate as a single integrated flow rather than a collection of disconnected efforts.</p>
+        </div>
+      </div>
+
+      <!-- SYSTEM APPLIED -->
+      <div class="case-block">
+        <div class="case-block-label">System Applied</div>
+        <div class="case-block-content">
+          <p class="case-block-text">All five layers of the ICHIGO Method were engaged. Each layer was configured specifically for the studio's operational context.</p>
+          <div class="layers-applied">
+            <div class="layer-applied-row">
+              <span class="la-index">L1</span>
+              <span class="la-name">Governance</span>
+              <p class="la-desc">Studio direction, client priorities, and brand standards held at the human layer. All system outputs are reviewed against this layer before reaching clients.</p>
+            </div>
+            <div class="layer-applied-row">
+              <span class="la-index">L2</span>
+              <span class="la-name">Orchestration</span>
+              <p class="la-desc">Automated workflows connecting content planning, client communication, and delivery pipelines. Triggers reduce manual handoffs between tasks.</p>
+            </div>
+            <div class="layer-applied-row">
+              <span class="la-index">L3</span>
+              <span class="la-name">Intelligence</span>
+              <p class="la-desc">Multiple AI models assigned to distinct roles — drafting, research, summarisation, and ideation. Each operates within defined parameters rather than open-ended prompting.</p>
+            </div>
+            <div class="layer-applied-row">
+              <span class="la-index">L4</span>
+              <span class="la-name">Memory</span>
+              <p class="la-desc">Brand guidelines, tone of voice, client history, and operational knowledge structured as persistent context. Every output reflects what the studio actually knows.</p>
+            </div>
+            <div class="layer-applied-row">
+              <span class="la-index">L5</span>
+              <span class="la-name">Output</span>
+              <p class="la-desc">Website, social content, client deliverables, and internal documentation. Produced with consistent voice and materially lower time cost per piece.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WHAT CHANGED -->
+      <div class="case-block">
+        <div class="case-block-label">What Changed</div>
+        <div class="case-block-content">
+          <p class="case-block-text">The shifts below are observed, not projected. They reflect the difference between operating with and without the system in place.</p>
+          <div class="outcomes">
+            <div class="outcome-item">
+              <span class="outcome-mark">→</span>
+              <div class="outcome-text">
+                Content production time reduced significantly
+                <span>First drafts for posts, copy, and client updates now require review and refinement rather than creation from scratch.</span>
+              </div>
+            </div>
+            <div class="outcome-item">
+              <span class="outcome-mark">→</span>
+              <div class="outcome-text">
+                Brand voice became consistent across all output
+                <span>With tone and guidelines embedded in the memory layer, every piece of output — regardless of context — sounds like the same studio.</span>
+              </div>
+            </div>
+            <div class="outcome-item">
+              <span class="outcome-mark">→</span>
+              <div class="outcome-text">
+                Operational decisions became clearer and faster
+                <span>When the system holds context, decisions about priority and direction require less re-orientation. The business knows what it knows.</span>
+              </div>
+            </div>
+            <div class="outcome-item">
+              <span class="outcome-mark">→</span>
+              <div class="outcome-text">
+                Client work quality improved without additional hours
+                <span>Time recovered from operational overhead was redirected toward the work that requires genuine judgment and creative thinking.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ④ FUTURE CASES -->
+  <section class="future-section">
+    <div class="future-header">
+      <div>
+        <div class="section-number">—</div>
+        <h2 class="section-title">Further<br><em>cases</em></h2>
+      </div>
+      <p class="future-intro">Additional cases are in preparation. These are drawn from active client engagements where the ICHIGO Method has been applied. They will be published as documentation is completed and client consent is confirmed.</p>
+    </div>
+    <div class="future-grid">
+      <div class="future-card">
+        <div>
+          <div class="future-card-label">Case 02 · Salon Group</div>
+          <h3 class="future-card-title">Supplier & vendor management system</h3>
+        </div>
+        <div class="future-card-status">In preparation</div>
+      </div>
+      <div class="future-card">
+        <div>
+          <div class="future-card-label">Case 03 · Retail Brand</div>
+          <h3 class="future-card-title">SNS content system & brand voice consistency</h3>
+        </div>
+        <div class="future-card-status">In preparation</div>
+      </div>
+      <div class="future-card">
+        <div>
+          <div class="future-card-label">Case 04 · B2B Services</div>
+          <h3 class="future-card-title">Client communication & workflow automation</h3>
+        </div>
+        <div class="future-card-status">In preparation</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑤ CTA -->
+  <section class="cta-section">
+    <div>
+      <div class="cta-eyebrow">Start a Conversation</div>
+      <h2 class="cta-title">See what this<br>could look like<br>for <em>your business.</em></h2>
+    </div>
+    <div class="cta-right">
+      <p class="cta-body">If any of the above reflects challenges you recognise in your own operations, the next step is a conversation — not a proposal. We start by understanding how your business currently runs before recommending anything.</p>
+      <div>
+        <div class="contact-link-label">Email</div>
+        <a href="mailto:ichigo.kyanite@gmail.com" class="contact-link">ichigo.kyanite@gmail.com</a>
+        <div class="contact-link-label">WhatsApp</div>
+        <a href="https://wa.me/6580978928?text=Hello%20ICHIGO%20Studio%2C%20I%27d%20like%20to%20discuss%20how%20the%20ICHIGO%20Method%20could%20apply%20to%20my%20business." class="contact-link">Start the conversation</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">© 2026 ICHIGO Studio. All rights reserved.</span>
+    <img src="BG removed logo.png" alt="ICHIGO Studio" style="height:28px; opacity:0.5;" />
+  </footer>
+
+</body>
+</html>
