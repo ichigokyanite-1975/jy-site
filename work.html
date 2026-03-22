@@ -310,6 +310,32 @@
       margin-top: 4px;
     }
 
+    .case-block-text--intent {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem; font-style: italic;
+      color: var(--ink); line-height: 1.7;
+      padding: 20px 24px;
+      border-left: 2px solid var(--blush);
+      background: var(--off-white);
+    }
+
+    /* ── CASE CLOSING ── */
+    .case-closing {
+      padding-top: 48px;
+      border-top: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 14px;
+      max-width: 560px;
+    }
+    .case-closing-text {
+      font-size: 0.86rem; line-height: 1.9; color: var(--muted);
+    }
+    .case-closing-roles {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-weight: 300;
+      color: var(--ink); font-style: italic;
+      letter-spacing: 0.02em;
+    }
+
     /* ── FUTURE CASES ── */
     .future-section {
       padding: 100px 56px;
@@ -540,6 +566,7 @@
         <div class="case-block-label">System Applied</div>
         <div class="case-block-content">
           <p class="case-block-text">All five layers of the ICHIGO Method were engaged. Each layer was configured specifically for the studio's operational context.</p>
+          <p class="case-block-text case-block-text--intent">This system was not designed to use AI more. It was designed to think more clearly, and execute with less friction.</p>
           <div class="layers-applied">
             <div class="layer-applied-row">
               <span class="la-index">L1</span>
@@ -554,7 +581,7 @@
             <div class="layer-applied-row">
               <span class="la-index">L3</span>
               <span class="la-name">Intelligence</span>
-              <p class="la-desc">Multiple AI models assigned to distinct roles — drafting, research, summarisation, and ideation. Each operates within defined parameters rather than open-ended prompting.</p>
+              <p class="la-desc">Multiple AI models are assigned to clearly defined roles — not as interchangeable tools, but as distinct agents with specific responsibilities. These roles may be fulfilled by different platforms — including models such as ChatGPT, Claude, or Gemini — selected based on their strengths in reasoning, structuring, or execution. The system is not built around any single model. It is designed so that roles remain stable, while the underlying tools can be adjusted as needed. No single model is expected to do everything.</p>
             </div>
             <div class="layer-applied-row">
               <span class="la-index">L4</span>
@@ -606,6 +633,13 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- CLOSING NOTE -->
+      <div class="case-closing">
+        <p class="case-closing-text">The system operates through a set of defined roles — each with its own responsibility, behaviour, and boundaries.</p>
+        <p class="case-closing-roles">Some are human.&nbsp;&nbsp;Some are automated.&nbsp;&nbsp;Some are AI-driven.</p>
+        <p class="case-closing-text">Together, they form a working structure — not a collection of tools, but a coordinated system.</p>
       </div>
 
     </div>
@@ -664,9 +698,4 @@
 
   <!-- FOOTER -->
   <footer>
-    <span class="footer-copy">© 2026 ICHIGO Studio. All rights reserved.</span>
-    <img src="BG removed logo.png" alt="ICHIGO Studio" style="height:28px; opacity:0.5;" />
-  </footer>
-
-</body>
-</html>
+    <span class="footer-copy">© 2026 ICHIGO Studio. All
