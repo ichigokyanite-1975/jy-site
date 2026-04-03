@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work Blog — ICHIGO Studio</title>
+  <meta name="description" content="Operational thinking, system notes, and field observations from building and running ICHIGO Studio." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://ichigo.studio/blog.html" />
+  <meta property="og:type" content="blog" />
+  <meta property="og:url" content="https://ichigo.studio/blog.html" />
+  <meta property="og:title" content="Work Blog — ICHIGO Studio" />
+  <meta property="og:description" content="Operational thinking, system notes and field observations from ICHIGO Studio." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@200;300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink:         #0e0c0c;
+      --off-white:   #f7f4f0;
+      --warm-white:  #fdfbf8;
+      --blush:       #e8a2ad;
+      --blush-light: #f3d5da;
+      --muted:       #8a8480;
+      --border:      rgba(14,12,12,0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--warm-white); color: var(--ink);
+      font-family: 'DM Sans', sans-serif; font-weight: 300;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: 0.4;
+    }
+
+    /* ── Custom cursor ── */
+    .cursor {
+      position: fixed; width: 10px; height: 10px;
+      background: var(--blush); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: transform 0.15s ease, width 0.2s, height 0.2s;
+    }
+    .cursor-ring {
+      position: fixed; width: 36px; height: 36px;
+      border: 1px solid var(--ink); border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%,-50%);
+      transition: transform 0.35s cubic-bezier(.23,1,.32,1), width 0.25s, height 0.25s;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 56px;
+      background: rgba(253,251,248,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a {
+      font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none; opacity: 0.55;
+      transition: opacity 0.2s; font-family: 'DM Sans', sans-serif; font-weight: 400;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .nav-links a.active { opacity: 1; color: var(--blush); }
+    .nav-item { position: relative; }
+    .nav-item:hover .nav-dropdown { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+    .nav-dropdown {
+      position: absolute; top: calc(100% + 16px); left: 50%;
+      transform: translateX(-50%) translateY(6px);
+      background: var(--warm-white); border: 1px solid var(--border);
+      min-width: 180px; display: flex; flex-direction: column;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease; z-index: 200;
+    }
+    .nav-dropdown a {
+      font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none; padding: 12px 18px;
+      border-bottom: 1px solid var(--border); opacity: 0.6;
+      transition: opacity 0.15s, background 0.15s; display: block;
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+    }
+    .nav-dropdown a:last-child { border-bottom: none; }
+    .nav-dropdown a:hover { opacity: 1; background: var(--off-white); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 52vh;
+      padding: 160px 56px 90px;
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .hero-bg {
+      position: absolute;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 34vw; font-weight: 200;
+      color: rgba(14,12,12,0.025);
+      bottom: -3vw; right: -1vw;
+      user-select: none; pointer-events: none; line-height: 1;
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 640px; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+      color: var(--blush); margin-bottom: 28px;
+      opacity: 0; animation: fadeUp 0.9s 0.1s ease forwards;
+    }
+    .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--blush); }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5.5vw, 6.5rem);
+      font-weight: 300; line-height: 0.95;
+      letter-spacing: -0.02em; color: var(--ink);
+      margin-bottom: 32px;
+      opacity: 0; animation: fadeUp 1s 0.3s ease forwards;
+    }
+    .hero-title em { font-style: italic; color: var(--blush); }
+    .hero-sub {
+      font-size: 0.88rem; line-height: 1.9; color: var(--muted); max-width: 460px;
+      opacity: 0; animation: fadeUp 1s 0.5s ease forwards;
+    }
+
+    /* ── BLOG LAYOUT ── */
+    .blog-main {
+      padding: 80px 56px;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 80px;
+      align-items: start;
+      position: relative; z-index: 2;
+    }
+
+    /* ── SIDEBAR ── */
+    .blog-sidebar { position: sticky; top: 110px; }
+    .sidebar-label {
+      font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--blush); font-family: 'DM Sans', sans-serif; margin-bottom: 16px;
+    }
+    .sidebar-filters { display: flex; flex-direction: column; gap: 8px; margin-bottom: 32px; }
+    .filter-btn {
+      font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif;
+      background: none; border: 1px solid var(--border);
+      color: var(--muted); padding: 8px 14px;
+      cursor: pointer; text-align: left;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .filter-btn:hover { border-color: var(--blush); color: var(--ink); background: var(--off-white); }
+    .filter-btn.active { border-color: var(--blush); color: var(--blush); background: var(--off-white); }
+    .sidebar-divider { width: 100%; height: 1px; background: var(--border); margin: 24px 0; }
+    .sidebar-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag-pill {
+      font-size: 0.56rem; letter-spacing: 0.16em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif;
+      border: 1px solid var(--border); color: var(--muted);
+      padding: 4px 10px; cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .tag-pill:hover { border-color: var(--blush); color: var(--blush); }
+
+    /* ── FEED ── */
+    .blog-feed { display: flex; flex-direction: column; }
+
+    /* ── QUARTER ACCORDION ── */
+    .quarter-block { border-top: 1px solid var(--border); }
+    .quarter-block:last-child { border-bottom: 1px solid var(--border); }
+    .quarter-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 0; cursor: pointer; user-select: none;
+    }
+    .quarter-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; font-weight: 300; color: var(--muted);
+      letter-spacing: 0.1em; transition: color 0.2s;
+    }
+    .quarter-header:hover .quarter-label { color: var(--ink); }
+    .quarter-meta {
+      display: flex; align-items: center; gap: 20px;
+      font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); font-family: 'DM Sans', sans-serif;
+    }
+    .quarter-toggle {
+      font-size: 1rem; color: var(--blush); line-height: 1;
+      transition: transform 0.3s ease; display: inline-block;
+    }
+    .quarter-block.open .quarter-toggle { transform: rotate(45deg); }
+    .quarter-posts { display: none; flex-direction: column; padding-bottom: 12px; }
+    .quarter-block.open .quarter-posts { display: flex; }
+
+    /* ── POST CARD ── */
+    .post-card {
+      border-top: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .post-card:hover { background: var(--off-white); margin: 0 -56px; padding: 0 56px; }
+    .post-card-inner {
+      display: grid;
+      grid-template-columns: 72px 1fr 24px;
+      gap: 28px; align-items: center;
+      padding: 28px 0;
+    }
+
+    /* Post icon */
+    .post-icon {
+      width: 72px; height: 72px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border); background: var(--off-white);
+      flex-shrink: 0;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .post-card:hover .post-icon { border-color: var(--blush); background: var(--blush-light); }
+    .post-icon span {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.5rem; font-weight: 200; color: var(--blush);
+    }
+
+    /* Category colour variants — identical to article template */
+    .post-card.cat-observations .post-category { color: var(--blush); }
+    .post-card.cat-observations .post-category::before { background: var(--blush); }
+    .post-card.cat-studio-builds .post-category { color: var(--ink); opacity: 0.65; }
+    .post-card.cat-studio-builds .post-category::before { background: var(--ink); opacity: 0.4; }
+    .post-card.cat-the-method .post-category { color: var(--blush); }
+    .post-card.cat-the-method .post-category::before { background: var(--blush); }
+
+    .post-category {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.58rem; letter-spacing: 0.32em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+      margin-bottom: 10px;
+    }
+    .post-category::before { content: ''; display: block; width: 20px; height: 1px; }
+    .post-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem; font-weight: 400; color: var(--ink);
+      line-height: 1.25; margin-bottom: 8px;
+      transition: color 0.2s;
+    }
+    .post-card:hover .post-title { color: var(--blush); }
+    .post-excerpt { font-size: 0.76rem; line-height: 1.8; color: var(--muted); }
+    .post-arrow {
+      font-size: 0.8rem; color: var(--blush); opacity: 0.4;
+      transition: opacity 0.2s, transform 0.25s; align-self: center;
+    }
+    .post-card:hover .post-arrow { opacity: 1; transform: translateX(3px); }
+
+    /* ── MODAL OVERLAY ── */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(14,12,12,0.6);
+      backdrop-filter: blur(4px);
+      display: none; align-items: center; justify-content: center;
+      padding: 40px 24px;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal-card {
+      background: var(--warm-white);
+      width: 100%; max-width: 700px;
+      max-height: 90vh; overflow-y: auto;
+      position: relative;
+      animation: modalIn 0.3s cubic-bezier(.23,1,.32,1);
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Modal close */
+    .modal-close {
+      position: absolute; top: 20px; right: 24px;
+      background: none; border: none; cursor: pointer;
+      font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--muted); font-family: 'DM Sans', sans-serif;
+      transition: color 0.2s; z-index: 10;
+    }
+    .modal-close:hover { color: var(--ink); }
+
+    /* Modal category — matches article-category pattern */
+    .modal-cat-bar { padding: 32px 40px 0; }
+    .modal-category {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+    }
+    .modal-category::before { content: ''; display: block; width: 32px; height: 1px; }
+
+    .modal-cat-observations .modal-category { color: var(--blush); }
+    .modal-cat-observations .modal-category::before { background: var(--blush); }
+    .modal-cat-studio-builds .modal-category { color: var(--ink); opacity: 0.65; }
+    .modal-cat-studio-builds .modal-category::before { background: var(--ink); opacity: 0.4; }
+    .modal-cat-the-method .modal-category { color: var(--blush); }
+    .modal-cat-the-method .modal-category::before { background: var(--blush); }
+
+    /* Modal header — mirrors article-hero */
+    .modal-header {
+      padding: 20px 40px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 300; line-height: 1.05;
+      letter-spacing: -0.01em; color: var(--ink);
+      margin-bottom: 16px;
+    }
+    .modal-title em { font-style: italic; color: var(--blush); }
+    .modal-lede {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem; font-weight: 300; line-height: 1.7;
+      color: var(--muted); font-style: italic;
+    }
+
+    /* Modal meta — mirrors article-meta block */
+    .modal-meta {
+      display: grid; grid-template-columns: 1fr 1fr;
+      margin: 0 40px;
+      border: 1px solid var(--border);
+      background: var(--off-white);
+    }
+    .modal-meta-row {
+      padding: 16px 20px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-meta-row:nth-child(even) { border-right: none; }
+    .modal-meta-row:nth-last-child(-n+2) { border-bottom: none; }
+    .meta-key {
+      font-size: 0.56rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--blush); font-family: 'DM Sans', sans-serif; margin-bottom: 4px;
+    }
+    .meta-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem; color: var(--ink); font-weight: 400;
+    }
+
+    /* Modal tags */
+    .modal-tags {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-tag {
+      font-size: 0.56rem; letter-spacing: 0.18em; text-transform: uppercase;
+      border: 1px solid var(--blush); color: var(--blush);
+      padding: 4px 10px; font-family: 'DM Sans', sans-serif;
+    }
+
+    /* Modal CTA */
+    .modal-cta {
+      padding: 28px 40px 36px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .modal-cta-text { font-size: 0.78rem; color: var(--muted); line-height: 1.7; }
+    .btn-read {
+      display: inline-block; padding: 13px 28px;
+      background: var(--ink); color: var(--off-white);
+      font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+      text-decoration: none; font-family: 'DM Sans', sans-serif; font-weight: 400;
+      border: 1px solid var(--ink); white-space: nowrap;
+      transition: background 0.25s, color 0.25s;
+    }
+    .btn-read:hover { background: transparent; color: var(--ink); }
+
+    /* ── SITE FOOTER ── */
+    footer.site-footer {
+      padding: 28px 56px;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--ink); color: rgba(247,244,240,0.3);
+      position: relative; z-index: 2;
+    }
+    .footer-copy { font-size: 0.65rem; letter-spacing: 0.15em; font-family: 'DM Sans', sans-serif; }
+    .footer-logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem; letter-spacing: 0.25em;
+      color: rgba(247,244,240,0.4); text-decoration: none;
+    }
+    .footer-logo-text span { color: var(--blush); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 22px 28px; }
+      .nav-links { display: none; }
+      .hero { padding: 120px 28px 72px; }
+      .blog-main { grid-template-columns: 1fr; padding: 48px 28px; gap: 40px; }
+      .blog-sidebar { position: static; }
+      .post-card:hover { margin: 0; padding: 0; }
+      .post-card-inner { grid-template-columns: 52px 1fr 20px; gap: 16px; }
+      .modal-card { max-height: 95vh; }
+      .modal-meta { grid-template-columns: 1fr; }
+      .modal-meta-row { border-right: none; }
+      .modal-cta { flex-direction: column; align-items: flex-start; }
+      footer.site-footer { padding: 22px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/index.html"><img src="BG removed logo.png" alt="ICHIGO Studio" style="height:38px; display:block;" /></a>
+    <ul class="nav-links">
+      <li class="nav-item">
+        <a href="/ichigo-method.html">The Method</a>
+        <div class="nav-dropdown">
+          <a href="/ichigo-method.html">The ICHIGO Method</a>
+          <a href="/work.html">Selected Work</a>
+          <a href="/blog.html" class="active">Work Blog</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="/index.html#about">About</a>
+        <div class="nav-dropdown">
+          <a href="/index.html#about">About the Studio</a>
+          <a href="/founder.html">About the Founder</a>
+        </div>
+      </li>
+      <li><a href="/index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">記</div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Work Blog</div>
+      <h1 class="hero-title">A working<br><em>record.</em></h1>
+      <p class="hero-sub">Operational thinking, system notes, and field observations from building and running ICHIGO Studio. Not polished essays — honest documentation.</p>
+    </div>
+  </section>
+
+  <!-- BLOG MAIN -->
+  <div class="blog-main">
+
+    <!-- SIDEBAR -->
+    <aside class="blog-sidebar">
+      <p class="sidebar-label">Filter</p>
+      <div class="sidebar-filters">
+        <button class="filter-btn active" data-filter="all">All entries</button>
+        <button class="filter-btn" data-filter="cat-observations">Observations</button>
+        <button class="filter-btn" data-filter="cat-studio-builds">Studio Builds</button>
+        <button class="filter-btn" data-filter="cat-the-method">The Method</button>
+      </div>
+      <div class="sidebar-divider"></div>
+      <p class="sidebar-label">Tags</p>
+      <div class="sidebar-tags">
+        <span class="tag-pill">ICHIGO Method</span>
+        <span class="tag-pill">AI</span>
+        <span class="tag-pill">Workflow</span>
+        <span class="tag-pill">Automation</span>
+        <span class="tag-pill">Branding</span>
+        <span class="tag-pill">Coherence</span>
+        <span class="tag-pill">Systems</span>
+      </div>
+    </aside>
+
+    <!-- FEED -->
+    <div class="blog-feed">
+
+      <!-- ── Q1 2026 — open by default ── -->
+      <div class="quarter-block open" id="q1-2026">
+        <div class="quarter-header" onclick="toggleQuarter('q1-2026')">
+          <span class="quarter-label">Q1 · 2026</span>
+          <div class="quarter-meta">
+            <span>3 entries</span>
+            <span class="quarter-toggle">+</span>
+          </div>
+        </div>
+        <div class="quarter-posts">
+
+          <!-- POST 01 -->
+          <div class="post-card cat-studio-builds" onclick="openModal('modal-01')" data-cat="cat-studio-builds">
+            <div class="post-card-inner">
+              <div class="post-icon"><span>構</span></div>
+              <div class="post-summary">
+                <div class="post-category">Studio Builds</div>
+                <h2 class="post-title">Building the client intake system — v1 to v3</h2>
+                <p class="post-excerpt">How a simple form-to-Notion pipeline became a three-layer AI triage system. A live build log with artifacts.</p>
+              </div>
+              <span class="post-arrow">→</span>
+            </div>
+          </div>
+
+          <!-- POST 02 -->
+          <div class="post-card cat-observations" onclick="openModal('modal-02')" data-cat="cat-observations">
+            <div class="post-card-inner">
+              <div class="post-icon"><span>知</span></div>
+              <div class="post-summary">
+                <div class="post-category">Observations</div>
+                <h2 class="post-title">Why we stopped using AI as a shortcut</h2>
+                <p class="post-excerpt">The moment we started treating AI as a thinking tool rather than a production tool, everything became clearer. This is what changed.</p>
+              </div>
+              <span class="post-arrow">→</span>
+            </div>
+          </div>
+
+          <!-- POST 03 -->
+          <div class="post-card cat-the-method" onclick="openModal('modal-03')" data-cat="cat-the-method">
+            <div class="post-card-inner">
+              <div class="post-icon"><span>一</span></div>
+              <div class="post-summary">
+                <div class="post-category">The Method</div>
+                <h2 class="post-title">On building a brand that is also a system</h2>
+                <p class="post-excerpt">ICHIGO Studio is both a business and a live demonstration of the method it sells. This is what that tension looks like from the inside.</p>
+              </div>
+              <span class="post-arrow">→</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── Earlier — collapsed ── -->
+      <div class="quarter-block" id="q-earlier">
+        <div class="quarter-header" onclick="toggleQuarter('q-earlier')">
+          <span class="quarter-label">Earlier entries</span>
+          <div class="quarter-meta">
+            <span>Coming soon</span>
+            <span class="quarter-toggle">+</span>
+          </div>
+        </div>
+        <div class="quarter-posts">
+          <p style="padding: 28px 0; font-size: 0.82rem; color: var(--muted);">Further entries will be published as documentation is completed.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       MODALS
+  ════════════════════════════════════ -->
+
+  <!-- MODAL 01 — Studio Builds -->
+  <div class="modal-overlay" id="modal-01" onclick="closeModalOnOverlay(event,'modal-01')">
+    <div class="modal-card modal-cat-studio-builds">
+      <button class="modal-close" onclick="closeModal('modal-01')">Close ✕</button>
+      <div class="modal-cat-bar">
+        <span class="modal-category">Studio Builds</span>
+      </div>
+      <div class="modal-header">
+        <h2 class="modal-title">Building the client intake system<br>— v1 to <em>v3</em></h2>
+        <p class="modal-lede">How a simple form-to-Notion pipeline became a three-layer AI triage system. A live build log with artifacts, decisions, and version notes.</p>
+      </div>
+      <div class="modal-meta">
+        <div class="modal-meta-row">
+          <div class="meta-key">Published</div>
+          <div class="meta-val">March 2026</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Read time</div>
+          <div class="meta-val">~8 min</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Series</div>
+          <div class="meta-val">Studio Builds</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Versions</div>
+          <div class="meta-val">v1 → v3 documented</div>
+        </div>
+      </div>
+      <div class="modal-tags">
+        <span class="modal-tag">Automation</span>
+        <span class="modal-tag">AI Workflow</span>
+        <span class="modal-tag">Make.com</span>
+        <span class="modal-tag">Notion</span>
+        <span class="modal-tag">Systems</span>
+      </div>
+      <div class="modal-cta">
+        <p class="modal-cta-text">Includes build artifacts,<br>version comparisons and decision notes.</p>
+        <a href="/blog/post-01.html" class="btn-read">Read full entry →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 02 — Observations -->
+  <div class="modal-overlay" id="modal-02" onclick="closeModalOnOverlay(event,'modal-02')">
+    <div class="modal-card modal-cat-observations">
+      <button class="modal-close" onclick="closeModal('modal-02')">Close ✕</button>
+      <div class="modal-cat-bar">
+        <span class="modal-category">Observations</span>
+      </div>
+      <div class="modal-header">
+        <h2 class="modal-title">Why we stopped using AI<br>as a <em>shortcut</em></h2>
+        <p class="modal-lede">The moment we started treating AI as a thinking tool rather than a production tool, everything became clearer. This is what changed — and what it cost to get there.</p>
+      </div>
+      <div class="modal-meta">
+        <div class="modal-meta-row">
+          <div class="meta-key">Published</div>
+          <div class="meta-val">February 2026</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Read time</div>
+          <div class="meta-val">~5 min</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Category</div>
+          <div class="meta-val">Observations</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Theme</div>
+          <div class="meta-val">AI & clarity</div>
+        </div>
+      </div>
+      <div class="modal-tags">
+        <span class="modal-tag">AI</span>
+        <span class="modal-tag">Clarity</span>
+        <span class="modal-tag">ICHIGO Method</span>
+        <span class="modal-tag">Workflow</span>
+      </div>
+      <div class="modal-cta">
+        <p class="modal-cta-text">A short field note on<br>how we changed our approach.</p>
+        <a href="/blog/post-02.html" class="btn-read">Read full entry →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 03 — The Method -->
+  <div class="modal-overlay" id="modal-03" onclick="closeModalOnOverlay(event,'modal-03')">
+    <div class="modal-card modal-cat-the-method">
+      <button class="modal-close" onclick="closeModal('modal-03')">Close ✕</button>
+      <div class="modal-cat-bar">
+        <span class="modal-category">The Method</span>
+      </div>
+      <div class="modal-header">
+        <h2 class="modal-title">On building a brand<br>that is also a <em>system</em></h2>
+        <p class="modal-lede">ICHIGO Studio is both a business and a live demonstration of the method it sells. This is what that tension looks like from the inside — and why it matters.</p>
+      </div>
+      <div class="modal-meta">
+        <div class="modal-meta-row">
+          <div class="meta-key">Published</div>
+          <div class="meta-val">January 2026</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Read time</div>
+          <div class="meta-val">~6 min</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Category</div>
+          <div class="meta-val">The Method</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Theme</div>
+          <div class="meta-val">Brand as system</div>
+        </div>
+      </div>
+      <div class="modal-tags">
+        <span class="modal-tag">Branding</span>
+        <span class="modal-tag">ICHIGO Method</span>
+        <span class="modal-tag">Coherence</span>
+        <span class="modal-tag">Systems</span>
+      </div>
+      <div class="modal-cta">
+        <p class="modal-cta-text">On the discipline of operating<br>as your own case study.</p>
+        <a href="/blog/post-03.html" class="btn-read">Read full entry →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    <span class="footer-copy">© 2026 ICHIGO Studio. All rights reserved.</span>
+    <a href="/index.html" class="footer-logo-text">ICHIGO <span>Studio</span></a>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring   = document.getElementById('cursorRing');
+    if (cursor && ring) {
+      document.addEventListener('mousemove', e => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top  = e.clientY + 'px';
+        ring.style.left   = e.clientX + 'px';
+        ring.style.top    = e.clientY + 'px';
+      });
+      document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursor.style.width = '16px'; cursor.style.height = '16px';
+          ring.style.width   = '48px'; ring.style.height  = '48px';
+          ring.style.borderColor = 'var(--blush)';
+        });
+        el.addEventListener('mouseleave', () => {
+          cursor.style.width = '10px'; cursor.style.height = '10px';
+          ring.style.width   = '36px'; ring.style.height  = '36px';
+          ring.style.borderColor = 'var(--ink)';
+        });
+      });
+    }
+
+    // Quarter accordion
+    function toggleQuarter(id) {
+      document.getElementById(id).classList.toggle('open');
+    }
+
+    // Modal open / close
+    function openModal(id) {
+      document.getElementById(id).classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function closeModalOnOverlay(e, id) {
+      if (e.target === e.currentTarget) closeModal(id);
+    }
+    // Escape key closes any open modal
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.open').forEach(m => {
+          m.classList.remove('open');
+          document.body.style.overflow = '';
+        });
+      }
+    });
+
+    // Sidebar filter
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.post-card').forEach(card => {
+          card.style.display = (filter === 'all' || card.dataset.cat === filter) ? '' : 'none';
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
