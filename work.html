@@ -4,6 +4,42 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Work — ICHIGO Studio</title>
+  <meta name="description" content="ICHIGO Studio is a Singapore-based creative studio specialising in AI workflow automation, business process design, and creative direction. We design integrated systems where strategy, operations, and creative work as one." />
+  <meta name="keywords" content="AI workflow automation, business process design, creative studio Singapore, AI systems, marketing strategy Singapore, ICHIGO Studio" />
+  <meta name="author" content="ICHIGO Studio" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://ichigo.studio/" />
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ichigo.studio/" />
+  <meta property="og:title" content="ICHIGO Studio — AI Systems, Business Design & Creative Direction" />
+  <meta property="og:description" content="A Singapore-based creative studio designing integrated systems where AI, operations, and creative work as one." />
+  <meta property="og:image" content="https://ichigo.studio/BG removed logo.png" />
+  <meta property="og:locale" content="en_SG" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ICHIGO Studio — AI Systems, Business Design & Creative Direction" />
+  <meta name="twitter:description" content="A Singapore-based creative studio designing integrated systems where AI, operations, and creative work as one." />
+
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "ICHIGO Studio",
+    "url": "https://ichigo.studio",
+    "email": "ichigo.kyanite@gmail.com",
+    "description": "AI workflow automation, business process design, and creative direction studio based in Singapore.",
+    "areaServed": "Singapore",
+    "serviceType": ["AI Workflow Automation", "Business Process Design", "Creative Direction"],
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "SG"
+    }
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@200;300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -38,16 +74,39 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
       pointer-events: none; z-index: 0; opacity: 0.4;
     }
-
+     /* ── Custom cursor ── */
+    .cursor {
+      position: fixed; width: 10px; height: 10px;
+      background: var(--blush); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: transform 0.15s ease, width 0.2s, height 0.2s;
+    }
+    .cursor-ring {
+      position: fixed; width: 36px; height: 36px;
+      border: 1px solid var(--ink); border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%,-50%);
+      transition: transform 0.35s cubic-bezier(.23,1,.32,1), width 0.25s, height 0.25s;
+    }
+    
     /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 28px 56px;
-      background: rgba(253,251,248,0.92);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--border);
+      background: transparent;
+      mix-blend-mode: normal;
     }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--blush); }
+
     .nav-links { display: flex; gap: 40px; list-style: none; }
     .nav-links a {
       font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
@@ -56,7 +115,34 @@
       font-family: 'DM Sans', sans-serif; font-weight: 400;
     }
     .nav-links a:hover { opacity: 1; }
-    .nav-links a.active { opacity: 1; color: var(--blush); }
+
+    /* ── NAV DROPDOWN ── */
+    .nav-item { position: relative; }
+    .nav-item:hover .nav-dropdown { opacity: 1; pointer-events: all; transform: translateY(0); }
+
+    .nav-dropdown {
+      position: absolute; top: calc(100% + 16px); left: 50%;
+      transform: translateX(-50%) translateY(6px);
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      min-width: 180px;
+      display: flex; flex-direction: column;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 200;
+    }
+    .nav-dropdown a {
+      font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+      opacity: 0.6;
+      transition: opacity 0.15s, background 0.15s;
+      display: block;
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+    }
+    .nav-dropdown a:last-child { border-bottom: none; }
+    .nav-dropdown a:hover { opacity: 1; background: var(--off-white); }
 
     /* ── SHARED ── */
     .eyebrow {
@@ -447,7 +533,19 @@
       display: flex; align-items: center; justify-content: space-between;
       background: var(--ink); color: rgba(247,244,240,0.3);
     }
-    .footer-copy { font-size: 0.65rem; letter-spacing: 0.15em; font-family: 'DM Sans', sans-serif; }
+
+    .footer-copy {
+      font-size: 0.65rem; letter-spacing: 0.15em;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .footer-logo span { color: var(--blush); }
+    
+        .footer-logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem; letter-spacing: 0.25em;
+      color: rgba(247,244,240,0.4); text-decoration: none;
+    }
+    .footer-logo-text span { color: var(--blush); }
 
     /* ── ANIMATIONS ── */
     @keyframes fadeUp {
@@ -476,15 +574,30 @@
   </style>
 </head>
 <body>
-
+    
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+  
   <!-- NAV -->
   <nav>
-    <a href="/index.html"><img src="BG removed logo.png" alt="ICHIGO Studio" style="height:38px; display:block;" /></a>
+    <a href="#"><img src="BG removed logo.png" alt="ICHIGO Studio" style="height:38px; display:block;" /></a>
     <ul class="nav-links">
-      <li><a href="/index.html#services">Services</a></li>
-      <li><a href="/ichigo-method.html">The Method</a></li>
-      <li><a href="/work.html" class="active">Work</a></li>
-      <li><a href="/index.html#contact">Contact</a></li>
+      <li class="nav-item">
+        <a href="/ichigo-method.html">The Method</a>
+        <div class="nav-dropdown">
+          <a href="/ichigo-method.html">The ICHIGO Method</a>
+          <a href="/work.html">Selected Work</a>
+          <a href="/blog.html">Work Blog</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="#about">About</a>
+        <div class="nav-dropdown">
+          <a href="#about">About the Studio</a>
+          <a href="/founder.html">About the Founder</a>
+        </div>
+      </li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
 
@@ -696,6 +809,50 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
+<!-- FOOTER -->
   <footer>
-    <span class="footer-copy">© 2026 ICHIGO Studio. All
+    <span class="footer-copy">© 2026 ICHIGO Studio. All rights reserved.</span>
+      <a href="/index.html" class="footer-logo-text">ICHIGO <span>Studio</span></a>
+  </footer>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    if (cursor && ring) {
+      document.addEventListener('mousemove', e => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top  = e.clientY + 'px';
+        ring.style.left   = e.clientX + 'px';
+        ring.style.top    = e.clientY + 'px';
+      });
+      document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursor.style.width = '16px'; cursor.style.height = '16px';
+          ring.style.width   = '48px'; ring.style.height  = '48px';
+          ring.style.borderColor = 'var(--blush)';
+        });
+        el.addEventListener('mouseleave', () => {
+          cursor.style.width = '10px'; cursor.style.height = '10px';
+          ring.style.width   = '36px'; ring.style.height  = '36px';
+          ring.style.borderColor = 'var(--ink)';
+        });
+      });
+    }
+
+    // TOC scroll highlight
+    const headings = document.querySelectorAll('[id]');
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      headings.forEach(h => {
+        if (window.scrollY >= h.offsetTop - 160) current = h.id;
+      });
+      tocLinks.forEach(a => {
+        const href = a.getAttribute('href').replace('#','');
+        a.classList.toggle('toc-active', href === current);
+      });
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
