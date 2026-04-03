@@ -3,7 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dilution, Structured — ICHIGO Studio Journal</title>
+  <title>Work Blog — ICHIGO Studio</title>
+  <meta name="description" content="Operational thinking, system notes, and field observations from building and running ICHIGO Studio." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://ichigo.studio/blog.html" />
+  <meta property="og:type" content="blog" />
+  <meta property="og:url" content="https://ichigo.studio/blog.html" />
+  <meta property="og:title" content="Work Blog — ICHIGO Studio" />
+  <meta property="og:description" content="Operational thinking, system notes and field observations from ICHIGO Studio." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@200;300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -21,19 +28,13 @@
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
     body {
-      background: var(--warm-white);
-      color: var(--ink);
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 300;
+      background: var(--warm-white); color: var(--ink);
+      font-family: 'DM Sans', sans-serif; font-weight: 300;
       overflow-x: hidden;
     }
-
-    /* ── Noise overlay ── */
     body::before {
-      content: '';
-      position: fixed; inset: 0;
+      content: ''; position: fixed; inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
       pointer-events: none; z-index: 0; opacity: 0.4;
     }
@@ -63,12 +64,6 @@
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
-    .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem; font-weight: 600; letter-spacing: 0.22em;
-      text-transform: uppercase; color: var(--ink); text-decoration: none;
-    }
-    .nav-logo span { color: var(--blush); }
     .nav-links { display: flex; gap: 40px; list-style: none; }
     .nav-links a {
       font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
@@ -77,420 +72,320 @@
     }
     .nav-links a:hover { opacity: 1; }
     .nav-links a.active { opacity: 1; color: var(--blush); }
-
-    /* ── BACK BREADCRUMB ── */
-    .breadcrumb {
-      padding: 140px 56px 0;
-      position: relative; z-index: 2;
+    .nav-item { position: relative; }
+    .nav-item:hover .nav-dropdown { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+    .nav-dropdown {
+      position: absolute; top: calc(100% + 16px); left: 50%;
+      transform: translateX(-50%) translateY(6px);
+      background: var(--warm-white); border: 1px solid var(--border);
+      min-width: 180px; display: flex; flex-direction: column;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease; z-index: 200;
     }
-    .breadcrumb a {
-      font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--muted); text-decoration: none;
-      font-family: 'DM Sans', sans-serif;
-      display: inline-flex; align-items: center; gap: 10px;
-      transition: color 0.2s;
+    .nav-dropdown a {
+      font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none; padding: 12px 18px;
+      border-bottom: 1px solid var(--border); opacity: 0.6;
+      transition: opacity 0.15s, background 0.15s; display: block;
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
     }
-    .breadcrumb a:hover { color: var(--ink); }
-    .breadcrumb a::before { content: '←'; font-size: 0.8rem; }
+    .nav-dropdown a:last-child { border-bottom: none; }
+    .nav-dropdown a:hover { opacity: 1; background: var(--off-white); }
 
-    /* ── ARTICLE HERO ── */
-    .article-hero {
-      padding: 52px 56px 72px;
-      position: relative; z-index: 2;
-      display: grid;
-      grid-template-columns: 1fr 320px;
-      gap: 80px;
-      align-items: end;
+    /* ── HERO ── */
+    .hero {
+      min-height: 52vh;
+      padding: 160px 56px 90px;
       border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column; justify-content: flex-end;
     }
-
-    .article-category {
+    .hero-bg {
+      position: absolute;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 34vw; font-weight: 200;
+      color: rgba(14,12,12,0.025);
+      bottom: -3vw; right: -1vw;
+      user-select: none; pointer-events: none; line-height: 1;
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 640px; }
+    .hero-eyebrow {
       display: inline-flex; align-items: center; gap: 12px;
       font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase;
       font-family: 'DM Sans', sans-serif; font-weight: 400;
-      margin-bottom: 28px;
+      color: var(--blush); margin-bottom: 28px;
+      opacity: 0; animation: fadeUp 0.9s 0.1s ease forwards;
     }
-    .article-category::before {
-      content: ''; display: block; width: 32px; height: 1px;
-    }
-
-    .cat-studio-builds .article-category { color: var(--ink); opacity: 0.7; }
-    .cat-studio-builds .article-category::before { background: var(--ink); opacity: 0.4; }
-
-    .article-title {
+    .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--blush); }
+    .hero-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.8rem, 5vw, 5.2rem);
-      font-weight: 300; line-height: 1.0;
+      font-size: clamp(3rem, 5.5vw, 6.5rem);
+      font-weight: 300; line-height: 0.95;
       letter-spacing: -0.02em; color: var(--ink);
-      opacity: 0;
-      animation: fadeUp 1s 0.2s ease forwards;
+      margin-bottom: 32px;
+      opacity: 0; animation: fadeUp 1s 0.3s ease forwards;
     }
-    .article-title em { font-style: italic; color: var(--blush); }
+    .hero-title em { font-style: italic; color: var(--blush); }
+    .hero-sub {
+      font-size: 0.88rem; line-height: 1.9; color: var(--muted); max-width: 460px;
+      opacity: 0; animation: fadeUp 1s 0.5s ease forwards;
+    }
 
-    .article-lede {
-      margin-top: 28px;
+    /* ── BLOG LAYOUT ── */
+    .blog-main {
+      padding: 80px 56px;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 80px;
+      align-items: start;
+      position: relative; z-index: 2;
+    }
+
+    /* ── SIDEBAR ── */
+    .blog-sidebar { position: sticky; top: 110px; }
+    .sidebar-label {
+      font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--blush); font-family: 'DM Sans', sans-serif; margin-bottom: 16px;
+    }
+    .sidebar-filters { display: flex; flex-direction: column; gap: 8px; margin-bottom: 32px; }
+    .filter-btn {
+      font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif;
+      background: none; border: 1px solid var(--border);
+      color: var(--muted); padding: 8px 14px;
+      cursor: pointer; text-align: left;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .filter-btn:hover { border-color: var(--blush); color: var(--ink); background: var(--off-white); }
+    .filter-btn.active { border-color: var(--blush); color: var(--blush); background: var(--off-white); }
+    .sidebar-divider { width: 100%; height: 1px; background: var(--border); margin: 24px 0; }
+    .sidebar-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag-pill {
+      font-size: 0.56rem; letter-spacing: 0.16em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif;
+      border: 1px solid var(--border); color: var(--muted);
+      padding: 4px 10px; cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .tag-pill:hover { border-color: var(--blush); color: var(--blush); }
+
+    /* ── FEED ── */
+    .blog-feed { display: flex; flex-direction: column; }
+
+    /* ── QUARTER ACCORDION ── */
+    .quarter-block { border-top: 1px solid var(--border); }
+    .quarter-block:last-child { border-bottom: 1px solid var(--border); }
+    .quarter-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 0; cursor: pointer; user-select: none;
+    }
+    .quarter-label {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.25rem; font-weight: 300;
-      line-height: 1.7; color: var(--muted);
-      max-width: 640px; font-style: italic;
-      opacity: 0;
-      animation: fadeUp 1s 0.45s ease forwards;
+      font-size: 1rem; font-weight: 300; color: var(--muted);
+      letter-spacing: 0.1em; transition: color 0.2s;
+    }
+    .quarter-header:hover .quarter-label { color: var(--ink); }
+    .quarter-meta {
+      display: flex; align-items: center; gap: 20px;
+      font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); font-family: 'DM Sans', sans-serif;
+    }
+    .quarter-toggle {
+      font-size: 1rem; color: var(--blush); line-height: 1;
+      transition: transform 0.3s ease; display: inline-block;
+    }
+    .quarter-block.open .quarter-toggle { transform: rotate(45deg); }
+    .quarter-posts { display: none; flex-direction: column; padding-bottom: 12px; }
+    .quarter-block.open .quarter-posts { display: flex; }
+
+    /* ── POST CARD ── */
+    .post-card {
+      border-top: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .post-card:hover { background: var(--off-white); margin: 0 -56px; padding: 0 56px; }
+    .post-card-inner {
+      display: grid;
+      grid-template-columns: 72px 1fr 24px;
+      gap: 28px; align-items: center;
+      padding: 28px 0;
     }
 
-    /* Hero right meta block */
-    .article-meta {
-      display: flex; flex-direction: column; gap: 24px;
-      padding: 32px;
+    /* Post icon */
+    .post-icon {
+      width: 72px; height: 72px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border); background: var(--off-white);
+      flex-shrink: 0;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .post-card:hover .post-icon { border-color: var(--blush); background: var(--blush-light); }
+    .post-icon span {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.5rem; font-weight: 200; color: var(--blush);
+    }
+
+    /* Category colour variants — identical to article template */
+    .post-card.cat-observations .post-category { color: var(--blush); }
+    .post-card.cat-observations .post-category::before { background: var(--blush); }
+    .post-card.cat-studio-builds .post-category { color: var(--ink); opacity: 0.65; }
+    .post-card.cat-studio-builds .post-category::before { background: var(--ink); opacity: 0.4; }
+    .post-card.cat-the-method .post-category { color: var(--blush); }
+    .post-card.cat-the-method .post-category::before { background: var(--blush); }
+
+    .post-category {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.58rem; letter-spacing: 0.32em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+      margin-bottom: 10px;
+    }
+    .post-category::before { content: ''; display: block; width: 20px; height: 1px; }
+    .post-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem; font-weight: 400; color: var(--ink);
+      line-height: 1.25; margin-bottom: 8px;
+      transition: color 0.2s;
+    }
+    .post-card:hover .post-title { color: var(--blush); }
+    .post-excerpt { font-size: 0.76rem; line-height: 1.8; color: var(--muted); }
+    .post-arrow {
+      font-size: 0.8rem; color: var(--blush); opacity: 0.4;
+      transition: opacity 0.2s, transform 0.25s; align-self: center;
+    }
+    .post-card:hover .post-arrow { opacity: 1; transform: translateX(3px); }
+
+    /* ── MODAL OVERLAY ── */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(14,12,12,0.6);
+      backdrop-filter: blur(4px);
+      display: none; align-items: center; justify-content: center;
+      padding: 40px 24px;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal-card {
+      background: var(--warm-white);
+      width: 100%; max-width: 700px;
+      max-height: 90vh; overflow-y: auto;
+      position: relative;
+      animation: modalIn 0.3s cubic-bezier(.23,1,.32,1);
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Modal close */
+    .modal-close {
+      position: absolute; top: 20px; right: 24px;
+      background: none; border: none; cursor: pointer;
+      font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--muted); font-family: 'DM Sans', sans-serif;
+      transition: color 0.2s; z-index: 10;
+    }
+    .modal-close:hover { color: var(--ink); }
+
+    /* Modal category — matches article-category pattern */
+    .modal-cat-bar { padding: 32px 40px 0; }
+    .modal-category {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+    }
+    .modal-category::before { content: ''; display: block; width: 32px; height: 1px; }
+
+    .modal-cat-observations .modal-category { color: var(--blush); }
+    .modal-cat-observations .modal-category::before { background: var(--blush); }
+    .modal-cat-studio-builds .modal-category { color: var(--ink); opacity: 0.65; }
+    .modal-cat-studio-builds .modal-category::before { background: var(--ink); opacity: 0.4; }
+    .modal-cat-the-method .modal-category { color: var(--blush); }
+    .modal-cat-the-method .modal-category::before { background: var(--blush); }
+
+    /* Modal header — mirrors article-hero */
+    .modal-header {
+      padding: 20px 40px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 300; line-height: 1.05;
+      letter-spacing: -0.01em; color: var(--ink);
+      margin-bottom: 16px;
+    }
+    .modal-title em { font-style: italic; color: var(--blush); }
+    .modal-lede {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem; font-weight: 300; line-height: 1.7;
+      color: var(--muted); font-style: italic;
+    }
+
+    /* Modal meta — mirrors article-meta block */
+    .modal-meta {
+      display: grid; grid-template-columns: 1fr 1fr;
+      margin: 0 40px;
       border: 1px solid var(--border);
       background: var(--off-white);
-      opacity: 0;
-      animation: fadeUp 1s 0.55s ease forwards;
     }
-    .meta-row {}
+    .modal-meta-row {
+      padding: 16px 20px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-meta-row:nth-child(even) { border-right: none; }
+    .modal-meta-row:nth-last-child(-n+2) { border-bottom: none; }
     .meta-key {
-      font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase;
+      font-size: 0.56rem; letter-spacing: 0.3em; text-transform: uppercase;
       color: var(--blush); font-family: 'DM Sans', sans-serif; margin-bottom: 4px;
     }
     .meta-val {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem; color: var(--ink); font-weight: 400;
+      font-size: 0.95rem; color: var(--ink); font-weight: 400;
     }
-    .meta-divider { width: 100%; height: 1px; background: var(--border); }
-    .meta-tag {
-      display: inline-block;
-      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+
+    /* Modal tags */
+    .modal-tags {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      padding: 20px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-tag {
+      font-size: 0.56rem; letter-spacing: 0.18em; text-transform: uppercase;
       border: 1px solid var(--blush); color: var(--blush);
       padding: 4px 10px; font-family: 'DM Sans', sans-serif;
     }
 
-    /* ── ARTICLE LAYOUT ── */
-    .article-wrap {
-      display: grid;
-      grid-template-columns: 1fr 260px;
-      gap: 80px;
-      padding: 80px 56px;
-      position: relative; z-index: 2;
-      align-items: start;
+    /* Modal CTA */
+    .modal-cta {
+      padding: 28px 40px 36px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
     }
-
-    /* ── ARTICLE BODY ── */
-    .article-body { max-width: 720px; }
-
-    .article-body h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 2.5vw, 2.4rem);
-      font-weight: 300; line-height: 1.2;
-      color: var(--ink); margin: 64px 0 24px;
-    }
-    .article-body h2 em { font-style: italic; color: var(--blush); }
-    .article-body h2:first-child { margin-top: 0; }
-
-    .article-body h3 {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--blush); margin: 48px 0 16px; font-weight: 400;
-    }
-
-    .article-body p {
-      font-size: 0.95rem; line-height: 2.05;
-      color: var(--muted); margin-bottom: 24px;
-    }
-    .article-body p strong { color: var(--ink); font-weight: 400; }
-
-    /* Pull quote */
-    .pull-quote {
-      margin: 60px 0; padding: 40px 48px;
-      border-left: 2px solid var(--blush);
-      background: var(--off-white); position: relative;
-    }
-    .pull-quote::before {
-      content: '"';
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 6rem; font-weight: 300; color: var(--blush-light);
-      position: absolute; top: -10px; left: 16px;
-      line-height: 1; pointer-events: none;
-    }
-    .pull-quote p {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem; font-weight: 300; font-style: italic;
-      line-height: 1.6; color: var(--ink); margin: 0;
-    }
-    .pull-quote cite {
-      display: block; margin-top: 16px;
-      font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase;
-      color: var(--blush); font-family: 'DM Sans', sans-serif; font-style: normal;
-    }
-
-    /* Key concept callout */
-    .concept-block {
-      margin: 56px 0; padding: 36px 40px;
-      border: 1px solid var(--border); position: relative;
-    }
-    .concept-block::before {
-      content: attr(data-label);
-      position: absolute; top: -10px; left: 24px;
-      font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--blush); font-family: 'DM Sans', sans-serif;
-      background: var(--warm-white); padding: 0 8px;
-    }
-    .concept-block p {
-      margin: 0; color: var(--ink);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.05rem; line-height: 1.8; font-style: italic;
-    }
-
-    /* Three-column principles */
-    .triad {
-      display: grid; grid-template-columns: 1fr 1fr 1fr;
-      gap: 2px; border: 1px solid var(--border);
-      margin: 48px 0;
-    }
-    .triad-cell {
-      padding: 32px 28px;
-      border-right: 1px solid var(--border);
-      position: relative;
-    }
-    .triad-cell:last-child { border-right: none; }
-    .triad-num {
-      font-family: 'Noto Serif JP', serif;
-      font-size: 1.4rem; font-weight: 200; color: var(--blush-light);
-      display: block; margin-bottom: 14px;
-    }
-    .triad-label {
-      font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--blush); font-family: 'DM Sans', sans-serif; margin-bottom: 8px;
-    }
-    .triad-text {
-      font-size: 0.82rem; line-height: 1.8; color: var(--muted);
-    }
-
-    /* Section divider */
-    .article-divider {
-      display: flex; align-items: center; gap: 20px; margin: 64px 0;
-    }
-    .article-divider::before,
-    .article-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-    .article-divider span {
-      font-family: 'Noto Serif JP', serif;
-      font-size: 1rem; font-weight: 200; color: var(--blush);
-    }
-
-    /* ── VERSION TIMELINE ── */
-    .version-timeline { margin: 72px 0 0; position: relative; }
-
-    .timeline-header { display: flex; align-items: center; gap: 16px; margin-bottom: 56px; }
-    .timeline-header-label {
-      font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase;
-      color: var(--blush); font-family: 'DM Sans', sans-serif;
-    }
-    .timeline-header-line { flex: 1; height: 1px; background: var(--border); }
-
-    .version-entry {
-      display: grid; grid-template-columns: 40px 1fr;
-      gap: 32px; margin-bottom: 64px; position: relative;
-    }
-
-    .version-dot-col {
-      display: flex; flex-direction: column;
-      align-items: center; padding-top: 6px;
-    }
-    .version-dot {
-      width: 14px; height: 14px; border-radius: 50%;
-      border: 2px solid var(--blush); background: var(--warm-white);
-      flex-shrink: 0; position: relative; z-index: 1;
-      transition: background 0.2s;
-    }
-    .version-entry.active .version-dot { background: var(--blush); }
-    .version-dot-connector {
-      width: 1px; flex: 1; background: var(--blush-light); margin-top: 8px;
-    }
-    .version-entry:last-child .version-dot-connector { display: none; }
-
-    .version-badge {
-      display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px;
-    }
-    .version-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.8rem; letter-spacing: 0.2em; color: var(--blush); font-weight: 400;
-    }
-    .version-date {
-      font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--muted); font-family: 'DM Sans', sans-serif;
-    }
-    .version-label-tag {
-      font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase;
-      font-family: 'DM Sans', sans-serif;
-      border: 1px solid var(--border); color: var(--muted); padding: 3px 9px;
-    }
-    .version-entry.active .version-label-tag { border-color: var(--blush); color: var(--blush); }
-
-    .version-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem; font-weight: 300;
-      color: var(--ink); margin-bottom: 12px; line-height: 1.2;
-    }
-    .version-title em { font-style: italic; color: var(--blush); }
-
-    .version-desc {
-      font-size: 0.85rem; line-height: 1.9; color: var(--muted); margin-bottom: 24px;
-    }
-
-    .version-changes {
-      list-style: none; display: flex; flex-direction: column;
-      gap: 10px; margin-bottom: 28px;
-    }
-    .version-changes li {
-      font-size: 0.82rem; line-height: 1.7; color: var(--ink);
-      display: flex; gap: 14px; align-items: flex-start;
-    }
-    .version-changes li::before {
-      content: '✦'; font-size: 0.5rem; color: var(--blush);
-      margin-top: 5px; flex-shrink: 0;
-    }
-
-    /* Artifact preview frame */
-    .artifact-preview { border: 1px solid var(--border); background: var(--off-white); overflow: hidden; }
-    .artifact-preview-bar {
-      padding: 10px 16px; border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; gap: 8px; background: var(--warm-white);
-    }
-    .preview-dot { width: 8px; height: 8px; border-radius: 50%; }
-    .preview-dot:nth-child(1) { background: #f5c0b8; }
-    .preview-dot:nth-child(2) { background: var(--blush-light); }
-    .preview-dot:nth-child(3) { background: #c5d8c0; }
-    .preview-bar-label {
-      margin-left: 8px; font-size: 0.6rem; letter-spacing: 0.15em;
-      color: var(--muted); font-family: 'DM Sans', sans-serif;
-    }
-    .artifact-preview-body {
-      padding: 32px; min-height: 200px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .preview-placeholder { text-align: center; }
-    .preview-placeholder-kanji {
-      font-family: 'Noto Serif JP', serif; font-size: 3rem; font-weight: 200;
-      color: var(--blush-light); display: block; margin-bottom: 12px;
-    }
-    .preview-placeholder-text {
-      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--muted); font-family: 'DM Sans', sans-serif;
-    }
-    .btn-view-artifact {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 12px 28px; border: 1px solid var(--ink); color: var(--ink);
+    .modal-cta-text { font-size: 0.78rem; color: var(--muted); line-height: 1.7; }
+    .btn-read {
+      display: inline-block; padding: 13px 28px;
+      background: var(--ink); color: var(--off-white);
       font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
       text-decoration: none; font-family: 'DM Sans', sans-serif; font-weight: 400;
+      border: 1px solid var(--ink); white-space: nowrap;
       transition: background 0.25s, color 0.25s;
     }
-    .btn-view-artifact:hover { background: var(--ink); color: var(--off-white); }
-
-    /* ── SIDEBAR ── */
-    .article-sidebar {
-      position: sticky; top: 100px;
-      display: flex; flex-direction: column; gap: 40px;
-    }
-    .sidebar-block {}
-    .sidebar-label {
-      font-size: 0.58rem; letter-spacing: 0.32em; text-transform: uppercase;
-      color: var(--blush); font-family: 'DM Sans', sans-serif;
-      display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
-    }
-    .sidebar-label::before {
-      content: ''; display: block; width: 20px; height: 1px; background: var(--blush);
-    }
-    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-    .toc-list a {
-      font-size: 0.8rem; line-height: 1.5; color: var(--muted); text-decoration: none;
-      font-family: 'Cormorant Garamond', serif; transition: color 0.2s;
-      display: flex; align-items: flex-start; gap: 10px;
-    }
-    .toc-list a::before {
-      content: '—'; font-size: 0.7rem; color: var(--blush-light);
-      flex-shrink: 0; margin-top: 2px;
-    }
-    .toc-list a:hover { color: var(--ink); }
-    .toc-list a.toc-active { color: var(--ink); }
-    .toc-list a.toc-active::before { color: var(--blush); }
-
-    .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
-    .sidebar-tag {
-      font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase;
-      border: 1px solid var(--border); color: var(--muted);
-      padding: 5px 12px; font-family: 'DM Sans', sans-serif; cursor: default;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .sidebar-tag:hover { border-color: var(--blush); color: var(--blush); }
-
-    .sidebar-about { padding: 24px; border: 1px solid var(--border); background: var(--off-white); }
-    .sidebar-about p { font-size: 0.78rem; line-height: 1.8; color: var(--muted); margin-bottom: 16px; }
-    .btn-ghost {
-      font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--muted); text-decoration: none; font-family: 'DM Sans', sans-serif;
-      border-bottom: 1px solid var(--muted); padding-bottom: 2px;
-      transition: color 0.2s, border-color 0.2s;
-    }
-    .btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
-
-    /* ── POST FOOTER ── */
-    .article-footer {
-      border-top: 1px solid var(--border);
-      padding: 72px 56px; position: relative; z-index: 2;
-    }
-    .article-footer-inner {
-      display: grid; grid-template-columns: 1fr 1fr 1fr;
-      gap: 2px; border: 1px solid var(--border);
-    }
-    .footer-nav-cell {
-      padding: 48px 40px; border-right: 1px solid var(--border);
-      text-decoration: none; transition: background 0.25s;
-      position: relative; overflow: hidden;
-    }
-    .footer-nav-cell:last-child { border-right: none; }
-    .footer-nav-cell:hover { background: var(--off-white); }
-    .footer-nav-cell::after {
-      content: ''; position: absolute; bottom: 0; left: 0;
-      width: 0; height: 2px; background: var(--blush); transition: width 0.4s;
-    }
-    .footer-nav-cell:hover::after { width: 100%; }
-    .fnc-direction {
-      font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--blush); font-family: 'DM Sans', sans-serif; margin-bottom: 12px;
-    }
-    .fnc-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem; font-weight: 300; color: var(--ink); line-height: 1.35;
-    }
-    .fnc-category {
-      display: block; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--muted); font-family: 'DM Sans', sans-serif; margin-top: 8px;
-    }
-    .footer-nav-cell.center {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; text-align: center;
-    }
-    .back-all-label {
-      font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--muted); font-family: 'DM Sans', sans-serif; margin-top: 12px;
-    }
-    .back-all-kanji {
-      font-family: 'Noto Serif JP', serif;
-      font-size: 2.2rem; font-weight: 200; color: var(--blush-light);
-    }
+    .btn-read:hover { background: transparent; color: var(--ink); }
 
     /* ── SITE FOOTER ── */
     footer.site-footer {
-      padding: 28px 56px; border-top: 1px solid var(--border);
+      padding: 28px 56px;
+      border-top: 1px solid var(--border);
       display: flex; align-items: center; justify-content: space-between;
-      background: var(--ink);
+      background: var(--ink); color: rgba(247,244,240,0.3);
+      position: relative; z-index: 2;
     }
-    .footer-copy {
-      font-size: 0.65rem; letter-spacing: 0.15em;
-      font-family: 'DM Sans', sans-serif; color: rgba(247,244,240,0.3);
-    }
+    .footer-copy { font-size: 0.65rem; letter-spacing: 0.15em; font-family: 'DM Sans', sans-serif; }
     .footer-logo-text {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem; font-weight: 600; letter-spacing: 0.22em;
-      text-transform: uppercase; color: rgba(247,244,240,0.5); text-decoration: none;
+      font-size: 0.85rem; letter-spacing: 0.25em;
+      color: rgba(247,244,240,0.4); text-decoration: none;
     }
     .footer-logo-text span { color: var(--blush); }
 
@@ -499,27 +394,21 @@
       from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 960px) {
+    @media (max-width: 900px) {
       nav { padding: 22px 28px; }
       .nav-links { display: none; }
-      .breadcrumb { padding: 110px 28px 0; }
-      .article-hero { grid-template-columns: 1fr; gap: 40px; padding: 40px 28px 56px; }
-      .article-wrap { grid-template-columns: 1fr; padding: 56px 28px; }
-      .article-sidebar { position: static; }
-      .article-footer { padding: 56px 28px; }
-      .article-footer-inner { grid-template-columns: 1fr; }
-      .footer-nav-cell { border-right: none; border-bottom: 1px solid var(--border); }
-      .footer-nav-cell:last-child { border-bottom: none; }
+      .hero { padding: 120px 28px 72px; }
+      .blog-main { grid-template-columns: 1fr; padding: 48px 28px; gap: 40px; }
+      .blog-sidebar { position: static; }
+      .post-card:hover { margin: 0; padding: 0; }
+      .post-card-inner { grid-template-columns: 52px 1fr 20px; gap: 16px; }
+      .modal-card { max-height: 95vh; }
+      .modal-meta { grid-template-columns: 1fr; }
+      .modal-meta-row { border-right: none; }
+      .modal-cta { flex-direction: column; align-items: flex-start; }
       footer.site-footer { padding: 22px 28px; }
-      .triad { grid-template-columns: 1fr; }
-      .triad-cell { border-right: none; border-bottom: 1px solid var(--border); }
-      .triad-cell:last-child { border-bottom: none; }
     }
   </style>
 </head>
@@ -530,476 +419,276 @@
 
   <!-- NAV -->
   <nav>
-    <a href="index.html" class="nav-logo">ICHIGO <span>Studio</span></a>
+    <a href="/index.html"><img src="BG removed logo.png" alt="ICHIGO Studio" style="height:38px; display:block;" /></a>
     <ul class="nav-links">
-      <li><a href="index.html#services">Services</a></li>
-      <li><a href="/ichigo-method.html">The Method</a></li>
-      <li><a href="index.html#about">About</a></li>
-      <li><a href="/blog.html" class="active">Journal</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
+      <li class="nav-item">
+        <a href="/ichigo-method.html">The Method</a>
+        <div class="nav-dropdown">
+          <a href="/ichigo-method.html">The ICHIGO Method</a>
+          <a href="/work.html">Selected Work</a>
+          <a href="/blog.html" class="active">Work Blog</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="/index.html#about">About</a>
+        <div class="nav-dropdown">
+          <a href="/index.html#about">About the Studio</a>
+          <a href="/founder.html">About the Founder</a>
+        </div>
+      </li>
+      <li><a href="/index.html#contact">Contact</a></li>
     </ul>
   </nav>
 
-  <!-- BREADCRUMB -->
-  <div class="breadcrumb">
-    <a href="/blog.html">All Posts</a>
-  </div>
-
-  <!-- ARTICLE HERO -->
-  <header class="article-hero cat-studio-builds">
-    <div>
-      <div class="article-category">Studio Builds</div>
-      <h1 class="article-title">
-        Dilution,<br>
-        <em>Structured.</em>
-      </h1>
-      <p class="article-lede">
-        A small system built in iterations — because most calculations
-        in practice are not complex. They are simply not structured.
-      </p>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">記</div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Work Blog</div>
+      <h1 class="hero-title">A working<br><em>record.</em></h1>
+      <p class="hero-sub">Operational thinking, system notes, and field observations from building and running ICHIGO Studio. Not polished essays — honest documentation.</p>
     </div>
-    <aside class="article-meta">
-      <div class="meta-row">
-        <div class="meta-key">Category</div>
-        <div class="meta-val">Studio Builds</div>
-      </div>
-      <div class="meta-divider"></div>
-      <div class="meta-row">
-        <div class="meta-key">Published</div>
-        <div class="meta-val">March 2026</div>
-      </div>
-      <div class="meta-divider"></div>
-      <div class="meta-row">
-        <div class="meta-key">Versions</div>
-        <div class="meta-val">v1 → v2 → v3 → v4 → v5</div>
-      </div>
-      <div class="meta-divider"></div>
-      <div class="meta-row">
-        <div class="meta-key">Tags</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
-          <span class="meta-tag">Systems</span>
-          <span class="meta-tag">AI Workflow</span>
-        </div>
-      </div>
-    </aside>
-  </header>
+  </section>
 
-  <!-- ARTICLE BODY + SIDEBAR -->
-  <div class="article-wrap">
-
-    <article class="article-body">
-
-      <!-- STARTING POINT -->
-      <h2 id="starting-point">Starting <em>Point</em></h2>
-      <p>
-        On the evening of 20 March 2026, during an aromatherapy class, we were
-        working through essential oil dilution percentages.
-        The difficulty was not the calculation itself. It was the process around it.
-      </p>
-      <p>
-        Checking safe dermal limits required flipping through reference books.
-        Values were scattered. Consistency depended on memory.
-        The friction was small, but repeated.
-      </p>
-
-      <div class="pull-quote">
-        <p>Most useful systems are not built because something is broken. They are built because something is slow.</p>
-        <cite>Observation, 20 March 2026</cite>
-      </div>
-
-      <p>
-        That was enough. The friction was small, but repeated.
-        Repeated friction is not a minor inconvenience — it is a design problem.
-      </p>
-
-      <div class="article-divider"><span>一</span></div>
-
-      <!-- VERSION TIMELINE -->
-      <section class="version-timeline" id="versions">
-
-        <div class="timeline-header">
-          <span class="timeline-header-label">Version Progression</span>
-          <div class="timeline-header-line"></div>
-        </div>
-
-        <!-- V1 -->
-        <div class="version-entry">
-          <div class="version-dot-col">
-            <div class="version-dot"></div>
-            <div class="version-dot-connector"></div>
-          </div>
-          <div class="version-content">
-            <div class="version-badge">
-              <span class="version-num">Version 01</span>
-              <span class="version-date">20 Mar 2026</span>
-              <span class="version-label-tag">Making It Work</span>
-            </div>
-            <h3 class="version-title">The working <em>skeleton</em></h3>
-            <p class="version-desc">
-              The first version began as an experiment. Using Claude, I constructed
-              a simple calculator — input volume, define oils, calculate drops.
-              At this stage, the challenge was not logic, but data.
-            </p>
-            <p class="version-desc">
-              Although the model attempted to recall safety limits, the results were
-              inconsistent. JSON-based references failed to stabilise the outputs.
-              So the approach changed: instead of relying on internal recall, the
-              system was anchored to source material — the textbook (PDF).
-              A constraint was introduced: limited oils, explicit disclaimer.
-              <strong>Accuracy was no longer assumed. It was bounded.</strong>
-            </p>
-            <ul class="version-changes">
-              <li>Basic calculator: volume input, oil selection, drops output</li>
-              <li>AI recall for safety limits — inconsistent, later replaced</li>
-              <li>Anchored to PDF textbook as primary reference</li>
-              <li>Scope constrained to a defined oil list</li>
-              <li>Explicit disclaimer added — accuracy bounded, not assumed</li>
-            </ul>
-            <div class="artifact-preview">
-              <div class="artifact-preview-bar">
-                <div class="preview-dot"></div><div class="preview-dot"></div><div class="preview-dot"></div>
-                <span class="preview-bar-label">dilution-calculator-v1.html — Artifact Preview</span>
-              </div>
-              <div class="artifact-preview-body">
-                <div class="preview-placeholder">
-                  <span class="preview-placeholder-kanji">一</span>
-                  <span class="preview-placeholder-text">Artifact embed / screenshot</span>
-                </div>
-              </div>
-            </div>
-            <div style="margin-top:16px">
-              <a href="#" class="btn-view-artifact">View Artifact →</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- V2 -->
-        <div class="version-entry">
-          <div class="version-dot-col">
-            <div class="version-dot"></div>
-            <div class="version-dot-connector"></div>
-          </div>
-          <div class="version-content">
-            <div class="version-badge">
-              <span class="version-num">Version 02</span>
-              <span class="version-date">21 Mar 2026</span>
-              <span class="version-label-tag">Adding Structure</span>
-            </div>
-            <h3 class="version-title">Recognition over <em>recall</em></h3>
-            <p class="version-desc">
-              On 21 March, the focus shifted from function to clarity. Each oil was
-              no longer just a name. The question became: how does a person actually
-              think about these things?
-            </p>
-            <p class="version-desc">
-              Latin names were added. Visual markers — simple emojis — were
-              introduced to indicate plant type: flower, leaf, fruit. This was not
-              aesthetic. It was recognition. <strong>A system becomes easier to use
-              when it reflects how people already think.</strong>
-            </p>
-            <ul class="version-changes">
-              <li>Latin names added alongside common names</li>
-              <li>Plant-type visual markers introduced (flower, leaf, fruit)</li>
-              <li>Improved legibility — oils easier to scan and identify</li>
-              <li>No logic changes — structure was the work</li>
-            </ul>
-            <div class="artifact-preview">
-              <div class="artifact-preview-bar">
-                <div class="preview-dot"></div><div class="preview-dot"></div><div class="preview-dot"></div>
-                <span class="preview-bar-label">dilution-calculator-v2.html — Artifact Preview</span>
-              </div>
-              <div class="artifact-preview-body">
-                <div class="preview-placeholder">
-                  <span class="preview-placeholder-kanji">二</span>
-                  <span class="preview-placeholder-text">Artifact embed / screenshot</span>
-                </div>
-              </div>
-            </div>
-            <div style="margin-top:16px">
-              <a href="#" class="btn-view-artifact">View Artifact →</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- V3 -->
-        <div class="version-entry">
-          <div class="version-dot-col">
-            <div class="version-dot"></div>
-            <div class="version-dot-connector"></div>
-          </div>
-          <div class="version-content">
-            <div class="version-badge">
-              <span class="version-num">Version 03</span>
-              <span class="version-date">24 Mar 2026</span>
-              <span class="version-label-tag">Feedback & Reality</span>
-            </div>
-            <h3 class="version-title">Boundaries that <em>respond</em></h3>
-            <p class="version-desc">
-              On 24 March, a classmate tested the tool. Two responses stood out:
-              "Safety limit exceeded" and "Oil not in database."
-            </p>
-            <p class="version-desc">
-              These were not features. They were boundaries. And they worked.
-              <strong>The system was no longer just calculating — it was responding.</strong>
-              A system that communicates its own limits is more trustworthy than
-              one that silently produces an answer.
-            </p>
-            <ul class="version-changes">
-              <li>Safety limit exceeded — boundary message surfaced clearly</li>
-              <li>Oil not in database — explicit out-of-scope response</li>
-              <li>First real-user test conducted with a classmate</li>
-              <li>System behaviour validated against actual usage patterns</li>
-            </ul>
-            <div class="artifact-preview">
-              <div class="artifact-preview-bar">
-                <div class="preview-dot"></div><div class="preview-dot"></div><div class="preview-dot"></div>
-                <span class="preview-bar-label">dilution-calculator-v3.html — Artifact Preview</span>
-              </div>
-              <div class="artifact-preview-body">
-                <div class="preview-placeholder">
-                  <span class="preview-placeholder-kanji">三</span>
-                  <span class="preview-placeholder-text">Artifact embed / screenshot</span>
-                </div>
-              </div>
-            </div>
-            <div style="margin-top:16px">
-              <a href="#" class="btn-view-artifact">View Artifact →</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- V4 -->
-        <div class="version-entry">
-          <div class="version-dot-col">
-            <div class="version-dot"></div>
-            <div class="version-dot-connector"></div>
-          </div>
-          <div class="version-content">
-            <div class="version-badge">
-              <span class="version-num">Version 04</span>
-              <span class="version-date">27 Mar 2026</span>
-              <span class="version-label-tag">Error Surfaces</span>
-            </div>
-            <h3 class="version-title">When names are <em>ambiguous</em></h3>
-            <p class="version-desc">
-              On 27 March, a flaw appeared. Lemongrass was interpreted as
-              Citrus limon. The result: incorrect dilution percentage.
-              This was not a UI issue. It was a mapping problem.
-              <strong>Names, without structure, are ambiguous.</strong>
-            </p>
-            <p class="version-desc">
-              To resolve this, NotebookLM was used — extracting structured data
-              from a second primary textbook. The system expanded.
-              More importantly, it became more precise. The lesson was not
-              about data volume. It was about data clarity.
-            </p>
-            <ul class="version-changes">
-              <li>Lemongrass → Citrus limon mapping error identified</li>
-              <li>NotebookLM used to extract structured data from second textbook</li>
-              <li>Oil taxonomy restructured — names anchored to Latin identifiers</li>
-              <li>Database expanded with greater precision, not just breadth</li>
-            </ul>
-
-            <div class="concept-block" data-label="Design Note">
-              <p>
-                A name is not an identifier. A Latin binomial is.
-                Ambiguity at the data layer propagates into every calculation downstream.
-              </p>
-            </div>
-
-            <div class="artifact-preview">
-              <div class="artifact-preview-bar">
-                <div class="preview-dot"></div><div class="preview-dot"></div><div class="preview-dot"></div>
-                <span class="preview-bar-label">dilution-calculator-v4.html — Artifact Preview</span>
-              </div>
-              <div class="artifact-preview-body">
-                <div class="preview-placeholder">
-                  <span class="preview-placeholder-kanji">四</span>
-                  <span class="preview-placeholder-text">Artifact embed / screenshot</span>
-                </div>
-              </div>
-            </div>
-            <div style="margin-top:16px">
-              <a href="#" class="btn-view-artifact">View Artifact →</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- V5 -->
-        <div class="version-entry active">
-          <div class="version-dot-col">
-            <div class="version-dot"></div>
-          </div>
-          <div class="version-content">
-            <div class="version-badge">
-              <span class="version-num">Version 05</span>
-              <span class="version-date">28 Mar 2026</span>
-              <span class="version-label-tag">Current</span>
-            </div>
-            <h3 class="version-title">Refinement through <em>friction</em></h3>
-            <p class="version-desc">
-              On 28 March, further adjustments were made: a feedback comment box
-              was introduced, and visual refinements were attempted — including
-              background and logo handling.
-            </p>
-            <p class="version-desc">
-              Not all of these were successful. But they revealed something else:
-              <strong>a system is not finished when it works. It evolves through friction.</strong>
-              The feedback mechanism was not about collecting data.
-              It was about keeping the loop open.
-            </p>
-            <ul class="version-changes">
-              <li>Feedback comment box added to each output</li>
-              <li>Visual refinements — background handling, logo integration</li>
-              <li>Some visual changes reverted — function preserved over form</li>
-              <li>System remains open — further iteration expected</li>
-            </ul>
-            <div class="artifact-preview">
-              <div class="artifact-preview-bar">
-                <div class="preview-dot"></div><div class="preview-dot"></div><div class="preview-dot"></div>
-                <span class="preview-bar-label">dilution-calculator-v5.html — Artifact Preview</span>
-              </div>
-              <div class="artifact-preview-body">
-                <div class="preview-placeholder">
-                  <span class="preview-placeholder-kanji">五</span>
-                  <span class="preview-placeholder-text">Artifact embed / screenshot</span>
-                </div>
-              </div>
-            </div>
-            <div style="margin-top:16px">
-              <a href="#" class="btn-view-artifact">View Artifact →</a>
-            </div>
-          </div>
-        </div>
-
-      </section>
-      <!-- end version timeline -->
-
-      <div class="article-divider"><span>一</span></div>
-
-      <!-- WHAT THIS IS -->
-      <h2 id="what-this-is">What this is, and what it <em>is not</em></h2>
-      <p>
-        This is not just a calculator. It is a small system.
-        Inputs are defined. Constraints are explicit. Outputs are repeatable.
-        The calculation itself is trivial. The structure is not.
-      </p>
-
-      <div class="triad">
-        <div class="triad-cell">
-          <span class="triad-num">一</span>
-          <div class="triad-label">Defined</div>
-          <div class="triad-text">Inputs are scoped. The system knows what it handles — and communicates clearly when it does not.</div>
-        </div>
-        <div class="triad-cell">
-          <span class="triad-num">二</span>
-          <div class="triad-label">Explicit</div>
-          <div class="triad-text">Constraints are visible. Safety limits are surfaced, not hidden. Boundaries are part of the interface.</div>
-        </div>
-        <div class="triad-cell">
-          <span class="triad-num">三</span>
-          <div class="triad-label">Repeatable</div>
-          <div class="triad-text">The same input produces the same output, every time. Consistency is not assumed — it is designed.</div>
-        </div>
-      </div>
-
-      <!-- WHAT THIS DEMONSTRATES -->
-      <h2 id="what-this-demonstrates">What this <em>demonstrates</em></h2>
-      <p>
-        This build was not about speed. It was about coordination.
-        Between domain knowledge, structure, and execution — each playing a distinct role.
-      </p>
-      <p>
-        The model generates. The human defines. The system holds.
-      </p>
-
-      <div class="pull-quote">
-        <p>Most useful systems are not complex. They simply make thinking visible.</p>
-        <cite>Closing note</cite>
-      </div>
-
-      <p>
-        Domain knowledge shaped the constraints — what the safe limits are,
-        how oils are identified, what a valid output looks like.
-        Structure determined how that knowledge was organised — taxonomy,
-        naming, data references, error states.
-        Execution was the act of building — AI-assisted, iterative, grounded.
-      </p>
-      <p>
-        When these three layers work together, the result is not a clever tool.
-        It is a <strong>coherent system</strong>. And once thinking is structured,
-        execution follows.
-      </p>
-
-    </article>
+  <!-- BLOG MAIN -->
+  <div class="blog-main">
 
     <!-- SIDEBAR -->
-    <aside class="article-sidebar">
-
-      <div class="sidebar-block">
-        <div class="sidebar-label">In this post</div>
-        <ul class="toc-list">
-          <li><a href="#starting-point" class="toc-active">Starting point</a></li>
-          <li><a href="#versions">Version progression</a></li>
-          <li><a href="#what-this-is">What this is</a></li>
-          <li><a href="#what-this-demonstrates">What this demonstrates</a></li>
-        </ul>
+    <aside class="blog-sidebar">
+      <p class="sidebar-label">Filter</p>
+      <div class="sidebar-filters">
+        <button class="filter-btn active" data-filter="all">All entries</button>
+        <button class="filter-btn" data-filter="cat-observations">Observations</button>
+        <button class="filter-btn" data-filter="cat-studio-builds">Studio Builds</button>
+        <button class="filter-btn" data-filter="cat-the-method">The Method</button>
       </div>
+      <div class="sidebar-divider"></div>
+      <p class="sidebar-label">Tags</p>
+      <div class="sidebar-tags">
+        <span class="tag-pill">ICHIGO Method</span>
+        <span class="tag-pill">AI</span>
+        <span class="tag-pill">Workflow</span>
+        <span class="tag-pill">Automation</span>
+        <span class="tag-pill">Branding</span>
+        <span class="tag-pill">Coherence</span>
+        <span class="tag-pill">Systems</span>
+      </div>
+    </aside>
 
-      <div class="sidebar-block">
-        <div class="sidebar-label">Tags</div>
-        <div class="tag-cloud">
-          <span class="sidebar-tag">Systems</span>
-          <span class="sidebar-tag">AI Workflow</span>
-          <span class="sidebar-tag">Claude</span>
-          <span class="sidebar-tag">NotebookLM</span>
-          <span class="sidebar-tag">Aromatherapy</span>
+    <!-- FEED -->
+    <div class="blog-feed">
+
+      <!-- ── Q1 2026 — open by default ── -->
+      <div class="quarter-block open" id="q1-2026">
+        <div class="quarter-header" onclick="toggleQuarter('q1-2026')">
+          <span class="quarter-label">Q1 · 2026</span>
+          <div class="quarter-meta">
+            <span>3 entries</span>
+            <span class="quarter-toggle">+</span>
+          </div>
+        </div>
+        <div class="quarter-posts">
+
+          <!-- POST 01 -->
+          <div class="post-card cat-studio-builds" onclick="openModal('modal-01')" data-cat="cat-studio-builds">
+            <div class="post-card-inner">
+              <div class="post-icon"><span>構</span></div>
+              <div class="post-summary">
+                <div class="post-category">Studio Builds</div>
+                <h2 class="post-title">Dilution,Structured. — v1 to v5</h2>
+                <p class="post-excerpt">A small system built in iterations — because most calculations in practice are not complex. They are simply not structured.</p>
+              </div>
+              <span class="post-arrow">→</span>
+            </div>
+          </div>
+
+          <!-- POST 02 -->
+          <div class="post-card cat-observations" onclick="openModal('modal-02')" data-cat="cat-observations">
+            <div class="post-card-inner">
+              <div class="post-icon"><span>知</span></div>
+              <div class="post-summary">
+                <div class="post-category">Observations</div>
+                <h2 class="post-title">Why we stopped using AI as a shortcut</h2>
+                <p class="post-excerpt">The moment we started treating AI as a thinking tool rather than a production tool, everything became clearer. This is what changed.</p>
+              </div>
+              <span class="post-arrow">→</span>
+            </div>
+          </div>
+
+          <!-- POST 03 -->
+          <div class="post-card cat-the-method" onclick="openModal('modal-03')" data-cat="cat-the-method">
+            <div class="post-card-inner">
+              <div class="post-icon"><span>一</span></div>
+              <div class="post-summary">
+                <div class="post-category">The Method</div>
+                <h2 class="post-title">On building a brand that is also a system</h2>
+                <p class="post-excerpt">ICHIGO Studio is both a business and a live demonstration of the method it sells. This is what that tension looks like from the inside.</p>
+              </div>
+              <span class="post-arrow">→</span>
+            </div>
+          </div>
+
         </div>
       </div>
 
-      <div class="sidebar-block sidebar-about">
-        <div class="sidebar-label">About this series</div>
-        <p>
-          Studio Builds documents real artifacts built at ICHIGO —
-          the decisions made, the iterations taken, and what each
-          version revealed.
-        </p>
-        <a href="/blog.html" class="btn-ghost">More Studio Builds →</a>
+      <!-- ── Earlier — collapsed ── -->
+      <div class="quarter-block" id="q-earlier">
+        <div class="quarter-header" onclick="toggleQuarter('q-earlier')">
+          <span class="quarter-label">Earlier entries</span>
+          <div class="quarter-meta">
+            <span>Coming soon</span>
+            <span class="quarter-toggle">+</span>
+          </div>
+        </div>
+        <div class="quarter-posts">
+          <p style="padding: 28px 0; font-size: 0.82rem; color: var(--muted);">Further entries will be published as documentation is completed.</p>
+        </div>
       </div>
 
-    </aside>
-
+    </div>
   </div>
 
-  <!-- POST FOOTER NAV -->
-  <div class="article-footer">
-    <div class="article-footer-inner">
-      <a href="#" class="footer-nav-cell">
-        <div class="fnc-direction">← Previous</div>
-        <div class="fnc-title">On coherence over capability</div>
-        <span class="fnc-category">Observations</span>
-      </a>
-      <a href="/blog.html" class="footer-nav-cell center">
-        <div class="back-all-kanji">一</div>
-        <div class="back-all-label">All Posts</div>
-      </a>
-      <a href="#" class="footer-nav-cell">
-        <div class="fnc-direction">Next →</div>
-        <div class="fnc-title">The three layers of the ICHIGO Method</div>
-        <span class="fnc-category">The Method</span>
-      </a>
+  <!-- ══════════════════════════════════
+       MODALS
+  ════════════════════════════════════ -->
+
+  <!-- MODAL 01 — Studio Builds -->
+  <div class="modal-overlay" id="modal-01" onclick="closeModalOnOverlay(event,'modal-01')">
+    <div class="modal-card modal-cat-studio-builds">
+      <button class="modal-close" onclick="closeModal('modal-01')">Close ✕</button>
+      <div class="modal-cat-bar">
+        <span class="modal-category">Studio Builds</span>
+      </div>
+      <div class="modal-header">
+        <h2 class="modal-title">Dilution Structured<br>— v1 to <em>v5</em></h2>
+        <p class="modal-lede">A small system built in iterations — because most calculations in practice are not complex. They are simply not structured.</p>
+      </div>
+      <div class="modal-meta">
+        <div class="modal-meta-row">
+          <div class="meta-key">Published</div>
+          <div class="meta-val">March 2026</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Read time</div>
+          <div class="meta-val">~5 min</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Series</div>
+          <div class="meta-val">Studio Builds</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Versions</div>
+          <div class="meta-val">v1 → v5 documented</div>
+        </div>
+      </div>
+      <div class="modal-tags">
+        <span class="modal-tag">Systems</span>
+        <span class="modal-tag">AI Workflow</span>
+        <span class="modal-tag">Claude Artifacts</span>
+        <span class="modal-tag">NotebookLM</span>
+        <span class="modal-tag">Tool Development</span>
+      </div>
+      <div class="modal-cta">
+        <p class="modal-cta-text">Includes build artifacts,<br>version comparisons and decision notes.</p>
+        <a href="/blog/20260403dilution.html" class="btn-read">Read full entry →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 02 — Observations -->
+  <div class="modal-overlay" id="modal-02" onclick="closeModalOnOverlay(event,'modal-02')">
+    <div class="modal-card modal-cat-observations">
+      <button class="modal-close" onclick="closeModal('modal-02')">Close ✕</button>
+      <div class="modal-cat-bar">
+        <span class="modal-category">Observations</span>
+      </div>
+      <div class="modal-header">
+        <h2 class="modal-title">Why we stopped using AI<br>as a <em>shortcut</em></h2>
+        <p class="modal-lede">The moment we started treating AI as a thinking tool rather than a production tool, everything became clearer. This is what changed — and what it cost to get there.</p>
+      </div>
+      <div class="modal-meta">
+        <div class="modal-meta-row">
+          <div class="meta-key">Published</div>
+          <div class="meta-val">February 2026</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Read time</div>
+          <div class="meta-val">~5 min</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Category</div>
+          <div class="meta-val">Observations</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Theme</div>
+          <div class="meta-val">AI & clarity</div>
+        </div>
+      </div>
+      <div class="modal-tags">
+        <span class="modal-tag">AI</span>
+        <span class="modal-tag">Clarity</span>
+        <span class="modal-tag">ICHIGO Method</span>
+        <span class="modal-tag">Workflow</span>
+      </div>
+      <div class="modal-cta">
+        <p class="modal-cta-text">A short field note on<br>how we changed our approach.</p>
+        <a href="/blog/post-02.html" class="btn-read">Read full entry →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 03 — The Method -->
+  <div class="modal-overlay" id="modal-03" onclick="closeModalOnOverlay(event,'modal-03')">
+    <div class="modal-card modal-cat-the-method">
+      <button class="modal-close" onclick="closeModal('modal-03')">Close ✕</button>
+      <div class="modal-cat-bar">
+        <span class="modal-category">The Method</span>
+      </div>
+      <div class="modal-header">
+        <h2 class="modal-title">On building a brand<br>that is also a <em>system</em></h2>
+        <p class="modal-lede">ICHIGO Studio is both a business and a live demonstration of the method it sells. This is what that tension looks like from the inside — and why it matters.</p>
+      </div>
+      <div class="modal-meta">
+        <div class="modal-meta-row">
+          <div class="meta-key">Published</div>
+          <div class="meta-val">January 2026</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Read time</div>
+          <div class="meta-val">~6 min</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Category</div>
+          <div class="meta-val">The Method</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Theme</div>
+          <div class="meta-val">Brand as system</div>
+        </div>
+      </div>
+      <div class="modal-tags">
+        <span class="modal-tag">Branding</span>
+        <span class="modal-tag">ICHIGO Method</span>
+        <span class="modal-tag">Coherence</span>
+        <span class="modal-tag">Systems</span>
+      </div>
+      <div class="modal-cta">
+        <p class="modal-cta-text">On the discipline of operating<br>as your own case study.</p>
+        <a href="/blog/post-03.html" class="btn-read">Read full entry →</a>
+      </div>
     </div>
   </div>
 
   <!-- SITE FOOTER -->
   <footer class="site-footer">
     <span class="footer-copy">© 2026 ICHIGO Studio. All rights reserved.</span>
-    <a href="index.html" class="footer-logo-text">ICHIGO <span>Studio</span></a>
+    <a href="/index.html" class="footer-logo-text">ICHIGO <span>Studio</span></a>
   </footer>
 
   <script>
+    // Custom cursor
     const cursor = document.getElementById('cursor');
-    const ring = document.getElementById('cursorRing');
+    const ring   = document.getElementById('cursorRing');
     if (cursor && ring) {
       document.addEventListener('mousemove', e => {
         cursor.style.left = e.clientX + 'px';
@@ -1021,19 +710,44 @@
       });
     }
 
-    // TOC scroll highlight
-    const headings = document.querySelectorAll('[id]');
-    const tocLinks = document.querySelectorAll('.toc-list a');
-    window.addEventListener('scroll', () => {
-      let current = '';
-      headings.forEach(h => {
-        if (window.scrollY >= h.offsetTop - 160) current = h.id;
+    // Quarter accordion
+    function toggleQuarter(id) {
+      document.getElementById(id).classList.toggle('open');
+    }
+
+    // Modal open / close
+    function openModal(id) {
+      document.getElementById(id).classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function closeModalOnOverlay(e, id) {
+      if (e.target === e.currentTarget) closeModal(id);
+    }
+    // Escape key closes any open modal
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.open').forEach(m => {
+          m.classList.remove('open');
+          document.body.style.overflow = '';
+        });
+      }
+    });
+
+    // Sidebar filter
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.post-card').forEach(card => {
+          card.style.display = (filter === 'all' || card.dataset.cat === filter) ? '' : 'none';
+        });
       });
-      tocLinks.forEach(a => {
-        const href = a.getAttribute('href').replace('#','');
-        a.classList.toggle('toc-active', href === current);
-      });
-    }, { passive: true });
+    });
   </script>
 
 </body>
