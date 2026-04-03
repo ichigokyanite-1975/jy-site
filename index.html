@@ -68,25 +68,6 @@
       cursor: auto;
     }
 
-    /* ── Custom cursor ── */
-    .cursor {
-      position: fixed; width: 10px; height: 10px;
-      background: var(--blush); border-radius: 50%;
-      pointer-events: none; z-index: 9999;
-      transform: translate(-50%,-50%);
-      transition: transform 0.15s ease, width 0.2s ease, height 0.2s ease;
-    }
-    .cursor-ring {
-      position: fixed; width: 36px; height: 36px;
-      border: 1px solid var(--ink); border-radius: 50%;
-      pointer-events: none; z-index: 9998;
-      transform: translate(-50%,-50%);
-      transition: transform 0.35s cubic-bezier(.23,1,.32,1),
-                  width 0.25s ease, height 0.25s ease, border-color 0.2s;
-    }
-    body:hover .cursor-ring { opacity: 1; }
-    a:hover ~ .cursor, button:hover ~ .cursor { width: 16px; height: 16px; }
-
     /* ── Noise overlay ── */
     body::before {
       content: '';
@@ -94,7 +75,22 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
       pointer-events: none; z-index: 0; opacity: 0.4;
     }
-
+     /* ── Custom cursor ── */
+    .cursor {
+      position: fixed; width: 10px; height: 10px;
+      background: var(--blush); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: transform 0.15s ease, width 0.2s, height 0.2s;
+    }
+    .cursor-ring {
+      position: fixed; width: 36px; height: 36px;
+      border: 1px solid var(--ink); border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%,-50%);
+      transition: transform 0.35s cubic-bezier(.23,1,.32,1), width 0.25s, height 0.25s;
+    }
+    
     /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -510,13 +506,14 @@
       font-size: 0.65rem; letter-spacing: 0.15em;
       font-family: 'DM Sans', sans-serif;
     }
-
-    .footer-logo {
+    .footer-logo span { color: var(--blush); }
+    
+        .footer-logo-text {
       font-family: 'Cormorant Garamond', serif;
       font-size: 0.85rem; letter-spacing: 0.25em;
-      color: rgba(247,244,240,0.4);
+      color: rgba(247,244,240,0.4); text-decoration: none;
     }
-    .footer-logo span { color: var(--blush); }
+    .footer-logo-text span { color: var(--blush); }
 
     /* ── ANIMATIONS ── */
     @keyframes fadeUp {
@@ -650,7 +647,10 @@
   </style>
 </head>
 <body>
-
+    
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+  
   <!-- NAV -->
   <nav>
     <a href="#"><img src="BG removed logo.png" alt="ICHIGO Studio" style="height:38px; display:block;" /></a>
@@ -840,19 +840,47 @@
   <!-- FOOTER -->
   <footer>
     <span class="footer-copy">© 2026 ICHIGO Studio. All rights reserved.</span>
-    <img src="BG removed logo.png" alt="ICHIGO Studio" style="height:28px; opacity:0.6;" />
+      <a href="/index.html" class="footer-logo-text">ICHIGO <span>Studio</span></a>
   </footer>
 
   <script>
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    if (cursor && ring) {
+      document.addEventListener('mousemove', e => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top  = e.clientY + 'px';
+        ring.style.left   = e.clientX + 'px';
+        ring.style.top    = e.clientY + 'px';
+      });
+      document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursor.style.width = '16px'; cursor.style.height = '16px';
+          ring.style.width   = '48px'; ring.style.height  = '48px';
+          ring.style.borderColor = 'var(--blush)';
+        });
+        el.addEventListener('mouseleave', () => {
+          cursor.style.width = '10px'; cursor.style.height = '10px';
+          ring.style.width   = '36px'; ring.style.height  = '36px';
+          ring.style.borderColor = 'var(--ink)';
+        });
+      });
+    }
 
-  if (cursor && ring) {
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-      ring.style.left = e.clientX + 'px';
-      ring.style.top = e.clientY + 'px';
-    });
+    // TOC scroll highlight
+    const headings = document.querySelectorAll('[id]');
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      headings.forEach(h => {
+        if (window.scrollY >= h.offsetTop - 160) current = h.id;
+      });
+      tocLinks.forEach(a => {
+        const href = a.getAttribute('href').replace('#','');
+        a.classList.toggle('toc-active', href === current);
+      });
+    }, { passive: true });
+  </script>
 
-    document.querySelectorAll('a, button
+</body>
+</html>
