@@ -3,10 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dilution, Structured — ICHIGO Studio Journal</title>
+  <title>Dilution, Structured — ICHIGO Studio Work Blog</title>
+  <meta name="description" content="ICHIGO Studio is a Singapore-based creative studio specialising in AI workflow automation, business process design, and creative direction. We design integrated systems where strategy, operations, and creative work as one." />
+  <meta name="keywords" content="AI workflow automation, business process design, creative studio Singapore, AI systems, marketing strategy Singapore, ICHIGO Studio" />
+  <meta name="author" content="ICHIGO Studio" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://ichigo.studio/" />
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ichigo.studio/" />
+  <meta property="og:title" content="ICHIGO Studio — AI Systems, Business Design & Creative Direction" />
+  <meta property="og:description" content="A Singapore-based creative studio designing integrated systems where AI, operations, and creative work as one." />
+  <meta property="og:image" content="https://ichigo.studio/BG removed logo.png" />
+  <meta property="og:locale" content="en_SG" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ICHIGO Studio — AI Systems, Business Design & Creative Direction" />
+  <meta name="twitter:description" content="A Singapore-based creative studio designing integrated systems where AI, operations, and creative work as one." />
+
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "ICHIGO Studio",
+    "url": "https://ichigo.studio",
+    "email": "ichigo.kyanite@gmail.com",
+    "description": "AI workflow automation, business process design, and creative direction studio based in Singapore.",
+    "areaServed": "Singapore",
+    "serviceType": ["AI Workflow Automation", "Business Process Design", "Creative Direction"],
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "SG"
+    }
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@200;300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
 
   <style>
     :root {
@@ -77,6 +114,34 @@
     }
     .nav-links a:hover { opacity: 1; }
     .nav-links a.active { opacity: 1; color: var(--blush); }
+    
+        /* ── NAV DROPDOWN ── */
+    .nav-item { position: relative; }
+    .nav-item:hover .nav-dropdown { opacity: 1; pointer-events: all; transform: translateY(0); }
+
+    .nav-dropdown {
+      position: absolute; top: calc(100% + 16px); left: 50%;
+      transform: translateX(-50%) translateY(6px);
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      min-width: 180px;
+      display: flex; flex-direction: column;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 200;
+    }
+    .nav-dropdown a {
+      font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+      opacity: 0.6;
+      transition: opacity 0.15s, background 0.15s;
+      display: block;
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+    }
+    .nav-dropdown a:last-child { border-bottom: none; }
+    .nav-dropdown a:hover { opacity: 1; background: var(--off-white); }
 
     /* ── BACK BREADCRUMB ── */
     .breadcrumb {
@@ -529,14 +594,25 @@
   <div class="cursor-ring" id="cursorRing"></div>
 
   <!-- NAV -->
-  <nav>
-    <a href="index.html" class="nav-logo">ICHIGO <span>Studio</span></a>
+   <nav>
+    <a href="#"><img src="BG removed logo.png" alt="ICHIGO Studio" style="height:38px; display:block;" /></a>
     <ul class="nav-links">
-      <li><a href="index.html#services">Services</a></li>
-      <li><a href="/ichigo-method.html">The Method</a></li>
-      <li><a href="index.html#about">About</a></li>
-      <li><a href="/blog.html" class="active">Journal</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
+      <li class="nav-item">
+        <a href="/ichigo-method.html">The Method</a>
+        <div class="nav-dropdown">
+          <a href="/ichigo-method.html">The ICHIGO Method</a>
+          <a href="/work.html">Selected Work</a>
+          <a href="/blog.html">Work Blog</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="#about">About</a>
+        <div class="nav-dropdown">
+          <a href="#about">About the Studio</a>
+          <a href="/founder.html">About the Founder</a>
+        </div>
+      </li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
 
