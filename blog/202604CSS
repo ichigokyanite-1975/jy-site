@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Received Wisdom — ICHIGO Studio Journal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@200;300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+ <style>
+    :root {
+      --ink:         #0e0c0c;
+      --off-white:   #f7f4f0;
+      --warm-white:  #fdfbf8;
+      --blush:       #e8a2ad;
+      --blush-light: #f3d5da;
+      --muted:       #8a8480;
+      --border:      rgba(14,12,12,0.10);}
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--warm-white);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;}
+
+/* ── Noise overlay ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: 0.4;}
+
+/* ── Custom cursor ── */
+    .cursor {
+      position: fixed; width: 10px; height: 10px;
+      background: var(--blush); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: transform 0.15s ease, width 0.2s, height 0.2s;}
+    .cursor-ring {
+      position: fixed; width: 36px; height: 36px;
+      border: 1px solid var(--ink); border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%,-50%);
+      transition: transform 0.35s cubic-bezier(.23,1,.32,1), width 0.25s, height 0.25s;}
+
+/* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 56px;
+      background: rgba(253,251,248,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);}
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--ink); text-decoration: none;}
+    .nav-logo span { color: var(--blush); }
+    .nav-links { display: flex; gap: 40px; list-style: none;}
+    .nav-links a {
+      font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none; opacity: 0.55;
+      transition: opacity 0.2s; font-family: 'DM Sans', sans-serif; font-weight: 400;}
+    .nav-links a:hover { opacity: 1; }
+    .nav-links a.active { opacity: 1; color: var(--blush); }
+
+/* ── BACK BREADCRUMB ── */
+    .breadcrumb {
+      padding: 140px 56px 0;
+      position: relative; z-index: 2;}
+    .breadcrumb a {
+      font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      font-family: 'DM Sans', sans-serif;
+      display: inline-flex; align-items: center; gap: 10px;
+      transition: color 0.2s;}
+    .breadcrumb a:hover { color: var(--ink); }
+    .breadcrumb a::before { content: '←'; font-size: 0.8rem; }
+
+/* ── ARTICLE HERO ── */
+    .article-hero {
+      padding: 52px 56px 72px;
+      position: relative; z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 80px;
+      align-items: end;
+      border-bottom: 1px solid var(--border);}
+    .article-category {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+      margin-bottom: 28px;}
+    .article-category::before {
+      content: ''; display: block; width: 32px; height: 1px;}
+    .cat-studio-builds .article-category { color: var(--ink); opacity: 0.7; }
+    .cat-studio-builds .article-category::before { background: var(--ink); opacity: 0.4; }
+    .article-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 5vw, 5.2rem);
+      font-weight: 300; line-height: 1.0;
+      letter-spacing: -0.02em; color: var(--ink);
+      opacity: 0;
+      animation: fadeUp 1s 0.2s ease forwards;}
+    .article-title em { font-style: italic; color: var(--blush); }
+    .article-lede {
+      margin-top: 28px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem; font-weight: 300;
+      line-height: 1.7; color: var(--muted);
+      max-width: 640px; font-style: italic;
+      opacity: 0;
+      animation: fadeUp 1s 0.45s ease forwards;}
+/* Hero right meta block */
+    .article-meta {
+      display: flex; flex-direction: column; gap: 24px;
+      padding: 32px;
+      border: 1px solid var(--border);
+      background: var(--off-white);
+      opacity: 0;
+      animation: fadeUp 1s 0.55s ease forwards;}
+    .meta-row {}
+    .meta-key {
+      font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--blush); font-family: 'DM Sans', sans-serif; margin-bottom: 4px;}
+    .meta-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; color: var(--ink); font-weight: 400;}
+    .meta-divider { width: 100%; height: 1px; background: var(--border); }
+    .meta-tag {
+      display: inline-block;
+      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+      border: 1px solid var(--blush); color: var(--blush);
+      padding: 4px 10px; font-family: 'DM Sans', sans-serif;}
+
+/* ── ARTICLE LAYOUT ── */
+    .article-wrap {
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 80px;
+      padding: 80px 56px;
+      position: relative; z-index: 2;
+      align-items: start;}
+
+/* ── ARTICLE BODY ── */
+    .article-body { max-width: 720px; }
+
+    .article-body h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+      font-weight: 300; line-height: 1.2;
+      color: var(--ink); margin: 64px 0 24px;}
+    .article-body h2 em { font-style: italic; color: var(--blush);}
+    .article-body h2:first-child { margin-top: 0; }
+    .article-body h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--blush); margin: 48px 0 16px; font-weight: 400;}
+    .article-body p {
+      font-size: 0.95rem; line-height: 2.05;
+      color: var(--muted); margin-bottom: 24px;}
+    .article-body p strong { color: var(--ink); font-weight: 400; }
+    .article-figure {
+     margin: 48px 0;
+     border: 1px solid var(--border);
+     overflow: hidden;}
+    .article-figure img {
+     width: 100%; display: block;}
+    .article-figure figcaption {
+     padding: 12px 20px;
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+     color: var(--muted); font-family: 'DM Sans', sans-serif;
+     border-top: 1px solid var(--border);
+    background: var(--off-white);}
+
+/* Pull quote */
+    .pull-quote {
+      margin: 60px 0; padding: 40px 48px;
+      border-left: 2px solid var(--blush);
+      background: var(--off-white); position: relative;}
+    .pull-quote::before {
+      content: '"';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 6rem; font-weight: 300; color: var(--blush-light);
+      position: absolute; top: -10px; left: 16px;
+      line-height: 1; pointer-events: none;}
+    .pull-quote p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 300; font-style: italic;
+      line-height: 1.6; color: var(--ink); margin: 0;}
+    .pull-quote cite {
+      display: block; margin-top: 16px;
+      font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--blush); font-family: 'DM Sans', sans-serif; font-style: normal;}
+
+/* Key concept callout */
+    .concept-block {
+      margin: 56px 0; padding: 36px 40px;
+      border: 1px solid var(--border); position: relative;}
+    .concept-block::before {
+      content: attr(data-label);
+      position: absolute; top: -10px; left: 24px;
+      font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--blush); font-family: 'DM Sans', sans-serif;
+      background: var(--warm-white); padding: 0 8px;}
+    .concept-block p {
+      margin: 0; color: var(--ink);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem; line-height: 1.8; font-style: italic;}
+
+/* Three-column principles */
+    .triad {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px; border: 1px solid var(--border);
+      margin: 48px 0;}
+    .triad-cell {
+      padding: 32px 28px;
+      border-right: 1px solid var(--border);
+      position: relative;}
+    .triad-cell:last-child { border-right: none; }
+    .triad-num {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.4rem; font-weight: 200; color: var(--blush-light);
+      display: block; margin-bottom: 14px;}
+    .triad-label {
+      font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--blush); font-family: 'DM Sans', sans-serif; margin-bottom: 8px;}
+    .triad-text {
+      font-size: 0.82rem; line-height: 1.8; color: var(--muted);}
+
+/* Section divider */
+    .article-divider {
+      display: flex; align-items: center; gap: 20px; margin: 64px 0;}
+    .article-divider::before,
+    .article-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .article-divider span {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1rem; font-weight: 200; color: var(--blush);}
+
+/* ── VERSION TIMELINE ── */
+    .version-timeline { margin: 72px 0 0; position: relative; }
+
+    .timeline-header { display: flex; align-items: center; gap: 16px; margin-bottom: 56px; }
+    .timeline-header-label {
+      font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--blush); font-family: 'DM Sans', sans-serif;}
+    .timeline-header-line { flex: 1; height: 1px; background: var(--border); }
+    .version-entry {
+      display: grid; grid-template-columns: 40px 1fr;
+      gap: 32px; margin-bottom: 64px; position: relative;}
+    .version-dot-col {
+      display: flex; flex-direction: column;
+      align-items: center; padding-top: 6px;}
+    .version-dot {
+      width: 14px; height: 14px; border-radius: 50%;
+      border: 2px solid var(--blush); background: var(--warm-white);
+      flex-shrink: 0; position: relative; z-index: 1;
+      transition: background 0.2s;}
+    .version-entry.active .version-dot { background: var(--blush);}
+    .version-dot-connector {
+      width: 1px; flex: 1; background: var(--blush-light); margin-top: 8px;}
+    .version-entry:last-child .version-dot-connector { display: none; }
+    .version-badge {
+      display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px;}
+    .version-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem; letter-spacing: 0.2em; color: var(--blush); font-weight: 400;}
+    .version-date {
+      font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); font-family: 'DM Sans', sans-serif;}
+    .version-label-tag {
+      font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif;
+      border: 1px solid var(--border); color: var(--muted); padding: 3px 9px;}
+    .version-entry.active .version-label-tag { border-color: var(--blush); color: var(--blush); }
+    .version-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 300;
+      color: var(--ink); margin-bottom: 12px; line-height: 1.2;}
+    .version-title em { font-style: italic; color: var(--blush); }
+    .version-desc {
+      font-size: 0.85rem; line-height: 1.9; color: var(--muted); margin-bottom: 24px;}
+    .version-changes {
+      list-style: none; display: flex; flex-direction: column;
+      gap: 10px; margin-bottom: 28px;}
+    .version-changes li {
+      font-size: 0.82rem; line-height: 1.7; color: var(--ink);
+      display: flex; gap: 14px; align-items: flex-start;}
+    .version-changes li::before {
+      content: '✦'; font-size: 0.5rem; color: var(--blush);
+      margin-top: 5px; flex-shrink: 0; }
+
+/* Artifact preview frame */
+    .artifact-preview { border: 1px solid var(--border); background: var(--off-white); overflow: hidden; }
+    .artifact-preview-bar {
+      padding: 10px 16px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 8px; background: var(--warm-white);}
+    .preview-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .preview-dot:nth-child(1) { background: #f5c0b8; }
+    .preview-dot:nth-child(2) { background: var(--blush-light); }
+    .preview-dot:nth-child(3) { background: #c5d8c0; }
+    .preview-bar-label {
+      margin-left: 8px; font-size: 0.6rem; letter-spacing: 0.15em;
+      color: var(--muted); font-family: 'DM Sans', sans-serif;}
+    .artifact-preview-body {
+      padding: 32px; min-height: 200px;
+      display: flex; align-items: center; justify-content: center;}
+    .preview-placeholder { text-align: center; }
+    .preview-placeholder-kanji {
+      font-family: 'Noto Serif JP', serif; font-size: 3rem; font-weight: 200;
+      color: var(--blush-light); display: block; margin-bottom: 12px;}
+    .preview-placeholder-text {
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); font-family: 'DM Sans', sans-serif;}
+    .btn-view-artifact {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 12px 28px; border: 1px solid var(--ink); color: var(--ink);
+      font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+      text-decoration: none; font-family: 'DM Sans', sans-serif; font-weight: 400;
+      transition: background 0.25s, color 0.25s;}
+    .btn-view-artifact:hover { background: var(--ink); color: var(--off-white); }
+
+/* ── SIDEBAR ── */
+    .article-sidebar {
+      position: sticky; top: 100px;
+      display: flex; flex-direction: column; gap: 40px;}
+    .sidebar-block {}
+    .sidebar-label {
+      font-size: 0.58rem; letter-spacing: 0.32em; text-transform: uppercase;
+      color: var(--blush); font-family: 'DM Sans', sans-serif;
+      display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+    .sidebar-label::before {
+      content: ''; display: block; width: 20px; height: 1px; background: var(--blush);}
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .toc-list a {
+      font-size: 0.8rem; line-height: 1.5; color: var(--muted); text-decoration: none;
+      font-family: 'Cormorant Garamond', serif; transition: color 0.2s;
+      display: flex; align-items: flex-start; gap: 10px;}
+    .toc-list a::before {
+      content: '—'; font-size: 0.7rem; color: var(--blush-light);
+      flex-shrink: 0; margin-top: 2px;}
+    .toc-list a:hover { color: var(--ink); }
+    .toc-list a.toc-active { color: var(--ink); }
+    .toc-list a.toc-active::before { color: var(--blush); }
+
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+    .sidebar-tag {
+      font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase;
+      border: 1px solid var(--border); color: var(--muted);
+      padding: 5px 12px; font-family: 'DM Sans', sans-serif; cursor: default;
+      transition: border-color 0.2s, color 0.2s;}
+    .sidebar-tag:hover { border-color: var(--blush); color: var(--blush); }
+    .sidebar-about { padding: 24px; border: 1px solid var(--border); background: var(--off-white); }
+    .sidebar-about p { font-size: 0.78rem; line-height: 1.8; color: var(--muted); margin-bottom: 16px; }
+    .btn-ghost {
+      font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; font-family: 'DM Sans', sans-serif;
+      border-bottom: 1px solid var(--muted); padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;}
+    .btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
+
+/* ── POST FOOTER ── */
+    .article-footer {
+      border-top: 1px solid var(--border);
+      padding: 72px 56px; position: relative; z-index: 2;}
+    .article-footer-inner {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px; border: 1px solid var(--border);}
+    .footer-nav-cell {
+      padding: 48px 40px; border-right: 1px solid var(--border);
+      text-decoration: none; transition: background 0.25s;
+      position: relative; overflow: hidden;}
+    .footer-nav-cell:last-child { border-right: none; }
+    .footer-nav-cell:hover { background: var(--off-white); }
+    .footer-nav-cell::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 2px; background: var(--blush); transition: width 0.4s;}
+    .footer-nav-cell:hover::after { width: 100%; }
+    .fnc-direction {
+      font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--blush); font-family: 'DM Sans', sans-serif; margin-bottom: 12px;}
+    .fnc-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-weight: 300; color: var(--ink); line-height: 1.35;}
+    .fnc-category {
+      display: block; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); font-family: 'DM Sans', sans-serif; margin-top: 8px;}
+    .footer-nav-cell.center {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;}
+    .back-all-label {
+      font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--muted); font-family: 'DM Sans', sans-serif; margin-top: 12px;}
+    .back-all-kanji {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 2.2rem; font-weight: 200; color: var(--blush-light); }
+
+/* ── SITE FOOTER ── */
+    footer.site-footer {
+      padding: 28px 56px; border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;background: var(--ink);}
+    .footer-copy {
+      font-size: 0.65rem; letter-spacing: 0.15em;
+      font-family: 'DM Sans', sans-serif; color: rgba(247,244,240,0.3);}
+    .footer-logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(247,244,240,0.5); text-decoration: none; }
+    .footer-logo-text span { color: var(--blush); }
+
+/* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }}
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }}
+
+/* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      nav { padding: 22px 28px; }
+      .nav-links { display: none; }
+      .breadcrumb { padding: 110px 28px 0; }
+      .article-hero { grid-template-columns: 1fr; gap: 40px; padding: 40px 28px 56px; }
+      .article-wrap { grid-template-columns: 1fr; padding: 56px 28px; }
+      .article-sidebar { position: static; }
+      .article-footer { padding: 56px 28px; }
+      .article-footer-inner { grid-template-columns: 1fr; }
+      .footer-nav-cell { border-right: none; border-bottom: 1px solid var(--border); }
+      .footer-nav-cell:last-child { border-bottom: none; }
+      footer.site-footer { padding: 22px 28px; }
+      .triad { grid-template-columns: 1fr; }
+      .triad-cell { border-right: none; border-bottom: 1px solid var(--border); }
+      .triad-cell:last-child { border-bottom: none; } }
+  </style>
+</head>
+<body>
+<!-- Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">ICHIGO <span>Studio</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="/ichigo-method.html">The Method</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="/blog.html" class="active">Journal</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+<!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="/blog.html">All Posts</a>
+  </div>
+
+<!-- ARTICLE HERO -->
+  <header class="article-hero cat-studio-builds">
+    <div>
+      <div class="article-category">Studio Builds</div>
+      <h1 class="article-title">
+        The Received <em>Wisdom</em>
+      </h1>
+      <p class="article-lede">
+        How Programmers have learnt to build codes in a structured way.
+      </p>
+    </div>
+    <aside class="article-meta">
+      <div class="meta-row">
+        <div class="meta-key">Category</div>
+        <div class="meta-val">Observation</div>
+      </div>
+      <div class="meta-divider"></div>
+      <div class="meta-row">
+        <div class="meta-key">Published</div>
+        <div class="meta-val">April 2026</div>
+      </div>
+      <div class="meta-divider"></div>
+      <div class="meta-row">
+        <div class="meta-key">Versions</div>
+        <div class="meta-val">v1</div>
+      </div>
+      <div class="meta-divider"></div>
+      <div class="meta-row">
+        <div class="meta-key">Tags</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+          <span class="meta-tag">Observations</span>
+          <span class="meta-tag">AI Workflow</span>
+          <span class="meta-tag">Web Structure</span>
+          <span class="meta-tag">SME Design</span>
+          <span class="meta-tag">Judgment</span>
+        </div>
+      </div>
+    </aside>
+  </header>
+
+<!-- ARTICLE BODY + SIDEBAR -->
+  <div class="article-wrap">
+    <article class="article-body">
+
+<!-- STARTING POINT -->
+      <h2 id="starting-point">My revisit of HTML since <em>2002</em></h2>
+      <p>
+        Most people who learn to build websites are taught the same thing early:
+        separate your HTML, your CSS, your JavaScript.
+        One file for structure. One for style. One for behaviour.
+      </p>
+      <p>
+        In large engineering teams, this is correct.
+        It enables collaboration, version control, modularity.
+        The logic holds.
+      </p>
+      <p>
+        But most websites are not built by large engineering teams.
+        And applying the same structure to a different context
+        is not discipline — it is a mismatch.
+      </p>
+
+      <div class="pull-quote">
+        <p>The best practice for a team of twenty is not the best practice for a team of <b>one</b>.</p>
+        <cite>Observation, Apr 2026</cite>
+      </div>
+      <figure class="article-figure">
+      <img src="/blog/diagram/locality-comparison.png" alt="Separated vs local CSS/HTML structure" />
+      <figcaption>Separated structure vs locally grouped sections</figcaption>
+      </figure>
+      <p>
+        That was enough. The friction was small, but repeated.
+        Repeated friction is not a minor inconvenience — it is a design problem.
+      </p>
+      <div class="article-divider"><span>一</span></div>
+
+ <!-- ── SECTION: THE REAL QUESTION ── -->
+      <h2 id="real-question">The real <em>question</em></h2>
+      <p>
+        When I started thinking about this, the question I was actually asking was not:
+      </p>
+      <p>
+        <strong><b>Should HTML and CSS be separated?</b></strong>
+      </p>
+      <p>
+        The question was:
+        <strong>For a small website — maintained by one person, assisted by AI, updated in real business time — what structure is actually the most maintainable?</strong>
+      </p>
+      <p>
+        These are different questions: </p>
+      <p>
+          1.  It has a textbook answer.
+        <br>2. It requires judgment.
+      </p>
+      <div class="article-divider"><span>一</span></div>
+ 
+  <!-- ── SECTION: WHAT LOCALITY DOES ── -->
+      <h2 id="what-locality-does">What <em>locality</em> does</h2>
+ 
+      <h3>It makes the scope of change visible</h3>
+      <p>
+        When a section's HTML and its corresponding CSS sit close together,
+        changing a button colour means reading one block — not navigating
+        between a stylesheet and a template, losing context twice.
+      </p>
+      <p>
+        The structure becomes: see where you are, change what you see.
+        That is not a shortcut. It is a design decision.
+      </p>
+ 
+      <div class="concept-block" data-label="Key Principle">
+        <p>
+          For small websites, maintainability is often about visibility, not abstraction.
+        </p>
+      </div>
+ 
+      <h3>It improves AI collaboration</h3>
+      <p>
+        LLMs work best on things that are locally coherent — where the HTML,
+        the relevant CSS, and the interaction logic sit close enough
+        to be understood together.
+      </p>
+      <p>
+        When structure is highly distributed — styles in a separate file,
+        components spread across imports, class names shared across contexts —
+        the model is more likely to change the wrong thing,
+        affect an unrelated section, or optimise for the wrong scope.
+      </p>
+      <p>
+        Locality reduces that surface area.
+        Not because the AI cannot handle complexity,
+        but because smaller, clearer units are easier to modify correctly.
+      </p>
+ 
+      <h3>It survives time</h3>
+      <p>
+        For SME sites and personal projects, the real test of a structure
+        is not whether an engineer would approve of it today.
+        It is whether <em>you</em> can still read it six months from now,
+        open it cold, and know exactly what to change.
+      </p>
+      <p>
+        If that is true, the structure is working.
+      </p>
+ 
+      <div class="article-divider"><span>一</span></div>
+ 
+      <!-- ── SECTION: THE FAIR CAVEAT ── -->
+      <h2 id="the-caveat">The fair <em>caveat</em></h2>
+      <p>
+        This is not an argument against modular CSS.
+        At scale — with multiple contributors, shared component libraries,
+        design systems that span dozens of pages — separation is the right call.
+      </p>
+      <p>
+        The point is not that one approach is correct and the other is not.
+        The point is that the decision should follow from context,
+        not from convention.
+      </p>
+      <p>
+        The question to ask is not: <em>what is the standard way?</em>
+        The question is: <em>who is going to maintain this, and what makes
+        that easiest for them?</em>
+      </p>
+ 
+      <div class="article-divider"><span>一</span></div>
+ 
+      <!-- ── SECTION: CLOSING ── -->
+      <h2 id="closing"><em>Redefining</em> maintainability</h2>
+      <p>
+        In formal engineering, maintainability means abstraction — systems
+        that are decoupled, modular, independently testable.
+      </p>
+      <p>
+        For small websites, it means something else.
+        It means: the next person who opens this file —
+        whether that is a collaborator, a client, an AI, or yourself —
+        can understand it, locate what needs changing, and change it
+        without breaking anything else.
+      </p>
+      <p>
+        That is a different definition.
+        But it is not a lesser one.
+      </p>
+      <p>
+        The best structure is not the most architecturally pure.
+        It is the most appropriate — for the site, the stage, and the person doing the work.
+      </p>
+      <figure class="article-figure">
+      <img src="/blog/diagram/locality-decision-tree.png" alt="Decision tree for choosing structure" />
+      <figcaption>Structure follows context, not convention</figcaption>
+      </figure>
+      <div class="article-divider"><span>一</span></div>
+</article>
+
+<!-- SIDEBAR -->
+    <aside class="article-sidebar">
+      <div class="sidebar-block">
+        <div class="sidebar-label">In this post</div>
+        <ul class="toc-list">
+          <li><a href="#received-wisdom" class="toc-active">The received wisdom</a></li>
+          <li><a href="#real-question">The real question</a></li>
+          <li><a href="#what-locality-does">What locality does</a></li>
+          <li><a href="#the-caveat">The fair caveat</a></li>
+          <li><a href="#closing">Redefining maintainability</a></li>
+        </ul>
+      </div>
+      <div class="sidebar-block">
+        <div class="sidebar-label">Tags</div>
+        <div class="tag-cloud">
+          <span class="meta-tag">Observations</span>
+          <span class="meta-tag">AI Workflow</span>
+          <span class="meta-tag">Web Structure</span>
+          <span class="meta-tag">SME Design</span>
+          <span class="meta-tag">Judgment</span>
+        </div>
+      </div>
+      <div class="sidebar-block sidebar-about">
+        <div class="sidebar-label">About this series</div>
+        <p>Observations captures thinking in progress — patterns noticed, decisions examined, and the reasoning behind how ICHIGO works.
+        </p>
+        <a href="/blog.html" class="btn-ghost">More Observations →</a>
+      </div>
+    </aside>
+  </div>
+
+ <!-- POST FOOTER NAV -->
+  <div class="article-footer">
+    <div class="article-footer-inner">
+      <a href="/blog/20260403dilution" class="footer-nav-cell">
+        <div class="fnc-direction">← Previous</div>
+        <div class="fnc-title">Dilution Structured
+— v1 to v5</div>
+        <span class="fnc-category">Studio Builds</span>
+      </a>
+      <a href="/blog.html" class="footer-nav-cell center">
+        <div class="back-all-kanji">一</div>
+        <div class="back-all-label">All Posts</div>
+      </a>
+      <a href="#" class="footer-nav-cell">
+        <div class="fnc-direction">Next →</div>
+        <div class="fnc-title">The three layers of the ICHIGO Method</div>
+        <span class="fnc-category">The Method</span>
+      </a>
+    </div>
+  </div>
+
+ <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    <span class="footer-copy">© 2026 ICHIGO Studio. All rights reserved.</span>
+    <a href="index.html" class="footer-logo-text">ICHIGO <span>Studio</span></a>
+  </footer>
+  
+  <script>
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    if (cursor && ring) {
+      document.addEventListener('mousemove', e => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top  = e.clientY + 'px';
+        ring.style.left   = e.clientX + 'px';
+        ring.style.top    = e.clientY + 'px';
+      });
+      document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursor.style.width = '16px'; cursor.style.height = '16px';
+          ring.style.width   = '48px'; ring.style.height  = '48px';
+          ring.style.borderColor = 'var(--blush)';
+        });
+        el.addEventListener('mouseleave', () => {
+          cursor.style.width = '10px'; cursor.style.height = '10px';
+          ring.style.width   = '36px'; ring.style.height  = '36px';
+          ring.style.borderColor = 'var(--ink)';
+        });
+      });
+    }
+
+// TOC scroll highlight
+    const headings = document.querySelectorAll('[id]');
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      headings.forEach(h => {
+        if (window.scrollY >= h.offsetTop - 160) current = h.id;
+      });
+      tocLinks.forEach(a => {
+        const href = a.getAttribute('href').replace('#','');
+        a.classList.toggle('toc-active', href === current);
+      });
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
