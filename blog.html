@@ -488,9 +488,20 @@
           </div>
         </div>
         <div class="quarter-posts">
-
-          <!-- POST 01 -->
-          <div class="post-card cat-studio-builds" onclick="openModal('modal-01')" data-cat="cat-studio-builds">
+         <!-- POST 04 -->
+          <div class="post-card cat-observations" onclick="openModal('modal-04')" data-cat="cat-observations">
+            <div class="post-card-inner">
+              <div class="post-icon"><span>知</span></div>
+              <div class="post-summary">
+                <div class="post-category">Observations</div>
+                <h2 class="post-title">The Received Wisdom</h2>
+                <p class="post-excerpt">The best practice for a team of twenty is not the best practice for a team of one.</p>
+              </div>
+              <span class="post-arrow">→</span>
+            </div>
+          </div>
+          <!-- POST 03 -->
+          <div class="post-card cat-studio-builds" onclick="openModal('modal-03')" data-cat="cat-studio-builds">
             <div class="post-card-inner">
               <div class="post-icon"><span>構</span></div>
               <div class="post-summary">
@@ -515,8 +526,8 @@
             </div>
           </div>
 
-          <!-- POST 03 -->
-          <div class="post-card cat-the-method" onclick="openModal('modal-03')" data-cat="cat-the-method">
+          <!-- POST 01 -->
+          <div class="post-card cat-the-method" onclick="openModal('modal-01')" data-cat="cat-the-method">
             <div class="post-card-inner">
               <div class="post-icon"><span>一</span></div>
               <div class="post-summary">
@@ -551,11 +562,52 @@
   <!-- ══════════════════════════════════
        MODALS
   ════════════════════════════════════ -->
-
-  <!-- MODAL 01 — Studio Builds -->
-  <div class="modal-overlay" id="modal-01" onclick="closeModalOnOverlay(event,'modal-01')">
+  <!-- MODAL 04 — Observations -->
+  <div class="modal-overlay" id="modal-04" onclick="closeModalOnOverlay(event,'modal-04')">
     <div class="modal-card modal-cat-studio-builds">
-      <button class="modal-close" onclick="closeModal('modal-01')">Close ✕</button>
+      <button class="modal-close" onclick="closeModal('modal-04')">Close ✕</button>
+      <div class="modal-cat-bar">
+        <span class="modal-category">Observation</span>
+      </div>
+      <div class="modal-header">
+        <h2 class="modal-title">The Recevied Wisdom</h2>
+        <p class="modal-lede">The best practice for a team of twenty is not the best for a team of one.</p>
+      </div>
+      <div class="modal-meta">
+        <div class="modal-meta-row">
+          <div class="meta-key">Published</div>
+          <div class="meta-val">April 2026</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Read time</div>
+          <div class="meta-val">~8 min</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Series</div>
+          <div class="meta-val">Observations</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Versions</div>
+          <div class="meta-val">v1</div>
+        </div>
+      </div>
+      <div class="modal-tags">
+        <span class="modal-tag">Observations</span>
+        <span class="modal-tag">AI Workflow</span>
+        <span class="modal-tag">Web Structure</span>
+        <span class="modal-tag">SME</span>
+        <span class="modal-tag">Design Judgment</span>
+      </div>
+      <div class="modal-cta">
+        <p class="modal-cta-text">A short field note on<br>how we write HTML codes.</p>
+        <a href="/blog/20260412CSS.html" class="btn-read">Read full entry →</a>
+      </div>
+    </div>
+  </div>
+  <!-- MODAL 03 — Studio Builds -->
+  <div class="modal-overlay" id="modal-03" onclick="closeModalOnOverlay(event,'modal-03')">
+    <div class="modal-card modal-cat-studio-builds">
+      <button class="modal-close" onclick="closeModal('modal-03')">Close ✕</button>
       <div class="modal-cat-bar">
         <span class="modal-category">Studio Builds</span>
       </div>
@@ -637,10 +689,10 @@
     </div>
   </div>
 
-  <!-- MODAL 03 — The Method -->
-  <div class="modal-overlay" id="modal-03" onclick="closeModalOnOverlay(event,'modal-03')">
+  <!-- MODAL 01 — The Method -->
+  <div class="modal-overlay" id="modal-01" onclick="closeModalOnOverlay(event,'modal-01')">
     <div class="modal-card modal-cat-the-method">
-      <button class="modal-close" onclick="closeModal('modal-03')">Close ✕</button>
+      <button class="modal-close" onclick="closeModal('modal-01')">Close ✕</button>
       <div class="modal-cat-bar">
         <span class="modal-category">The Method</span>
       </div>
