@@ -483,17 +483,29 @@
     <!-- FEED -->
     <div class="blog-feed">
 
-      <!-- ── Q1 2026 — open by default ── -->
-      <div class="quarter-block open" id="q1-2026">
+      <!-- ── Q2 2026 — open by default ── -->
+      <div class="quarter-block open" id="q2-2026">
         <div class="quarter-header" onclick="toggleQuarter('q1-2026')">
-          <span class="quarter-label">Q1 · 2026</span>
+          <span class="quarter-label">Q2 · 2026</span>
           <div class="quarter-meta">
-            <span>3 entries</span>
+            <span>2 entries</span>
             <span class="quarter-toggle">+</span>
           </div>
         </div>
         <div class="quarter-posts">
-         <!-- POST 04 -->
+<!-- POST 05 -->
+          <div class="post-card cat-observations" onclick="openModal('modal-05')" data-cat="cat-observations">
+            <div class="post-card-inner">
+              <div class="post-icon"><span>知</span></div>
+              <div class="post-summary">
+                <div class="post-category">Observations</div>
+                <h2 class="post-title">Two Tools, Two Kinds of Thinking</h2>
+                <p class="post-excerpt">This is a thinking piece about tool selection, not a build log.</p>
+              </div>
+              <span class="post-arrow">→</span>
+            </div>
+          </div>            
+<!-- POST 04 -->
           <div class="post-card cat-observations" onclick="openModal('modal-04')" data-cat="cat-observations">
             <div class="post-card-inner">
               <div class="post-icon"><span>知</span></div>
@@ -505,7 +517,24 @@
               <span class="post-arrow">→</span>
             </div>
           </div>
-          <!-- POST 03 -->
+         
+        </div>
+      </div>
+
+<!-- ── Q1-2026 — collapsed ── -->
+      <div class="quarter-block" id="11-2026">
+        <div class="quarter-header" onclick="toggleQuarter('q1-2026')">
+          <span class="quarter-label">Q1 · 2026</span>
+          <div class="quarter-meta">
+            <span>3 entries</span>
+            <span class="quarter-toggle">+</span>
+          </div>
+        </div>
+        <div class="quarter-posts">
+          <p style="padding: 28px 0; font-size: 0.82rem; color: var(--muted);">Further entries will be published as documentation is completed.</p>
+        </div>
+      </div>
+<!-- POST 03 -->
           <div class="post-card cat-studio-builds" onclick="openModal('modal-03')" data-cat="cat-studio-builds">
             <div class="post-card-inner">
               <div class="post-icon"><span>構</span></div>
@@ -517,8 +546,7 @@
               <span class="post-arrow">→</span>
             </div>
           </div>
-
-          <!-- POST 02 -->
+<!-- POST 02 -->
           <div class="post-card cat-observations" onclick="openModal('modal-02')" data-cat="cat-observations">
             <div class="post-card-inner">
               <div class="post-icon"><span>知</span></div>
@@ -530,8 +558,7 @@
               <span class="post-arrow">→</span>
             </div>
           </div>
-
-          <!-- POST 01 -->
+<!-- POST 01 -->
           <div class="post-card cat-the-method" onclick="openModal('modal-01')" data-cat="cat-the-method">
             <div class="post-card-inner">
               <div class="post-icon"><span>一</span></div>
@@ -543,30 +570,55 @@
               <span class="post-arrow">→</span>
             </div>
           </div>
-
-        </div>
-      </div>
-
-      <!-- ── Earlier — collapsed ── -->
-      <div class="quarter-block" id="q-earlier">
-        <div class="quarter-header" onclick="toggleQuarter('q-earlier')">
-          <span class="quarter-label">Earlier entries</span>
-          <div class="quarter-meta">
-            <span>Coming soon</span>
-            <span class="quarter-toggle">+</span>
-          </div>
-        </div>
-        <div class="quarter-posts">
-          <p style="padding: 28px 0; font-size: 0.82rem; color: var(--muted);">Further entries will be published as documentation is completed.</p>
-        </div>
-      </div>
-
     </div>
   </div>
 
   <!-- ══════════════════════════════════
        MODALS
   ════════════════════════════════════ -->
+<!-- MODAL 05 — Observations -->
+  <div class="modal-overlay" id="modal-05" onclick="closeModalOnOverlay(event,'modal-05')">
+    <div class="modal-card modal-cat-studio-builds">
+      <button class="modal-close" onclick="closeModal('modal-05')">Close ✕</button>
+      <div class="modal-cat-bar">
+        <span class="modal-category">Observation</span>
+      </div>
+      <div class="modal-header">
+        <h2 class="modal-title">Two Tools, Two Kinds of Thinking</h2>
+        <p class="modal-lede">This is a thinking piece about tool selection, not a build log.</p>
+      </div>
+      <div class="modal-meta">
+        <div class="modal-meta-row">
+          <div class="meta-key">Published</div>
+          <div class="meta-val">May 2026</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Read time</div>
+          <div class="meta-val">~5 min</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Series</div>
+          <div class="meta-val">Observations</div>
+        </div>
+        <div class="modal-meta-row">
+          <div class="meta-key">Versions</div>
+          <div class="meta-val">v1</div>
+        </div>
+      </div>
+      <div class="modal-tags">
+        <span class="modal-tag">Observations</span>
+        <span class="modal-tag">AI Workflow</span>
+        <span class="modal-tag">AI Tools</span>
+        <span class="modal-tag">NotebookLM</span>
+        <span class="modal-tag">Aromatherapy</span>
+        <span class="modal-tag">Tool Selection</span>
+      </div>
+      <div class="modal-cta">
+        <p class="modal-cta-text">A short field note on<br>how we pick our study buddy.</p>
+        <a href="/blog/20260523TT.html" class="btn-read">Read full entry →</a>
+      </div>
+    </div>
+  </div>
   <!-- MODAL 04 — Observations -->
   <div class="modal-overlay" id="modal-04" onclick="closeModalOnOverlay(event,'modal-04')">
     <div class="modal-card modal-cat-studio-builds">
