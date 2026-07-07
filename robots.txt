@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Pages
+Allow: /index.html
+Allow: /ichigo-method.html
+Allow: /work.html
+Allow: /blog.html
+Allow: /blog/
+
+# Sitemap
+Sitemap: https://ichigo.studio/sitemap.xml
