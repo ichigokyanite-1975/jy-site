@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ICHIGO Aromatherapy — Scent, Ritual & Custom Blends | Singapore</title>
+  <meta name="description" content="ICHIGO Aromatherapy offers personalised aromatherapy consultations and custom blends in Singapore. Rooted in ritual, designed for your body and life." />
+  <meta name="keywords" content="aromatherapy Singapore, custom essential oil blends, aromatherapy consultation Singapore, ICHIGO Aromatherapy" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://ichigo.studio/aromatherapy.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ichigo.studio/aromatherapy.html" />
+  <meta property="og:title" content="ICHIGO Aromatherapy — Scent, Ritual & Custom Blends" />
+  <meta property="og:description" content="Personalised aromatherapy consultations and custom blends in Singapore. Rooted in ritual, designed for your body and life." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@200;300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink:         #0e0c0c;
+      --off-white:   #f7f4f0;
+      --warm-white:  #fdfbf8;
+      --blush:       #e8a2ad;
+      --blush-light: #f3d5da;
+      --muted:       #8a8480;
+      --border:      rgba(14,12,12,0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--warm-white); color: var(--ink);
+      font-family: 'DM Sans', sans-serif; font-weight: 300;
+      overflow-x: hidden; cursor: auto;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 56px;
+      background: rgba(253,251,248,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a {
+      font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none; opacity: 0.55;
+      transition: opacity 0.2s; font-family: 'DM Sans', sans-serif; font-weight: 400;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .nav-links a.active { opacity: 1; color: var(--blush); }
+    .nav-item { position: relative; }
+    .nav-item:hover .nav-dropdown { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+    .nav-dropdown {
+      position: absolute; top: calc(100% + 16px); left: 50%;
+      transform: translateX(-50%) translateY(6px);
+      background: var(--warm-white); border: 1px solid var(--border);
+      min-width: 180px; display: flex; flex-direction: column;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease; z-index: 200;
+    }
+    .nav-dropdown a {
+      font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none; padding: 12px 18px;
+      border-bottom: 1px solid var(--border); opacity: 0.6;
+      transition: opacity 0.15s, background 0.15s; display: block;
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+    }
+    .nav-dropdown a:last-child { border-bottom: none; }
+    .nav-dropdown a:hover { opacity: 1; background: var(--off-white); }
+
+    /* ── SHARED ── */
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 14px;
+      font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif; font-weight: 400; color: var(--blush);
+    }
+    .eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--blush); }
+
+    .btn-primary {
+      display: inline-block; padding: 14px 36px;
+      background: var(--ink); color: var(--off-white);
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      text-decoration: none; font-family: 'DM Sans', sans-serif; font-weight: 400;
+      border: 1px solid var(--ink); transition: background 0.25s, color 0.25s;
+    }
+    .btn-primary:hover { background: transparent; color: var(--ink); }
+
+    .btn-ghost {
+      display: inline-block;
+      font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; font-family: 'DM Sans', sans-serif;
+      border-bottom: 1px solid var(--muted); padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      padding: 0 56px;
+      position: relative; overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-bg-kanji {
+      position: absolute;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 52vw; font-weight: 200;
+      color: rgba(232,162,173,0.06);
+      bottom: -8vw; right: -6vw;
+      user-select: none; pointer-events: none; line-height: 1;
+    }
+    .hero-left {
+      display: flex; flex-direction: column;
+      justify-content: flex-end; padding-bottom: 100px;
+      position: relative; z-index: 2;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 14px;
+      font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif; color: var(--blush);
+      margin-bottom: 28px;
+      opacity: 0; animation: fadeUp 0.9s 0.2s ease forwards;
+    }
+    .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--blush); }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 6vw, 7rem);
+      font-weight: 300; line-height: 0.95;
+      letter-spacing: -0.02em; color: var(--ink);
+      margin-bottom: 36px;
+      opacity: 0; animation: fadeUp 1s 0.4s ease forwards;
+    }
+    .hero-title em { font-style: italic; color: var(--blush); }
+    .hero-sub {
+      font-size: 0.88rem; line-height: 2; color: var(--muted); max-width: 400px;
+      margin-bottom: 48px;
+      opacity: 0; animation: fadeUp 1s 0.6s ease forwards;
+    }
+    .hero-cta {
+      display: flex; align-items: center; gap: 28px;
+      opacity: 0; animation: fadeUp 1s 0.8s ease forwards;
+    }
+
+    /* Hero right — decorative scent circles */
+    .hero-right {
+      display: flex; align-items: center; justify-content: center;
+      position: relative; z-index: 1;
+    }
+    .hero-deco { position: relative; width: 400px; height: 500px; }
+    .deco-ring {
+      position: absolute; border-radius: 50%;
+      border: 1px solid var(--blush-light);
+      opacity: 0; animation: scaleIn 1.4s ease forwards;
+    }
+    .deco-ring-1 { width: 340px; height: 340px; top: 60px; left: 30px; animation-delay: 0.3s; }
+    .deco-ring-2 { width: 220px; height: 220px; top: 130px; left: 90px; border-color: var(--blush); animation-delay: 0.6s; }
+    .deco-ring-3 { width: 100px; height: 100px; top: 190px; left: 150px; background: var(--blush-light); border: none; animation-delay: 0.9s; }
+    .deco-kanji {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      font-family: 'Noto Serif JP', serif; font-size: 5rem; font-weight: 200;
+      color: rgba(232,162,173,0.25); user-select: none;
+      opacity: 0; animation: fadeUp 1.5s 0.8s ease forwards;
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* ── INTRO ── */
+    .intro-section {
+      padding: 120px 56px;
+      display: grid; grid-template-columns: 1fr 1.6fr;
+      gap: 100px; align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .intro-left { position: relative; }
+    .intro-visual {
+      width: 100%; aspect-ratio: 3/4;
+      background: linear-gradient(160deg, var(--blush-light) 0%, var(--off-white) 100%);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .intro-visual-kanji {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 8rem; font-weight: 200;
+      color: rgba(232,162,173,0.2);
+      user-select: none;
+    }
+    .intro-visual-tag {
+      position: absolute; bottom: -18px; right: -18px;
+      width: 90px; height: 90px;
+      background: var(--ink);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .intro-visual-tag span {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.6rem; font-weight: 200; color: var(--blush);
+    }
+    .intro-right {}
+    .section-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem; font-weight: 300;
+      color: rgba(14,12,12,0.05); line-height: 1; margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.9rem, 2.8vw, 2.8rem);
+      font-weight: 300; line-height: 1.15; color: var(--ink);
+      margin-bottom: 28px;
+    }
+    .section-title em { font-style: italic; color: var(--blush); }
+    .body-text {
+      font-size: 0.88rem; line-height: 2.1; color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .intro-divider { width: 48px; height: 1px; background: var(--blush); margin: 32px 0; }
+
+    /* ── OFFERINGS ── */
+    .offerings-section {
+      padding: 120px 56px;
+      border-bottom: 1px solid var(--border);
+    }
+    .offerings-header {
+      display: grid; grid-template-columns: 1fr 1.6fr;
+      gap: 100px; margin-bottom: 80px;
+    }
+    .offerings-intro { font-size: 0.88rem; line-height: 2.1; color: var(--muted); align-self: end; }
+
+    .offerings-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2px; border: 1px solid var(--border);
+    }
+    .offering-card {
+      padding: 56px 48px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+      transition: background 0.3s;
+    }
+    .offering-card:nth-child(even) { border-right: none; }
+    .offering-card:nth-last-child(-n+2) { border-bottom: none; }
+    .offering-card:hover { background: var(--off-white); }
+    .offering-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 2px; background: var(--blush);
+      transition: width 0.4s ease;
+    }
+    .offering-card:hover::after { width: 100%; }
+
+    .offering-kanji {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 2rem; font-weight: 200; color: var(--blush);
+      margin-bottom: 20px; display: block;
+    }
+    .offering-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.78rem; color: var(--blush); letter-spacing: 0.15em;
+      margin-bottom: 16px; display: block;
+    }
+    .offering-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 400; color: var(--ink);
+      line-height: 1.2; margin-bottom: 16px;
+    }
+    .offering-desc {
+      font-size: 0.82rem; line-height: 1.9; color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .offering-tag {
+      display: inline-block;
+      font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+      border: 1px solid var(--blush); color: var(--blush);
+      padding: 5px 12px; font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ── RITUAL ── */
+    .ritual-section {
+      padding: 120px 56px;
+      background: var(--off-white);
+      border-bottom: 1px solid var(--border);
+    }
+    .ritual-header {
+      display: grid; grid-template-columns: 1fr 1.6fr;
+      gap: 100px; margin-bottom: 80px;
+    }
+    .ritual-intro { font-size: 0.88rem; line-height: 2.1; color: var(--muted); align-self: end; }
+
+    .ritual-steps { display: flex; flex-direction: column; }
+    .ritual-step {
+      display: grid; grid-template-columns: 56px 1fr;
+      gap: 40px; padding: 36px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+    .ritual-step:first-child { border-top: 1px solid var(--border); }
+    .ritual-step-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem; font-weight: 300;
+      color: rgba(232,162,173,0.35); line-height: 1;
+    }
+    .ritual-step-content {}
+    .ritual-step-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 400; color: var(--ink);
+      margin-bottom: 10px;
+    }
+    .ritual-step-desc {
+      font-size: 0.82rem; line-height: 1.9; color: var(--muted);
+    }
+
+    /* ── SCENT NOTE — pull quote ── */
+    .scent-note {
+      padding: 100px 56px;
+      display: flex; align-items: center; justify-content: center;
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .scent-note-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 60% 50%, rgba(232,162,173,0.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .scent-note-inner { max-width: 680px; text-align: center; position: relative; z-index: 1; }
+    .scent-note-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 300; line-height: 1.4;
+      color: var(--ink); font-style: italic;
+      margin-bottom: 24px;
+    }
+    .scent-note-quote em { color: var(--blush); }
+    .scent-note-attr {
+      font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--muted); font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 140px 56px;
+      background: var(--ink); color: var(--off-white);
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 100px; align-items: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute; top: -200px; right: -200px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(232,162,173,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-eyebrow {
+      font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--blush); font-family: 'DM Sans', sans-serif; margin-bottom: 24px;
+    }
+    .cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 4vw, 4.2rem);
+      font-weight: 300; line-height: 1.05;
+    }
+    .cta-title em { font-style: italic; color: var(--blush); }
+    .cta-right { display: flex; flex-direction: column; gap: 28px; }
+    .cta-body { font-size: 0.86rem; line-height: 2; color: rgba(247,244,240,0.5); }
+    .contact-link-label {
+      font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--blush); margin-bottom: 8px; font-family: 'DM Sans', sans-serif;
+    }
+    .contact-link {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; color: var(--off-white);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(247,244,240,0.15);
+      padding-bottom: 12px; margin-bottom: 24px; display: block;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .contact-link:hover { color: var(--blush); border-color: var(--blush); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 28px 56px;
+      border-top: 1px solid rgba(247,244,240,0.08);
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--ink); color: rgba(247,244,240,0.3);
+    }
+    .footer-copy { font-size: 0.65rem; letter-spacing: 0.15em; font-family: 'DM Sans', sans-serif; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 22px 28px; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 120px 28px 80px; min-height: auto; }
+      .hero-right { display: none; }
+      .intro-section,
+      .offerings-header,
+      .ritual-header,
+      .cta-section { grid-template-columns: 1fr; gap: 48px; padding: 80px 28px; }
+      .intro-left { display: none; }
+      .offerings-section, .ritual-section { padding: 80px 28px; }
+      .offerings-grid { grid-template-columns: 1fr; }
+      .offering-card { border-right: none; }
+      .scent-note { padding: 72px 28px; }
+      footer { padding: 22px 28px; flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/index.html"><img src="BG removed logo.png" alt="ICHIGO Studio" style="height:38px; display:block;" /></a>
+    <ul class="nav-links">
+      <li class="nav-item">
+        <a href="/ichigo-method.html">The Method</a>
+        <div class="nav-dropdown">
+          <a href="/ichigo-method.html">The ICHIGO Method</a>
+          <a href="/work.html">Selected Work</a>
+          <a href="/blog.html">Work Blog</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="/index.html#about">About</a>
+        <div class="nav-dropdown">
+          <a href="/index.html#about">About the Studio</a>
+          <a href="/founder.html">About the Founder</a>
+        </div>
+      </li>
+      <li><a href="/index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ① HERO -->
+  <section class="hero">
+    <div class="hero-bg-kanji">香</div>
+    <div class="hero-left">
+      <div class="hero-eyebrow">ICHIGO Aromatherapy</div>
+      <h1 class="hero-title">
+        Scent as<br>
+        <em>ritual.</em><br>
+        Designed<br>
+        for you.
+      </h1>
+      <p class="hero-sub">Personalised aromatherapy consultations and custom blends — crafted around your body, your rhythm, and your life.</p>
+      <div class="hero-cta">
+        <a href="https://wa.me/6580978928?text=Hello%2C%20I%27d%20like%20to%20enquire%20about%20ICHIGO%20Aromatherapy." class="btn-primary" target="_blank" rel="noopener">Enquire via WhatsApp</a>
+        <a href="#offerings" class="btn-ghost">See what's offered ↓</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-deco">
+        <div class="deco-ring deco-ring-1"></div>
+        <div class="deco-ring deco-ring-2"></div>
+        <div class="deco-ring deco-ring-3"></div>
+        <div class="deco-kanji">香</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ② INTRO -->
+  <section class="intro-section">
+    <div class="intro-left">
+      <div class="intro-visual">
+        <span class="intro-visual-kanji">香</span>
+        <div class="intro-visual-tag"><span>一</span></div>
+      </div>
+    </div>
+    <div class="intro-right">
+      <div class="section-number">—</div>
+      <h2 class="section-title">Not a product.<br>A <em>practice.</em></h2>
+      <p class="body-text">Aromatherapy is one of the oldest forms of intentional care. Not a trend, not a shortcut — a practice rooted in the relationship between scent, the nervous system, and the rhythms of daily life.</p>
+      <p class="body-text">At ICHIGO, we approach it with the same care we bring to everything else: with structure, with intention, and with genuine attention to the person in front of us. Every consultation begins with listening. Every blend begins with you.</p>
+      <div class="intro-divider"></div>
+      <p class="body-text">Whether you are navigating stress, sleep, emotional balance, or simply looking to build a more considered daily ritual — we work with you to find what fits.</p>
+    </div>
+  </section>
+
+  <!-- ③ OFFERINGS -->
+  <section class="offerings-section" id="offerings">
+    <div class="offerings-header">
+      <div>
+        <div class="section-number">—</div>
+        <h2 class="section-title">What we<br><em>offer</em></h2>
+      </div>
+      <p class="offerings-intro">Each offering is designed to be used together or independently — depending on where you are and what you need. Nothing is prescriptive. Everything is personal.</p>
+    </div>
+    <div class="offerings-grid">
+
+      <div class="offering-card">
+        <span class="offering-kanji">話</span>
+        <span class="offering-number">01</span>
+        <h3 class="offering-title">Personalised Consultation</h3>
+        <p class="offering-desc">A 1-on-1 session to understand your body, your lifestyle, and your intentions. We discuss your current state — physically and emotionally — and design an aromatherapy approach that makes sense for your life, not a generic protocol.</p>
+        <span class="offering-tag">By appointment</span>
+      </div>
+
+      <div class="offering-card">
+        <span class="offering-kanji">調</span>
+        <span class="offering-number">02</span>
+        <h3 class="offering-title">Custom Blends</h3>
+        <p class="offering-desc">Formulated specifically for you, following a consultation or brief. Each custom blend is created from high-quality essential oils, designed for a specific purpose — sleep, focus, calm, energy, or emotional grounding. No two blends are the same.</p>
+        <span class="offering-tag">Made to order</span>
+      </div>
+
+      <div class="offering-card">
+        <span class="offering-kanji">香</span>
+        <span class="offering-number">03</span>
+        <h3 class="offering-title">Ready-Made Blends</h3>
+        <p class="offering-desc">A curated selection of blends developed through practice and refined over time. These are available for purchase directly — for those who want to begin immediately, or who have a clear sense of what they are looking for.</p>
+        <span class="offering-tag">Available now</span>
+      </div>
+
+      <div class="offering-card">
+        <span class="offering-kanji">間</span>
+        <span class="offering-number">04</span>
+        <h3 class="offering-title">Ritual Design</h3>
+        <p class="offering-desc">For those who want more than a product — a designed daily ritual using scent as the anchor. We help you build a simple, sustainable practice that fits into your existing life, using the blends as a guide for different moments of the day.</p>
+        <span class="offering-tag">Consultation-based</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ④ HOW A CONSULTATION WORKS -->
+  <section class="ritual-section">
+    <div class="ritual-header">
+      <div>
+        <div class="section-number">—</div>
+        <h2 class="section-title">How a<br>consultation<br><em>works</em></h2>
+      </div>
+      <p class="ritual-intro">A consultation is a conversation, not an assessment. There is no right or wrong answer — only what is true for you at this point in time. This is how we approach it.</p>
+    </div>
+    <div class="ritual-steps">
+      <div class="ritual-step">
+        <div class="ritual-step-num">01</div>
+        <div class="ritual-step-content">
+          <h3 class="ritual-step-title">We begin with listening</h3>
+          <p class="ritual-step-desc">You share what is present for you — physically, emotionally, practically. There is no agenda. We are simply trying to understand what your body and life actually need right now, not what a standard protocol would suggest.</p>
+        </div>
+      </div>
+      <div class="ritual-step">
+        <div class="ritual-step-num">02</div>
+        <div class="ritual-step-content">
+          <h3 class="ritual-step-title">We explore the options together</h3>
+          <p class="ritual-step-desc">Based on what we've discussed, we explore scent profiles, application methods, and timing. You are involved in every choice — the blend should feel right to you, not just correct on paper.</p>
+        </div>
+      </div>
+      <div class="ritual-step">
+        <div class="ritual-step-num">03</div>
+        <div class="ritual-step-content">
+          <h3 class="ritual-step-title">We formulate your blend</h3>
+          <p class="ritual-step-desc">Your custom blend is prepared with care — proportions considered, intentions noted. You receive it with clear guidance on how to use it, when, and why each element is there.</p>
+        </div>
+      </div>
+      <div class="ritual-step">
+        <div class="ritual-step-num">04</div>
+        <div class="ritual-step-content">
+          <h3 class="ritual-step-title">We follow up</h3>
+          <p class="ritual-step-desc">A good blend evolves with you. We check in after you have had time to use it, and adjust if needed. The intention is not a one-time transaction — it is a practice that grows.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑤ SCENT PULL QUOTE -->
+  <section class="scent-note">
+    <div class="scent-note-bg"></div>
+    <div class="scent-note-inner">
+      <p class="scent-note-quote">Scent reaches the parts of us that words cannot.<br>A good blend is not a solution —<br>it is a <em>reminder</em>.</p>
+      <p class="scent-note-attr">ICHIGO Aromatherapy</p>
+    </div>
+  </section>
+
+  <!-- ⑥ CTA -->
+  <section class="cta-section">
+    <div>
+      <div class="cta-eyebrow">Begin Here</div>
+      <h2 class="cta-title">Start with<br>a <em>conversation.</em></h2>
+    </div>
+    <div class="cta-right">
+      <p class="cta-body">Every consultation begins with a conversation over WhatsApp. Share a little about what you are looking for, and we will take it from there — no pressure, no commitment required before we speak.</p>
+      <div>
+        <div class="contact-link-label">WhatsApp</div>
+        <a href="https://wa.me/6580978928?text=Hello%2C%20I%27d%20like%20to%20enquire%20about%20ICHIGO%20Aromatherapy." class="contact-link" target="_blank" rel="noopener">Start a conversation →</a>
+        <div class="contact-link-label">Email</div>
+        <a href="mailto:ichigo.kyanite@gmail.com" class="contact-link">ichigo.kyanite@gmail.com</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">© 2026 ICHIGO Studio. All rights reserved.</span>
+    <img src="BG removed logo.png" alt="ICHIGO Studio" style="height:28px; opacity:0.5;" />
+  </footer>
+
+</body>
+</html>
