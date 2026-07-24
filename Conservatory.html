@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Conservatory — ICHIGO</title>
+  <meta name="description" content="ICHIGO Conservatory — preserved florals, aromatherapy consultations, custom blends, and hands-on workshops in Singapore." />
+  <meta name="keywords" content="preserved flowers Singapore, aromatherapy Singapore, flower workshop Singapore, ICHIGO Conservatory" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://ichigo.studio/conservatory.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ichigo.studio/conservatory.html" />
+  <meta property="og:title" content="The Conservatory — ICHIGO" />
+  <meta property="og:description" content="Preserved florals, aromatherapy, and workshops rooted in craft, ritual, and care." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@200;300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink:         #0e0c0c;
+      --off-white:   #f7f4f0;
+      --warm-white:  #fdfbf8;
+      --blush:       #e8a2ad;
+      --blush-light: #f3d5da;
+      --muted:       #8a8480;
+      --border:      rgba(14,12,12,0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--warm-white); color: var(--ink);
+      font-family: 'DM Sans', sans-serif; font-weight: 300;
+      overflow-x: hidden; cursor: auto;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 56px;
+      background: rgba(253,251,248,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a {
+      font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none; opacity: 0.55;
+      transition: opacity 0.2s; font-family: 'DM Sans', sans-serif; font-weight: 400;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .nav-links a.active { opacity: 1; color: var(--blush); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 72vh; padding: 160px 56px 100px;
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .hero-bg {
+      position: absolute; font-family: 'Noto Serif JP', serif;
+      font-size: 46vw; font-weight: 200;
+      color: rgba(232,162,173,0.07);
+      bottom: -6vw; right: -3vw;
+      user-select: none; pointer-events: none; line-height: 1;
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 700px; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 14px;
+      font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif; color: var(--blush); margin-bottom: 28px;
+      opacity: 0; animation: fadeUp 0.9s 0.1s ease forwards;
+    }
+    .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--blush); }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 6.5vw, 8rem);
+      font-weight: 300; line-height: 0.92;
+      letter-spacing: -0.02em; color: var(--ink); margin-bottom: 36px;
+      opacity: 0; animation: fadeUp 1s 0.3s ease forwards;
+    }
+    .hero-title em { font-style: italic; color: var(--blush); }
+    .hero-sub {
+      font-size: 0.9rem; line-height: 2; color: var(--muted); max-width: 500px;
+      opacity: 0; animation: fadeUp 1s 0.5s ease forwards;
+    }
+
+    /* ── INTRO ── */
+    .intro-section {
+      padding: 100px 56px;
+      border-bottom: 1px solid var(--border);
+      display: grid; grid-template-columns: 1fr 1.6fr;
+      gap: 100px; align-items: center;
+    }
+    .intro-left { position: sticky; top: 120px; align-self: start; }
+    .section-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem; font-weight: 300;
+      color: rgba(14,12,12,0.05); line-height: 1; margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 2.6vw, 2.6rem);
+      font-weight: 300; line-height: 1.15; color: var(--ink);
+    }
+    .section-title em { font-style: italic; color: var(--blush); }
+    .body-text { font-size: 0.88rem; line-height: 2.1; color: var(--muted); margin-bottom: 20px; }
+
+    /* ── THREE DOORS ── */
+    .doors-section {
+      padding: 100px 56px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .doors-label {
+      font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--blush); font-family: 'DM Sans', sans-serif;
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 52px;
+    }
+    .doors-label::before { content: ''; display: block; width: 32px; height: 1px; background: var(--blush); }
+
+    .doors-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; border: 1px solid var(--border);
+    }
+
+    .door {
+      display: flex; flex-direction: column;
+      justify-content: space-between;
+      padding: 52px 44px;
+      text-decoration: none; color: var(--ink);
+      border-right: 1px solid var(--border);
+      position: relative; overflow: hidden;
+      min-height: 400px;
+      transition: background 0.3s;
+    }
+    .door:last-child { border-right: none; }
+    .door:hover { background: var(--off-white); }
+    .door::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 2px; background: var(--blush);
+      transition: width 0.45s ease;
+    }
+    .door:hover::after { width: 100%; }
+
+    /* Blush wash on hover bg */
+    .door::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 80%, rgba(232,162,173,0.1) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.4s;
+      pointer-events: none;
+    }
+    .door:hover::before { opacity: 1; }
+
+    .door-top {}
+    .door-kanji {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 3.5rem; font-weight: 200; color: var(--blush);
+      margin-bottom: 32px; display: block;
+      transition: transform 0.4s cubic-bezier(.23,1,.32,1);
+    }
+    .door:hover .door-kanji { transform: translateY(-4px); }
+
+    .door-num {
+      font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--muted); font-family: 'DM Sans', sans-serif;
+      margin-bottom: 14px; display: block;
+    }
+    .door-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.75rem; font-weight: 400; color: var(--ink);
+      line-height: 1.15; margin-bottom: 16px;
+      transition: color 0.2s;
+    }
+    .door:hover .door-title { color: var(--blush); }
+    .door-desc {
+      font-size: 0.8rem; line-height: 1.9; color: var(--muted);
+    }
+
+    .door-bottom { margin-top: 36px; }
+    .door-cta {
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif; color: var(--muted);
+      border-bottom: 1px solid var(--muted); padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+      display: inline-block;
+    }
+    .door:hover .door-cta { color: var(--ink); border-color: var(--ink); }
+
+    /* ── CONTACT STRIP ── */
+    .contact-strip {
+      padding: 80px 56px;
+      display: flex; align-items: center; justify-content: space-between; gap: 60px;
+      background: var(--ink);
+    }
+    .contact-strip-left {}
+    .strip-eyebrow {
+      font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--blush); font-family: 'DM Sans', sans-serif; margin-bottom: 16px;
+    }
+    .strip-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 300; color: var(--off-white); line-height: 1.1;
+    }
+    .strip-title em { font-style: italic; color: var(--blush); }
+    .strip-links { display: flex; gap: 24px; align-items: center; flex-shrink: 0; }
+    .strip-link {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; color: var(--off-white); text-decoration: none;
+      border-bottom: 1px solid rgba(247,244,240,0.15); padding-bottom: 8px;
+      transition: color 0.2s, border-color 0.2s; white-space: nowrap;
+    }
+    .strip-link:hover { color: var(--blush); border-color: var(--blush); }
+    .strip-divider { width: 1px; height: 40px; background: rgba(247,244,240,0.15); flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 28px 56px;
+      border-top: 1px solid rgba(247,244,240,0.08);
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--ink); color: rgba(247,244,240,0.3);
+    }
+    .footer-copy { font-size: 0.65rem; letter-spacing: 0.15em; font-family: 'DM Sans', sans-serif; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 22px 28px; }
+      .nav-links { display: none; }
+      .hero { padding: 120px 28px 80px; }
+      .intro-section { grid-template-columns: 1fr; gap: 48px; padding: 72px 28px; }
+      .intro-left { position: static; }
+      .doors-section { padding: 72px 28px; }
+      .doors-grid { grid-template-columns: 1fr; }
+      .door { border-right: none; border-bottom: 1px solid var(--border); min-height: auto; }
+      .door:last-child { border-bottom: none; }
+      .contact-strip { flex-direction: column; align-items: flex-start; padding: 72px 28px; }
+      footer { padding: 22px 28px; flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/index.html"><img src="BG removed logo.png" alt="ICHIGO Studio" style="height:38px; display:block;" /></a>
+    <ul class="nav-links">
+      <li><a href="/conservatory.html" class="active">Conservatory</a></li>
+      <li><a href="/aromatherapy.html">Aromatherapy</a></li>
+      <li><a href="/workshop.html">Workshops</a></li>
+      <li><a href="/index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ① HERO -->
+  <section class="hero">
+    <div class="hero-bg">室</div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">ICHIGO Conservatory</div>
+      <h1 class="hero-title">
+        Made with<br>care.<br><em>Kept</em><br>with intention.
+      </h1>
+      <p class="hero-sub">A space for things that are grown, crafted, and considered — preserved florals, aromatherapy, and workshops rooted in the pleasure of making something well.</p>
+    </div>
+  </section>
+
+  <!-- ② INTRO -->
+  <section class="intro-section">
+    <div class="intro-left">
+      <div class="section-number">—</div>
+      <h2 class="section-title">A different<br>side of<br><em>ICHIGO</em></h2>
+    </div>
+    <div>
+      <p class="body-text">ICHIGO began with flowers. Before the systems, the frameworks, and the client work — there were preserved blooms arranged on a table, scent blended in small batches, and the quiet satisfaction of making something by hand.</p>
+      <p class="body-text">The Conservatory is where that part of ICHIGO lives. It is slower, more tactile, and more personal than the studio work — but it shares the same underlying belief: that intention in the process shows in the result.</p>
+      <p class="body-text">Whether you are looking for something beautiful to keep, a scent designed around your life, or a few hours to make something with your hands — you are in the right place.</p>
+    </div>
+  </section>
+
+  <!-- ③ THREE DOORS -->
+  <section class="doors-section">
+    <div class="doors-label">Where would you like to go</div>
+    <div class="doors-grid">
+
+      <!-- AROMATHERAPY -->
+      <a href="/aromatherapy.html" class="door">
+        <div class="door-top">
+          <span class="door-kanji">香</span>
+          <span class="door-num">01</span>
+          <h2 class="door-title">Aromatherapy</h2>
+          <p class="door-desc">Personalised consultations and custom essential oil blends — designed around your body, your rhythm, and your daily life.</p>
+        </div>
+        <div class="door-bottom">
+          <span class="door-cta">Explore Aromatherapy →</span>
+        </div>
+      </a>
+
+      <!-- WORKSHOPS -->
+      <a href="/workshop.html" class="door">
+        <div class="door-top">
+          <span class="door-kanji">作</span>
+          <span class="door-num">02</span>
+          <h2 class="door-title">Workshops</h2>
+          <p class="door-desc">Hands-on sessions in preserved flower dome making and aromatherapy crafting — open to all levels, available for private groups.</p>
+        </div>
+        <div class="door-bottom">
+          <span class="door-cta">Explore Workshops →</span>
+        </div>
+      </a>
+
+      <!-- GALLERY & FLORALS -->
+      <a href="https://sites.google.com/view/ichigo1975" class="door" target="_blank" rel="noopener">
+        <div class="door-top">
+          <span class="door-kanji">花</span>
+          <span class="door-num">03</span>
+          <h2 class="door-title">Gallery & Florals</h2>
+          <p class="door-desc">Preserved flowers, handmade gifts, earrings, stationery, and seasonal pieces — available to browse and purchase online.</p>
+        </div>
+        <div class="door-bottom">
+          <span class="door-cta">Visit the Gallery →</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ④ CONTACT STRIP -->
+  <section class="contact-strip">
+    <div class="contact-strip-left">
+      <p class="strip-eyebrow">Get in touch</p>
+      <h2 class="strip-title">Not sure where<br>to start? <em>Just ask.</em></h2>
+    </div>
+    <div class="strip-links">
+      <a href="https://wa.me/6580978928?text=Hello%20ICHIGO%2C%20I%27d%20like%20to%20find%20out%20more." class="strip-link" target="_blank" rel="noopener">WhatsApp</a>
+      <div class="strip-divider"></div>
+      <a href="mailto:ichigo.kyanite@gmail.com" class="strip-link">ichigo.kyanite@gmail.com</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">© 2026 ICHIGO Studio. All rights reserved.</span>
+    <img src="BG removed logo.png" alt="ICHIGO Studio" style="height:28px; opacity:0.5;" />
+  </footer>
+
+</body>
+</html>
