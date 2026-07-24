@@ -3,9 +3,14 @@ Allow: /
 
 # Pages
 Allow: /index.html
+Allow: /studio.html
 Allow: /ichigo-method.html
 Allow: /work.html
 Allow: /blog.html
+Allow: /aromatherapy.html
+Allow: /conservatory.html
+Allow: /workshop.html
+Allow: /links.html
 Allow: /blog/
 
 # Sitemap
