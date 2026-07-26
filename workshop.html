@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Workshops — ICHIGO Conservatory</title>
-  <meta name="description" content="Hands-on workshops in Singapore — preserved flower dome making and aromatherapy product crafting. Private and group sessions available." />
-  <meta name="keywords" content="flower dome workshop Singapore, aromatherapy workshop Singapore, preserved flowers Singapore, ICHIGO workshop" />
+  <meta name="description" content="Hands-on workshops in Singapore — aromatherapy crafting and preserved floral making. Private and group sessions available. From $25 per pax." />
+  <meta name="keywords" content="flower dome workshop Singapore, aromatherapy workshop Singapore, preserved flowers Singapore, plaster painting workshop Singapore, ICHIGO workshop" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://ichigo.studio/workshop.html" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://ichigo.studio/workshop.html" />
   <meta property="og:title" content="Workshops — ICHIGO Conservatory" />
-  <meta property="og:description" content="Hands-on workshops in Singapore — flower dome making and aromatherapy crafting." />
+  <meta property="og:description" content="Hands-on aromatherapy and floral workshops in Singapore. From $25 per pax." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@200;300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -32,8 +32,14 @@
     body {
       background: var(--warm-white); color: var(--ink);
       font-family: 'DM Sans', sans-serif; font-weight: 300;
-      overflow-x: hidden; cursor: auto;
+      overflow-x: hidden; cursor: none;
     }
+
+    /* ── Custom cursor ── */
+    .cursor { position: fixed; width: 10px; height: 10px; background: var(--blush); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width 0.2s ease, height 0.2s ease; }
+    .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid var(--ink); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.35s cubic-bezier(.23,1,.32,1), width 0.25s, height 0.25s, border-color 0.2s; }
+
+    /* ── Noise overlay ── */
     body::before {
       content: ''; position: fixed; inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
@@ -41,278 +47,174 @@
     }
 
     /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 28px 56px;
-      background: rgba(253,251,248,0.92); backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 28px 56px; background: rgba(253,251,248,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
     .nav-links { display: flex; gap: 40px; list-style: none; }
-    .nav-links a {
-      font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--ink); text-decoration: none; opacity: 0.55;
-      transition: opacity 0.2s; font-family: 'DM Sans', sans-serif; font-weight: 400;
-    }
+    .nav-links a { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); text-decoration: none; opacity: 0.55; transition: opacity 0.2s; font-family: 'DM Sans', sans-serif; font-weight: 400; }
     .nav-links a:hover { opacity: 1; }
     .nav-links a.active { opacity: 1; color: var(--blush); }
 
     /* ── SHARED ── */
-    .eyebrow {
-      display: inline-flex; align-items: center; gap: 14px;
-      font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase;
-      font-family: 'DM Sans', sans-serif; color: var(--blush);
-      margin-bottom: 24px;
-    }
-    .eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--blush); }
-
-    .btn-primary {
-      display: inline-block; padding: 14px 36px;
-      background: var(--ink); color: var(--off-white);
-      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
-      text-decoration: none; font-family: 'DM Sans', sans-serif; font-weight: 400;
-      border: 1px solid var(--ink); transition: background 0.25s, color 0.25s;
-    }
+    .btn-primary { display: inline-block; padding: 14px 36px; background: var(--ink); color: var(--off-white); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; font-family: 'DM Sans', sans-serif; font-weight: 400; border: 1px solid var(--ink); transition: background 0.25s, color 0.25s; }
     .btn-primary:hover { background: transparent; color: var(--ink); }
-
-    .btn-ghost {
-      display: inline-block;
-      font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--muted); text-decoration: none; font-family: 'DM Sans', sans-serif;
-      border-bottom: 1px solid var(--muted); padding-bottom: 2px;
-      transition: color 0.2s, border-color 0.2s;
-    }
+    .btn-ghost { display: inline-block; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; font-family: 'DM Sans', sans-serif; border-bottom: 1px solid var(--muted); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
     .btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 
     /* ── HERO ── */
-    .hero {
-      min-height: 60vh; padding: 160px 56px 100px;
-      border-bottom: 1px solid var(--border);
-      position: relative; overflow: hidden;
-      display: flex; flex-direction: column; justify-content: flex-end;
-    }
-    .hero-bg {
-      position: absolute; font-family: 'Noto Serif JP', serif;
-      font-size: 38vw; font-weight: 200; color: rgba(232,162,173,0.06);
-      bottom: -4vw; right: -2vw;
-      user-select: none; pointer-events: none; line-height: 1;
-    }
+    .hero { min-height: 56vh; padding: 160px 56px 100px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+    .hero-bg { position: absolute; font-family: 'Noto Serif JP', serif; font-size: 40vw; font-weight: 200; color: rgba(232,162,173,0.06); bottom: -4vw; right: -2vw; user-select: none; pointer-events: none; line-height: 1; }
     .hero-inner { position: relative; z-index: 1; max-width: 680px; }
-    .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 14px;
-      font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase;
-      font-family: 'DM Sans', sans-serif; color: var(--blush); margin-bottom: 28px;
-      opacity: 0; animation: fadeUp 0.9s 0.1s ease forwards;
-    }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 14px; font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; color: var(--blush); margin-bottom: 28px; opacity: 0; animation: fadeUp 0.9s 0.1s ease forwards; }
     .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--blush); }
-    .hero-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3.2rem, 6vw, 7rem);
-      font-weight: 300; line-height: 0.95;
-      letter-spacing: -0.02em; color: var(--ink); margin-bottom: 36px;
-      opacity: 0; animation: fadeUp 1s 0.3s ease forwards;
-    }
+    .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.2rem, 6vw, 7rem); font-weight: 300; line-height: 0.95; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 32px; opacity: 0; animation: fadeUp 1s 0.3s ease forwards; }
     .hero-title em { font-style: italic; color: var(--blush); }
-    .hero-sub {
-      font-size: 0.88rem; line-height: 2; color: var(--muted); max-width: 480px;
-      opacity: 0; animation: fadeUp 1s 0.5s ease forwards;
-    }
+    .hero-sub { font-size: 0.88rem; line-height: 2; color: var(--muted); max-width: 480px; opacity: 0; animation: fadeUp 1s 0.5s ease forwards; }
+    .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 28px; opacity: 0; animation: fadeUp 1s 0.65s ease forwards; }
+    .hero-badge { font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; border: 1px solid var(--border); color: var(--muted); padding: 5px 12px; font-family: 'DM Sans', sans-serif; }
 
-    /* ── INTRO ── */
-    .intro-section {
-      padding: 100px 56px;
-      display: grid; grid-template-columns: 1fr 1.6fr;
-      gap: 100px; align-items: center;
-      border-bottom: 1px solid var(--border);
-    }
-    .intro-left { position: sticky; top: 120px; align-self: start; }
-    .section-number {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 5rem; font-weight: 300;
-      color: rgba(14,12,12,0.05); line-height: 1; margin-bottom: 8px;
-    }
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 2.6vw, 2.6rem);
-      font-weight: 300; line-height: 1.15; color: var(--ink);
-    }
+    /* ── SECTION WRAPPER ── */
+    .section-wrap { padding: 100px 56px; border-bottom: 1px solid var(--border); }
+    .section-wrap.bg-off { background: var(--off-white); }
+    .section-header { display: grid; grid-template-columns: 1fr 1.6fr; gap: 100px; margin-bottom: 64px; align-items: end; }
+    .section-number { font-family: 'Cormorant Garamond', serif; font-size: 5rem; font-weight: 300; color: rgba(14,12,12,0.05); line-height: 1; margin-bottom: 8px; }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 2.6vw, 2.6rem); font-weight: 300; line-height: 1.15; color: var(--ink); }
     .section-title em { font-style: italic; color: var(--blush); }
-    .body-text { font-size: 0.88rem; line-height: 2.1; color: var(--muted); margin-bottom: 20px; }
-    .text-divider { width: 48px; height: 1px; background: var(--blush); margin: 28px 0; }
+    .section-intro { font-size: 0.86rem; line-height: 2.1; color: var(--muted); }
+    .body-text { font-size: 0.86rem; line-height: 2.1; color: var(--muted); margin-bottom: 16px; }
 
-    /* ── WORKSHOP CARDS ── */
-    .workshops-section { padding: 100px 56px; border-bottom: 1px solid var(--border); }
-
-    .workshop-block {
-      display: grid; grid-template-columns: 1fr 1.6fr;
-      gap: 100px; padding: 80px 0;
-      border-bottom: 1px solid var(--border);
-      align-items: start;
-    }
-    .workshop-block:first-child { padding-top: 0; }
-    .workshop-block:last-child { border-bottom: none; padding-bottom: 0; }
-
-    .workshop-left { position: sticky; top: 120px; }
-
-    .workshop-visual {
-      width: 100%; aspect-ratio: 4/3;
-      display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden;
-      border: 1px solid var(--border);
-    }
-    .workshop-visual-kanji {
-      font-family: 'Noto Serif JP', serif;
-      font-size: 7rem; font-weight: 200;
-      user-select: none;
-    }
-    .workshop-num {
-      position: absolute; top: 16px; left: 20px;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.85rem; color: var(--blush); letter-spacing: 0.15em;
-    }
-
-    /* Workshop 01 — warm blush */
-    .workshop-block:nth-child(1) .workshop-visual {
-      background: linear-gradient(135deg, var(--blush-light) 0%, var(--off-white) 100%);
-    }
-    .workshop-block:nth-child(1) .workshop-visual-kanji { color: rgba(232,162,173,0.3); }
-
-    /* Workshop 02 — soft sage tint */
-    .workshop-block:nth-child(2) .workshop-visual {
-      background: linear-gradient(135deg, #e8f0e8 0%, var(--off-white) 100%);
-    }
-    .workshop-block:nth-child(2) .workshop-visual-kanji { color: rgba(140,170,140,0.25); }
-
-    .workshop-right {}
-    .workshop-category {
-      display: inline-flex; align-items: center; gap: 10px;
-      font-size: 0.6rem; letter-spacing: 0.32em; text-transform: uppercase;
-      font-family: 'DM Sans', sans-serif; color: var(--blush);
-      margin-bottom: 20px;
-    }
-    .workshop-category::before { content: ''; display: block; width: 24px; height: 1px; background: var(--blush); }
-
-    .workshop-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 3vw, 3rem);
-      font-weight: 300; line-height: 1.05;
-      color: var(--ink); margin-bottom: 20px;
-    }
-    .workshop-title em { font-style: italic; color: var(--blush); }
-
-    .workshop-desc { font-size: 0.88rem; line-height: 2.1; color: var(--muted); margin-bottom: 28px; }
-
-    /* What you'll make */
-    .make-list {
-      display: flex; flex-direction: column; gap: 0;
-      margin-bottom: 36px;
-      border: 1px solid var(--border);
-    }
-    .make-item {
-      display: flex; align-items: center; gap: 16px;
-      padding: 14px 20px;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.82rem; color: var(--ink);
+    /* ── WORKSHOP LIST CARDS (aromatherapy) ── */
+    .workshop-grid { display: flex; flex-direction: column; }
+    .workshop-card {
+      display: grid; grid-template-columns: 56px 1fr auto;
+      gap: 32px; align-items: start;
+      padding: 36px 0;
+      border-top: 1px solid var(--border);
       transition: background 0.2s;
     }
-    .make-item:last-child { border-bottom: none; }
-    .make-item:hover { background: var(--off-white); }
-    .make-item-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--blush); flex-shrink: 0;
-    }
+    .workshop-card:last-child { border-bottom: 1px solid var(--border); }
+    .workshop-card:hover { background: var(--off-white); margin: 0 -56px; padding: 36px 56px; }
 
-    /* Details row */
-    .workshop-details {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 0; border: 1px solid var(--border);
-      background: var(--off-white); margin-bottom: 36px;
-    }
-    .detail-item {
-      padding: 16px 20px;
-      border-right: 1px solid var(--border);
-    }
-    .detail-item:last-child { border-right: none; }
-    .detail-key {
-      font-size: 0.56rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--blush); font-family: 'DM Sans', sans-serif; margin-bottom: 5px;
-    }
-    .detail-val {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.95rem; color: var(--ink); font-weight: 400;
-    }
+    .wc-kanji { font-family: 'Noto Serif JP', serif; font-size: 1.8rem; font-weight: 200; color: var(--blush); padding-top: 4px; }
 
-    .workshop-cta { display: flex; align-items: center; gap: 24px; }
+    .wc-body {}
+    .wc-category { display: inline-flex; align-items: center; gap: 10px; font-size: 0.56rem; letter-spacing: 0.28em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; color: var(--blush); margin-bottom: 8px; }
+    .wc-category::before { content: ''; display: block; width: 16px; height: 1px; background: var(--blush); }
+    .wc-title { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 400; color: var(--ink); line-height: 1.2; margin-bottom: 10px; }
+    .wc-desc { font-size: 0.8rem; line-height: 1.9; color: var(--muted); }
+    .wc-note { display: inline-block; margin-top: 10px; font-size: 0.72rem; color: var(--muted); font-style: italic; }
 
-    /* ── PRIVATE SESSIONS ── */
-    .private-section {
-      padding: 100px 56px;
-      background: var(--off-white);
+    /* Size options table within a card */
+    .wc-sizes {
+      display: flex; flex-direction: column;
+      margin-top: 16px;
+      border: 1px solid var(--border);
+    }
+    .wc-size-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 16px;
       border-bottom: 1px solid var(--border);
+      gap: 20px;
     }
-    .private-inner {
-      display: grid; grid-template-columns: 1fr 1.6fr;
-      gap: 100px; align-items: center;
+    .wc-size-row:last-child { border-bottom: none; }
+    .wc-size-label { font-size: 0.74rem; color: var(--ink); font-family: 'DM Sans', sans-serif; }
+    .wc-size-price { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 300; color: var(--ink); white-space: nowrap; }
+    .wc-size-price .size-suffix { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-family: 'DM Sans', sans-serif; margin-left: 4px; }
+
+    /* Desktop price column */
+    .wc-price { text-align: right; flex-shrink: 0; padding-top: 4px; }
+    .wc-price-amount { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; color: var(--ink); line-height: 1; display: block; }
+    .wc-price-label { font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); font-family: 'DM Sans', sans-serif; display: block; margin-top: 4px; }
+
+    /* Mobile price — shown inside body when column hidden */
+    .wc-price-mobile { display: none; margin-top: 14px; }
+    .wc-price-mobile .wc-price-amount { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 300; color: var(--ink); }
+    .wc-price-mobile .wc-price-label { font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); font-family: 'DM Sans', sans-serif; margin-left: 6px; }
+
+    /* Placeholder image */
+    .wc-placeholder {
+      max-width: 180px; margin-top: 16px;
+      aspect-ratio: 1; border-radius: 4px;
+      background: linear-gradient(135deg, var(--blush-light) 0%, var(--off-white) 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
     }
-    .private-statement {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem; font-style: italic;
-      font-weight: 300; line-height: 1.7; color: var(--ink);
-      padding-bottom: 24px; border-bottom: 1px solid var(--border);
-      margin-bottom: 24px;
-    }
+    .wc-placeholder-kanji { font-family: 'Noto Serif JP', serif; font-size: 2rem; font-weight: 200; color: var(--blush); opacity: 0.6; }
+    .wc-placeholder-note { font-size: 0.56rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-family: 'DM Sans', sans-serif; }
+
+    /* ── ROTATING IMAGE ── */
+    .img-rotate { position: relative; width: 100%; aspect-ratio: 4/3; overflow: hidden; }
+    .img-rotate img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; }
+    .img-rotate img:nth-child(1) { animation: imgFade 8s ease-in-out infinite; }
+    .img-rotate img:nth-child(2) { animation: imgFade 8s ease-in-out infinite 4s; }
+    @keyframes imgFade { 0% { opacity: 0; } 10% { opacity: 1; } 45% { opacity: 1; } 55% { opacity: 0; } 100% { opacity: 0; } }
+
+    /* ── FLORAL PHOTO CARDS ── */
+    .floral-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .floral-card { background: var(--warm-white); border-right: 1px solid var(--border); display: flex; flex-direction: column; transition: background 0.25s; position: relative; overflow: hidden; }
+    .floral-card:nth-child(even) { border-right: none; }
+    .floral-card:hover { background: var(--off-white); }
+    .floral-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--blush); transition: width 0.4s ease; }
+    .floral-card:hover::after { width: 100%; }
+
+    .floral-placeholder { width: 100%; aspect-ratio: 4/3; background: linear-gradient(135deg, var(--blush-light) 0%, var(--off-white) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
+    .floral-placeholder-kanji { font-family: 'Noto Serif JP', serif; font-size: 3rem; font-weight: 200; color: var(--blush); opacity: 0.6; }
+    .floral-placeholder-note { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-family: 'DM Sans', sans-serif; }
+    .illustration-note { display: block; margin-top: 10px; font-size: 0.62rem; color: var(--muted); font-style: italic; font-family: 'DM Sans', sans-serif; }
+
+    .floral-card-body { padding: 32px 36px 36px; flex: 1; display: flex; flex-direction: column; }
+    .floral-card-category { display: inline-flex; align-items: center; gap: 10px; font-size: 0.56rem; letter-spacing: 0.28em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; color: var(--blush); margin-bottom: 12px; }
+    .floral-card-category::before { content: ''; display: block; width: 16px; height: 1px; background: var(--blush); }
+    .floral-card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; color: var(--ink); line-height: 1.15; margin-bottom: 12px; }
+    .floral-card-desc { font-size: 0.78rem; line-height: 1.9; color: var(--muted); flex: 1; }
+    .floral-card-footer { display: flex; align-items: baseline; justify-content: space-between; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
+    .floral-card-price-amount { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; color: var(--ink); }
+    .floral-card-price-note { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-family: 'DM Sans', sans-serif; }
+
+    /* ── PRACTICAL INFO ── */
+    .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; border: 1px solid var(--border); }
+    .info-card { padding: 40px 36px; border-right: 1px solid var(--border); background: var(--warm-white); }
+    .info-card:last-child { border-right: none; }
+    .info-kanji { font-family: 'Noto Serif JP', serif; font-size: 1.8rem; font-weight: 200; color: var(--blush); margin-bottom: 16px; display: block; }
+    .info-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400; color: var(--ink); margin-bottom: 14px; }
+    .info-text { font-size: 0.78rem; line-height: 1.9; color: var(--muted); }
+    .info-text strong { color: var(--ink); font-weight: 400; }
+
+    /* ── VENUE ── */
+    .venue-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .venue-card { background: var(--warm-white); border-right: 1px solid var(--border); display: flex; flex-direction: column; }
+    .venue-card:last-child { border-right: none; }
+    .venue-img { width: 100%; aspect-ratio: 3/2; }
+    .venue-placeholder-img { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 100%; background: linear-gradient(135deg, var(--off-white) 0%, var(--blush-light) 100%); }
+    .venue-placeholder-img span { font-family: 'Noto Serif JP', serif; font-size: 2rem; font-weight: 200; color: var(--blush); opacity: 0.5; }
+    .venue-body { padding: 24px 28px; }
+    .venue-status { font-size: 0.56rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--blush); font-family: 'DM Sans', sans-serif; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .venue-status::before { content: ''; display: block; width: 5px; height: 5px; border-radius: 50%; background: var(--blush); opacity: 0.6; }
+    .venue-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400; color: var(--ink); margin-bottom: 8px; }
+    .venue-desc { font-size: 0.74rem; line-height: 1.8; color: var(--muted); }
+
+    /* ── BOOKING POLICY ── */
+    .policy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; border: 1px solid var(--border); }
+    .policy-item { padding: 32px 36px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--warm-white); }
+    .policy-item:nth-child(even) { border-right: none; }
+    .policy-item:nth-last-child(-n+2) { border-bottom: none; }
+    .policy-key { font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--blush); font-family: 'DM Sans', sans-serif; margin-bottom: 10px; }
+    .policy-val { font-size: 0.84rem; line-height: 1.9; color: var(--ink); }
+    .policy-val em { color: var(--muted); font-style: normal; font-size: 0.78rem; }
 
     /* ── CTA ── */
-    .cta-section {
-      padding: 140px 56px;
-      background: var(--ink); color: var(--off-white);
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 100px; align-items: center;
-      position: relative; overflow: hidden;
-    }
-    .cta-section::before {
-      content: ''; position: absolute; top: -200px; right: -200px;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(232,162,173,0.1) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .cta-eyebrow {
-      font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--blush); font-family: 'DM Sans', sans-serif; margin-bottom: 24px;
-    }
-    .cta-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.4rem, 4vw, 4.2rem);
-      font-weight: 300; line-height: 1.05;
-    }
+    .cta-section { padding: 120px 56px; background: var(--ink); color: var(--off-white); display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; position: relative; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; top: -200px; right: -200px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(232,162,173,0.1) 0%, transparent 70%); pointer-events: none; }
+    .cta-eyebrow { font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--blush); font-family: 'DM Sans', sans-serif; margin-bottom: 24px; }
+    .cta-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.4rem, 4vw, 4rem); font-weight: 300; line-height: 1.05; }
     .cta-title em { font-style: italic; color: var(--blush); }
     .cta-right { display: flex; flex-direction: column; gap: 28px; }
     .cta-body { font-size: 0.86rem; line-height: 2; color: rgba(247,244,240,0.5); }
-    .contact-link-label {
-      font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase;
-      color: var(--blush); margin-bottom: 8px; font-family: 'DM Sans', sans-serif;
-    }
-    .contact-link {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem; color: var(--off-white); text-decoration: none;
-      border-bottom: 1px solid rgba(247,244,240,0.15);
-      padding-bottom: 12px; margin-bottom: 24px; display: block;
-      transition: color 0.2s, border-color 0.2s;
-    }
+    .contact-link-label { font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--blush); margin-bottom: 8px; font-family: 'DM Sans', sans-serif; }
+    .contact-link { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--off-white); text-decoration: none; border-bottom: 1px solid rgba(247,244,240,0.15); padding-bottom: 12px; margin-bottom: 24px; display: block; transition: color 0.2s, border-color 0.2s; }
     .contact-link:hover { color: var(--blush); border-color: var(--blush); }
 
     /* ── FOOTER ── */
-    footer {
-      padding: 28px 56px;
-      border-top: 1px solid rgba(247,244,240,0.08);
-      display: flex; align-items: center; justify-content: space-between;
-      background: var(--ink); color: rgba(247,244,240,0.3);
-    }
+    footer { padding: 28px 56px; border-top: 1px solid rgba(247,244,240,0.08); display: flex; align-items: center; justify-content: space-between; background: var(--ink); color: rgba(247,244,240,0.3); }
     .footer-copy { font-size: 0.65rem; letter-spacing: 0.15em; font-family: 'DM Sans', sans-serif; }
 
     /* ── RESPONSIVE ── */
@@ -320,20 +222,33 @@
       nav { padding: 22px 28px; }
       .nav-links { display: none; }
       .hero { padding: 120px 28px 80px; }
-      .intro-section, .private-inner, .cta-section { grid-template-columns: 1fr; gap: 48px; padding: 80px 28px; }
-      .intro-left { position: static; }
-      .workshops-section { padding: 80px 28px; }
-      .workshop-block { grid-template-columns: 1fr; gap: 40px; }
-      .workshop-left { position: static; }
-      .workshop-details { grid-template-columns: 1fr; }
-      .detail-item { border-right: none; border-bottom: 1px solid var(--border); }
-      .detail-item:last-child { border-bottom: none; }
-      .private-section { padding: 80px 28px; }
+      .section-wrap { padding: 72px 28px; }
+      .section-header { grid-template-columns: 1fr; gap: 28px; margin-bottom: 40px; }
+      .workshop-card { grid-template-columns: 44px 1fr; gap: 16px; }
+      .workshop-card:hover { margin: 0; padding: 36px 0; }
+      .wc-price { display: none; }
+      .wc-price-mobile { display: block; }
+      .floral-grid { grid-template-columns: 1fr; }
+      .floral-card { border-right: none; border-bottom: 1px solid var(--border); }
+      .floral-card:last-child { border-bottom: none; }
+      .info-grid { grid-template-columns: 1fr; }
+      .info-card { border-right: none; border-bottom: 1px solid var(--border); }
+      .info-card:last-child { border-bottom: none; }
+      .venue-grid { grid-template-columns: 1fr; }
+      .venue-card { border-right: none; border-bottom: 1px solid var(--border); }
+      .venue-card:last-child { border-bottom: none; }
+      .policy-grid { grid-template-columns: 1fr; }
+      .policy-item { border-right: none; border-bottom: 1px solid var(--border) !important; }
+      .policy-item:last-child { border-bottom: none !important; }
+      .cta-section { grid-template-columns: 1fr; gap: 48px; padding: 80px 28px; }
       footer { padding: 22px 28px; flex-direction: column; gap: 12px; }
     }
   </style>
 </head>
 <body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
 
   <!-- NAV -->
   <nav>
@@ -342,157 +257,376 @@
       <li><a href="/conservatory.html">Conservatory</a></li>
       <li><a href="/aromatherapy.html">Aromatherapy</a></li>
       <li><a href="/workshop.html" class="active">Workshops</a></li>
-      <li><a href="/links.html">Contact</a></li>
+      <li><a href="/index.html#contact">Contact</a></li>
     </ul>
   </nav>
 
-  <!-- ① HERO -->
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-bg">作</div>
     <div class="hero-inner">
       <div class="hero-eyebrow">ICHIGO Workshops</div>
-      <h1 class="hero-title">
-        Made by<br>
-        hand. Kept<br>
-        <em>forever.</em>
-      </h1>
-      <p class="hero-sub">Hands-on workshops in Singapore where you make something real — a preserved flower dome to display, or an aromatherapy product to use every day. No experience needed. Just time, intention, and a willingness to slow down.</p>
+      <h1 class="hero-title">Make something<br>with your<br><em>own hands.</em></h1>
+      <p class="hero-sub">Small, unhurried sessions in aromatherapy crafting and preserved floral making. You leave with something you made — and something you know. Available in English and Mandarin 中英文授课.</p>
+      <div class="hero-badges">
+        <span class="hero-badge">English &amp; Mandarin</span>
+        <span class="hero-badge">Children welcome (with adult)</span>
+        <span class="hero-badge">From $25 per pax</span>
+        <span class="hero-badge">Private &amp; group bookings</span>
+      </div>
     </div>
   </section>
 
-  <!-- ② INTRO -->
-  <section class="intro-section">
-    <div class="intro-left">
-      <div class="section-number">—</div>
-      <h2 class="section-title">Why we<br>run <em>workshops</em></h2>
+  <!-- ① AROMATHERAPY WORKSHOPS -->
+  <section class="section-wrap" id="aromatherapy">
+    <div class="section-header">
+      <div>
+        <div class="section-number">01</div>
+        <h2 class="section-title">Aromatherapy<br><em>Workshops</em></h2>
+      </div>
+      <p class="section-intro">Each session is guided with explanation — you learn what each oil does, how blending works, and why the ratios matter. Every product you make is yours to take home, ready to use.</p>
     </div>
-    <div>
-      <p class="body-text">Most things we own are made elsewhere, by someone else, for everyone. A workshop is the opposite of that. It is a few hours set aside to make something with your own hands — something that carries the memory of the time you spent making it.</p>
-      <p class="body-text">At ICHIGO, our workshops are small and unhurried. We guide you through the process, explain the materials and the choices, and give you the space to make it your own. You leave with something you made — and something you know.</p>
-      <div class="text-divider"></div>
-      <p class="body-text">We run sessions at partnered venues across Singapore, and are also available for private bookings — for teams, celebrations, or simply a group of friends.</p>
+
+    <div class="workshop-grid">
+
+      <!-- PLASTER PAINTING + OWN BLEND (two sizes) -->
+      <div class="workshop-card">
+        <div class="wc-kanji">描</div>
+        <div class="wc-body">
+          <div class="wc-category">Aromatherapy</div>
+          <h3 class="wc-title">Plaster Painting + Your Own Essential Oil Blend</h3>
+          <p class="wc-desc">Paint and personalise your own plaster stone, then blend a custom essential oil combination from scratch. You choose your scent profile, ratios, and intention — guided throughout. Everything is made to your specification and ready to use immediately.</p>
+          <div class="wc-sizes">
+            <div class="wc-size-row">
+              <span class="wc-size-label">2ml blend</span>
+              <span class="wc-size-price">$75 <span class="size-suffix">per pax</span></span>
+            </div>
+            <div class="wc-size-row">
+              <span class="wc-size-label">10ml blend</span>
+              <span class="wc-size-price">$85 <span class="size-suffix">per pax</span></span>
+            </div>
+          </div>
+          <div class="wc-placeholder">
+            <span class="wc-placeholder-kanji">描</span>
+            <span class="wc-placeholder-note">Photo coming soon</span>
+          </div>
+        </div>
+        <div class="wc-price">
+          <span class="wc-price-amount">$75–85</span>
+          <span class="wc-price-label">per pax</span>
+        </div>
+      </div>
+
+      <!-- PLASTER PAINTING + READY BLEND -->
+      <div class="workshop-card">
+        <div class="wc-kanji">選</div>
+        <div class="wc-body">
+          <div class="wc-category">Aromatherapy</div>
+          <h3 class="wc-title">Plaster Painting + Select a Ready Blend</h3>
+          <p class="wc-desc">Paint and personalise your own plaster stone, then choose one from a curated selection of 2–3 signature blends crafted by ICHIGO. Includes one 2ml portion of your chosen blend. A great introduction to aromatherapy with a beautifully tactile element.</p>
+          <div class="wc-sizes">
+            <div class="wc-size-row">
+              <span class="wc-size-label">1 portion (2ml)</span>
+              <span class="wc-size-price">$35 <span class="size-suffix">per pax</span></span>
+            </div>
+            <div class="wc-size-row">
+              <span class="wc-size-label">Each additional 2ml portion</span>
+              <span class="wc-size-price">+$5 <span class="size-suffix">per portion</span></span>
+            </div>
+          </div>
+          <div class="wc-placeholder">
+            <span class="wc-placeholder-kanji">選</span>
+            <span class="wc-placeholder-note">Photo coming soon</span>
+          </div>
+        </div>
+        <div class="wc-price">
+          <span class="wc-price-amount">$35+</span>
+          <span class="wc-price-label">per pax</span>
+        </div>
+      </div>
+
+      <!-- PLASTER PAINTING ONLY -->
+      <div class="workshop-card">
+        <div class="wc-kanji">石</div>
+        <div class="wc-body">
+          <div class="wc-category">Aromatherapy</div>
+          <h3 class="wc-title">Plaster Painting Kit — No Oil</h3>
+          <p class="wc-desc">Paint and personalise your own plaster stone — without the essential oil component. A standalone creative session focused purely on the painting and decoration process. A gentle, accessible entry point for those new to the ICHIGO workshop experience.</p>
+          <span class="wc-note">Fragrance oils are not included in this session.</span>
+          <div class="wc-placeholder">
+            <span class="wc-placeholder-kanji">石</span>
+            <span class="wc-placeholder-note">Photo coming soon</span>
+          </div>
+          <div class="wc-price-mobile"><span class="wc-price-amount">$25</span> <span class="wc-price-label">per pax</span></div>
+        </div>
+        <div class="wc-price">
+          <span class="wc-price-amount">$25</span>
+          <span class="wc-price-label">per pax</span>
+        </div>
+      </div>
+
+      <!-- INHALER -->
+      <div class="workshop-card">
+        <div class="wc-kanji">吸</div>
+        <div class="wc-body">
+          <div class="wc-category">Aromatherapy</div>
+          <h3 class="wc-title">Create Your Own Aromatherapy Inhaler</h3>
+          <p class="wc-desc">Blend and fill your own personal aromatherapy inhaler — compact, portable, and ready for everyday use. Choose from a range of essential oils suited to your mood, energy, or intention. Great as a standalone session or add-on.</p>
+          <div class="wc-placeholder">
+            <span class="wc-placeholder-kanji">吸</span>
+            <span class="wc-placeholder-note">Photo coming soon</span>
+          </div>
+          <div class="wc-price-mobile"><span class="wc-price-amount">$25</span> <span class="wc-price-label">per pax</span></div>
+        </div>
+        <div class="wc-price">
+          <span class="wc-price-amount">$25</span>
+          <span class="wc-price-label">per pax</span>
+        </div>
+      </div>
+
+      <!-- ROLL-ON -->
+      <div class="workshop-card">
+        <div class="wc-kanji">滾</div>
+        <div class="wc-body">
+          <div class="wc-category">Aromatherapy</div>
+          <h3 class="wc-title">Create Your Own Roll-On (10ml)</h3>
+          <p class="wc-desc">Blend and bottle your own 10ml roll-on with a carrier oil and your chosen essential oils. Compact enough to carry daily — for focus, calm, sleep, or whatever you need most. You'll understand exactly what's in it and why.</p>
+          <div class="wc-placeholder">
+            <span class="wc-placeholder-kanji">滾</span>
+            <span class="wc-placeholder-note">Photo coming soon</span>
+          </div>
+          <div class="wc-price-mobile"><span class="wc-price-amount">$50</span> <span class="wc-price-label">per pax</span></div>
+        </div>
+        <div class="wc-price">
+          <span class="wc-price-amount">$50</span>
+          <span class="wc-price-label">per pax</span>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <!-- ③ WORKSHOPS -->
-  <section class="workshops-section" id="workshops">
-
-    <!-- WORKSHOP 01 — FLOWER DOME -->
-    <div class="workshop-block">
-      <div class="workshop-left">
-        <div class="workshop-visual">
-          <span class="workshop-num">01</span>
-          <span class="workshop-visual-kanji">花</span>
-        </div>
+  <!-- ② FLORAL WORKSHOPS -->
+  <section class="section-wrap bg-off" id="florals">
+    <div class="section-header">
+      <div>
+        <div class="section-number">02</div>
+        <h2 class="section-title">Preserved Floral<br><em>Workshops</em></h2>
       </div>
-      <div class="workshop-right">
-        <div class="workshop-category">Floral Workshop</div>
-        <h2 class="workshop-title">Preserved<br><em>Flower Dome</em></h2>
-        <p class="workshop-desc">Design and arrange your own preserved flower dome — a glass cloche filled with dried and preserved blooms that will last for years without water or care. Each dome is completely your own: you choose the flowers, the colours, and the arrangement.</p>
-        <p class="workshop-desc">Preserved flowers retain their shape and texture long after they are dried, making each dome a lasting piece you can display at home or give as a gift.</p>
-
-        <div class="make-list">
-          <div class="make-item"><span class="make-item-dot"></span>Selection of preserved and dried florals</div>
-          <div class="make-item"><span class="make-item-dot"></span>Glass dome with base (yours to take home)</div>
-          <div class="make-item"><span class="make-item-dot"></span>Guided arrangement with styling tips</div>
-          <div class="make-item"><span class="make-item-dot"></span>Care and display guidance included</div>
-        </div>
-
-        <div class="workshop-details">
-          <div class="detail-item">
-            <div class="detail-key">Duration</div>
-            <div class="detail-val">~2 hours</div>
-          </div>
-          <div class="detail-item">
-            <div class="detail-key">Group size</div>
-            <div class="detail-val">2 – 12 pax</div>
-          </div>
-          <div class="detail-item">
-            <div class="detail-key">Format</div>
-            <div class="detail-val">Public & private</div>
-          </div>
-        </div>
-
-        <div class="workshop-cta">
-          <a href="https://wa.me/6580978928?text=Hello%2C%20I%27d%20like%20to%20enquire%20about%20the%20Flower%20Dome%20workshop." class="btn-primary" target="_blank" rel="noopener">Enquire via WhatsApp</a>
-          <a href="mailto:ichigo.kyanite@gmail.com" class="btn-ghost">Email us</a>
-        </div>
-      </div>
+      <p class="section-intro">Preserved flowers retain their shape and texture for years without water or care. Each piece you make is a lasting object — to display at home, give as a gift, or keep as a memory of the session. Prices shown are before GST.</p>
     </div>
 
-    <!-- WORKSHOP 02 — AROMATHERAPY -->
-    <div class="workshop-block">
-      <div class="workshop-left">
-        <div class="workshop-visual">
-          <span class="workshop-num">02</span>
-          <span class="workshop-visual-kanji">香</span>
+    <div class="floral-grid">
+
+      <!-- SMALL DOME -->
+      <div class="floral-card">
+        <div class="img-rotate">
+          <img src="img-dome-small-rose.png" alt="Small flower dome — rose" />
+          <img src="img-dome-small-dandelion.png" alt="Small flower dome — dandelion" />
+        </div>
+        <div class="floral-card-body">
+          <div class="floral-card-category">Florals · Small</div>
+          <h3 class="floral-card-title">Preserved Flower Dome — Small</h3>
+          <p class="floral-card-desc">A single preserved flower arranged inside a glass dome with complementary dried botanicals. Choose your style: a preserved rose for something romantic, or a delicate dandelion seed head for something more sculptural and airy.</p>
+          <span class="illustration-note">Flowers and botanicals are subject to availability. Actual materials may vary from shown.</span>
+          <div class="floral-card-footer">
+            <span class="floral-card-price-amount">$35+</span>
+            <span class="floral-card-price-note">per pax · before GST</span>
+          </div>
         </div>
       </div>
-      <div class="workshop-right">
-        <div class="workshop-category">Aromatherapy Workshop</div>
-        <h2 class="workshop-title">Scent &amp;<br><em>Craft</em></h2>
-        <p class="workshop-desc">A hands-on session where you work with essential oils and create your own aromatherapy product to take home. Sessions can focus on a single product or mix across formats depending on your group's interest.</p>
-        <p class="workshop-desc">Each format is guided with explanation — you learn what each oil does, how blending works, and why the ratios matter. You leave with both a product and an understanding of how to use it.</p>
 
-        <div class="make-list">
-          <div class="make-item"><span class="make-item-dot"></span>Personal aromatherapy inhaler</div>
-          <div class="make-item"><span class="make-item-dot"></span>Painted plaster stone with scent infusion</div>
-          <div class="make-item"><span class="make-item-dot"></span>Custom essential oil blend (roller or dropper bottle)</div>
-          <div class="make-item"><span class="make-item-dot"></span>Blending guide and usage notes to keep</div>
+      <!-- MEDIUM DOME -->
+      <div class="floral-card">
+        <div class="floral-placeholder">
+          <span class="floral-placeholder-kanji">穹</span>
+          <span class="floral-placeholder-note">Photo coming soon</span>
         </div>
-
-        <div class="workshop-details">
-          <div class="detail-item">
-            <div class="detail-key">Duration</div>
-            <div class="detail-val">~2 – 3 hours</div>
+        <div class="floral-card-body">
+          <div class="floral-card-category">Florals · Medium</div>
+          <h3 class="floral-card-title">Preserved Flower Dome — Medium</h3>
+          <p class="floral-card-desc">A fuller arrangement inside a larger glass dome — more flowers, more texture, more presence. You choose the colour palette and floral mix, guided throughout. A beautiful gift or display piece that lasts for years without care.</p>
+          <span class="illustration-note">Flowers and botanicals are subject to availability. Actual materials may vary from shown.</span>
+          <div class="floral-card-footer">
+            <span class="floral-card-price-amount">$45+</span>
+            <span class="floral-card-price-note">per pax · before GST</span>
           </div>
-          <div class="detail-item">
-            <div class="detail-key">Group size</div>
-            <div class="detail-val">2 – 10 pax</div>
-          </div>
-          <div class="detail-item">
-            <div class="detail-key">Format</div>
-            <div class="detail-val">Public & private</div>
-          </div>
-        </div>
-
-        <div class="workshop-cta">
-          <a href="https://wa.me/6580978928?text=Hello%2C%20I%27d%20like%20to%20enquire%20about%20the%20Aromatherapy%20workshop." class="btn-primary" target="_blank" rel="noopener">Enquire via WhatsApp</a>
-          <a href="mailto:ichigo.kyanite@gmail.com" class="btn-ghost">Email us</a>
         </div>
       </div>
+
+      <!-- LARGE DOME -->
+      <div class="floral-card">
+        <div class="floral-placeholder">
+          <span class="floral-placeholder-kanji">穹</span>
+          <span class="floral-placeholder-note">Photo coming soon</span>
+        </div>
+        <div class="floral-card-body">
+          <div class="floral-card-category">Florals · Large</div>
+          <h3 class="floral-card-title">Preserved Flower Dome — Large</h3>
+          <p class="floral-card-desc">A statement piece — a generously sized dome with an illuminated base, filled with multiple preserved blooms and botanicals of your choosing. Rich, layered, and designed to be displayed. Comes complete with a presentation kit and LED base.</p>
+          <span class="illustration-note">Flowers and botanicals are subject to availability. Actual materials may vary from shown.</span>
+          <div class="floral-card-footer">
+            <span class="floral-card-price-amount">$98+</span>
+            <span class="floral-card-price-note">per pax · before GST</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- LARGE FRAME -->
+      <div class="floral-card">
+        <div class="floral-placeholder">
+          <span class="floral-placeholder-kanji">框</span>
+          <span class="floral-placeholder-note">Photo coming soon</span>
+        </div>
+        <div class="floral-card-body">
+          <div class="floral-card-category">Florals · Frame</div>
+          <h3 class="floral-card-title">Preserved Flower Frame — Large</h3>
+          <p class="floral-card-desc">Arrange preserved flowers inside a wooden shadow frame — a flat, wall-ready display piece that works beautifully as home décor or a personalised gift. You choose the blooms, the colours, and the composition, guided throughout.</p>
+          <span class="illustration-note">Flowers and botanicals are subject to availability. Actual materials may vary from shown.</span>
+          <div class="floral-card-footer">
+            <span class="floral-card-price-amount">$40+</span>
+            <span class="floral-card-price-note">per pax · before GST</span>
+          </div>
+        </div>
+      </div>
+
     </div>
-
   </section>
 
-  <!-- ④ PRIVATE SESSIONS -->
-  <section class="private-section">
-    <div class="private-inner">
+  <!-- ③ CUSTOM -->
+  <section class="section-wrap">
+    <div class="section-header">
+      <div>
+        <div class="section-number">03</div>
+        <h2 class="section-title">Custom &amp;<br><em>Creative Projects</em></h2>
+      </div>
+      <p class="section-intro">Have something else in mind? Bespoke workshops and creative projects can be arranged — with enough lead time to plan, source materials, and prepare properly.</p>
+    </div>
+    <div class="workshop-grid">
+      <div class="workshop-card">
+        <div class="wc-kanji">創</div>
+        <div class="wc-body">
+          <div class="wc-category">Custom</div>
+          <h3 class="wc-title">Bespoke Workshop or Creative Project</h3>
+          <p class="wc-desc">A custom session designed around your group's interest or occasion. Could be a new format, a themed experience, a combination of techniques, or something entirely different. We work with you to define it, source the materials, and run it well.</p>
+          <span class="wc-note">Minimum 2 months' advance notice required.</span>
+          <div class="wc-price-mobile"><span class="wc-price-amount">$25+</span> <span class="wc-price-label">per pax / from</span></div>
+        </div>
+        <div class="wc-price">
+          <span class="wc-price-amount">$25+</span>
+          <span class="wc-price-label">per pax / from</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ④ PRACTICAL INFO -->
+  <section class="section-wrap bg-off">
+    <div class="section-header">
       <div>
         <div class="section-number">—</div>
-        <h2 class="section-title">Private &amp;<br><em>group sessions</em></h2>
+        <h2 class="section-title">Practical<br><em>details</em></h2>
       </div>
+      <p class="section-intro">Everything you need to know before getting in touch.</p>
+    </div>
+    <div class="info-grid">
+      <div class="info-card">
+        <span class="info-kanji">所</span>
+        <h3 class="info-title">Location</h3>
+        <p class="info-text">We come to you — your office, a chosen venue, or a space you have arranged. We can also assist in sourcing a suitable classroom or studio space if needed.<br><br>
+        When ICHIGO is operating a pop-up stall or retail event, small group sessions may be possible on-site.</p>
+      </div>
+      <div class="info-card">
+        <span class="info-kanji">人</span>
+        <h3 class="info-title">Group Size</h3>
+        <p class="info-text"><strong>At a venue or pop-up location:</strong> Small groups welcome — details to be confirmed as locations are confirmed.<br><br>
+        <strong>At your location:</strong> Minimum <strong>10 pax</strong>, maximum <strong>20 pax</strong> per session.<br><br>
+        Children are welcome with adult supervision.</p>
+      </div>
+      <div class="info-card">
+        <span class="info-kanji">費</span>
+        <h3 class="info-title">Transport &amp; Tutor Fee</h3>
+        <p class="info-text">A flat fee of <strong>$100</strong> applies per session for transport and tutor, on top of the per-pax workshop cost.<br><br>
+        If a venue is sourced on your behalf, an additional <strong>$100 venue fee</strong> applies.<br><br>
+        Tuas, Jurong Island, and other outlying areas will incur a further surcharge. Please enquire for a quote.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑤ VENUES -->
+  <section class="section-wrap">
+    <div class="section-header">
       <div>
-        <p class="private-statement">A workshop is a good gift. A private workshop is a better one.</p>
-        <p class="body-text">We take private bookings for both workshop formats — ideal for birthday celebrations, hen parties, team bonding, corporate events, or simply a group of people who want to make something together. Private sessions are held at your preferred venue or at one of our partnered spaces across Singapore.</p>
-        <p class="body-text">For private bookings, we tailor the session length, product selection, and group size to what works for you. Get in touch and we will put together a proposal.</p>
-        <div class="text-divider"></div>
-        <div style="display:flex; gap:24px; flex-wrap:wrap;">
-          <a href="https://wa.me/6580978928?text=Hello%2C%20I%27d%20like%20to%20enquire%20about%20a%20private%20workshop." class="btn-primary" target="_blank" rel="noopener">Enquire via WhatsApp</a>
-          <a href="mailto:ichigo.kyanite@gmail.com" class="btn-ghost">Send an email</a>
+        <div class="section-number">—</div>
+        <h2 class="section-title">Example<br><em>Venues</em></h2>
+      </div>
+      <p class="section-intro">These are examples of the types of classroom and studio spaces we are exploring across Singapore. Availability is subject to dates and confirmation — please enquire and we will work with you to find a suitable arrangement. A venue fee of <strong>$100</strong> applies on top of the Transport &amp; Tutor fee where a venue is sourced on your behalf.</p>
+    </div>
+    <div class="venue-grid">
+      <div class="venue-card">
+        <div class="venue-img"><div class="venue-placeholder-img"><span>所</span></div></div>
+        <div class="venue-body">
+          <div class="venue-status">Subject to availability</div>
+          <h3 class="venue-name">Central Singapore</h3>
+          <p class="venue-desc">Studio or classroom spaces in the central region — well connected, suitable for groups of 10–20 pax. Specific venues confirmed based on your preferred date.</p>
+        </div>
+      </div>
+      <div class="venue-card">
+        <div class="venue-img"><div class="venue-placeholder-img"><span>所</span></div></div>
+        <div class="venue-body">
+          <div class="venue-status">Subject to availability</div>
+          <h3 class="venue-name">East Singapore</h3>
+          <p class="venue-desc">Creative and event spaces in the east — convenient for groups based in that area. Exact venue and capacity confirmed upon booking.</p>
+        </div>
+      </div>
+      <div class="venue-card">
+        <div class="venue-img"><div class="venue-placeholder-img"><span>所</span></div></div>
+        <div class="venue-body">
+          <div class="venue-status">Subject to availability</div>
+          <h3 class="venue-name">Other Locations</h3>
+          <p class="venue-desc">We can explore other areas depending on your group's location. Let us know where works best and we will do our best to find something nearby.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ⑤ CTA -->
+  <!-- ⑥ BOOKING POLICY -->
+  <section class="section-wrap bg-off">
+    <div class="section-header">
+      <div>
+        <div class="section-number">—</div>
+        <h2 class="section-title">Booking<br><em>policy</em></h2>
+      </div>
+      <p class="section-intro">We are a small independent studio. These terms exist so we can prepare properly and deliver the session well.</p>
+    </div>
+    <div class="policy-grid">
+      <div class="policy-item">
+        <div class="policy-key">Advance Notice</div>
+        <div class="policy-val">All bookings require a minimum of <strong>2 months' notice</strong> from the intended session date. <em>This allows time for sourcing materials and preparing your session properly.</em></div>
+      </div>
+      <div class="policy-item">
+        <div class="policy-key">Deposit</div>
+        <div class="policy-val">A <strong>50% non-refundable deposit</strong> is required upon confirmation. <em>This covers materials purchased specifically for your session.</em></div>
+      </div>
+      <div class="policy-item">
+        <div class="policy-key">Date Change</div>
+        <div class="policy-val">One complimentary date change is available per booking. <em>The new date is subject to availability. Please give as much notice as possible.</em></div>
+      </div>
+      <div class="policy-item">
+        <div class="policy-key">Cancellation</div>
+        <div class="policy-val">Deposits are non-refundable. In the event of cancellation, the deposit will not be returned as materials will already have been ordered.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑦ CTA -->
   <section class="cta-section">
     <div>
       <div class="cta-eyebrow">Book a Session</div>
-      <h2 class="cta-title">Make<br>something<br><em>with us.</em></h2>
+      <h2 class="cta-title">Let's make<br>something<br><em>together.</em></h2>
     </div>
     <div class="cta-right">
-      <p class="cta-body">Tell us which workshop interests you, how many people, and roughly when — and we will take it from there. No commitment needed to start the conversation.</p>
+      <p class="cta-body">Tell us which workshop interests you, your group size, preferred dates, and location — and we'll put together a proposal. No commitment needed to start the conversation.</p>
       <div>
         <div class="contact-link-label">WhatsApp</div>
         <a href="https://wa.me/6580978928?text=Hello%2C%20I%27d%20like%20to%20enquire%20about%20an%20ICHIGO%20workshop." class="contact-link" target="_blank" rel="noopener">Start a conversation</a>
@@ -507,6 +641,31 @@
     <span class="footer-copy">© 2026 ICHIGO Studio. All rights reserved.</span>
     <img src="BG removed logo.png" alt="ICHIGO Studio" style="height:28px; opacity:0.5;" />
   </footer>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    const ring   = document.getElementById('cursorRing');
+    if (cursor && ring) {
+      document.addEventListener('mousemove', e => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top  = e.clientY + 'px';
+        ring.style.left   = e.clientX + 'px';
+        ring.style.top    = e.clientY + 'px';
+      });
+      document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursor.style.width  = '18px'; cursor.style.height = '18px';
+          ring.style.width    = '52px'; ring.style.height   = '52px';
+          ring.style.borderColor = 'var(--blush)';
+        });
+        el.addEventListener('mouseleave', () => {
+          cursor.style.width  = '10px'; cursor.style.height = '10px';
+          ring.style.width    = '36px'; ring.style.height   = '36px';
+          ring.style.borderColor = 'var(--ink)';
+        });
+      });
+    }
+  </script>
 
 </body>
 </html>
