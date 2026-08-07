@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery — ICHIGO Conservatory</title>
+  <meta name="description" content="Preserved florals, handmade gifts and botanical pieces from ICHIGO Conservatory Singapore. Enquire via WhatsApp to purchase." />
+  <meta name="keywords" content="preserved flowers Singapore, dried flower arrangements Singapore, botanical gifts Singapore, ICHIGO florals" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://ichigo.studio/gallery.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ichigo.studio/gallery.html" />
+  <meta property="og:title" content="Gallery — ICHIGO Conservatory" />
+  <meta property="og:description" content="Preserved florals and botanical pieces. Enquire via WhatsApp to purchase." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@200;300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink:         #0e0c0c;
+      --off-white:   #f7f4f0;
+      --warm-white:  #fdfbf8;
+      --blush:       #e8a2ad;
+      --blush-light: #f3d5da;
+      --muted:       #8a8480;
+      --border:      rgba(14,12,12,0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--warm-white); color: var(--ink);
+      font-family: 'DM Sans', sans-serif; font-weight: 300;
+      overflow-x: hidden; cursor: none;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: 0.4;
+    }
+
+    /* ── Custom cursor ── */
+    .cursor { position: fixed; width: 10px; height: 10px; background: var(--blush); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width 0.2s, height 0.2s; }
+    .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid var(--ink); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.35s cubic-bezier(.23,1,.32,1), width 0.25s, height 0.25s, border-color 0.2s; }
+
+    /* ── NAV ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 28px 56px; background: rgba(253,251,248,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); text-decoration: none; opacity: 0.55; transition: opacity 0.2s; font-family: 'DM Sans', sans-serif; font-weight: 400; }
+    .nav-links a:hover { opacity: 1; }
+    .nav-links a.active { opacity: 1; color: var(--blush); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── HERO ── */
+    .hero { min-height: 44vh; padding: 148px 56px 80px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+    .hero-bg { position: absolute; font-family: 'Noto Serif JP', serif; font-size: 38vw; font-weight: 200; color: rgba(232,162,173,0.06); bottom: -4vw; right: -2vw; user-select: none; pointer-events: none; line-height: 1; }
+    .hero-inner { position: relative; z-index: 1; max-width: 640px; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 14px; font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; color: var(--blush); margin-bottom: 24px; opacity: 0; animation: fadeUp 0.9s 0.1s ease forwards; }
+    .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--blush); }
+    .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem, 5vw, 6rem); font-weight: 300; line-height: 0.95; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 24px; opacity: 0; animation: fadeUp 1s 0.3s ease forwards; }
+    .hero-title em { font-style: italic; color: var(--blush); }
+    .hero-sub { font-size: 0.86rem; line-height: 2; color: var(--muted); max-width: 460px; opacity: 0; animation: fadeUp 1s 0.5s ease forwards; }
+
+    /* ── TOOLBAR ── */
+    .toolbar {
+      padding: 24px 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 93px; z-index: 50;
+      background: rgba(253,251,248,0.95); backdrop-filter: blur(8px);
+    }
+    .toolbar-count { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); font-family: 'DM Sans', sans-serif; }
+    .toolbar-filters { display: flex; gap: 8px; }
+    .filter-pill {
+      font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif; background: none;
+      border: 1px solid var(--border); color: var(--muted);
+      padding: 6px 16px; cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .filter-pill:hover { border-color: var(--blush); color: var(--ink); }
+    .filter-pill.active { border-color: var(--blush); color: var(--blush); background: var(--blush-light); }
+
+    /* ── GALLERY MAIN ── */
+    .gallery-main { padding: 56px; position: relative; z-index: 2; }
+
+    /* ── MASONRY ── */
+    .masonry {
+      columns: 3;
+      column-gap: 16px;
+    }
+
+    /* ── IMAGE CAROUSEL ── */
+    .carousel { position: relative; overflow: hidden; background: var(--blush-light); }
+    .carousel-track { display: flex; transition: transform 0.4s cubic-bezier(.23,1,.32,1); }
+    .carousel-slide { min-width: 100%; position: relative; flex-shrink: 0; }
+    .carousel-slide img { width: 100%; display: block; }
+    .carousel-slide .product-img-placeholder { width: 100%; }
+
+    /* Prev / Next */
+    .carousel-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(253,251,248,0.88); border: 1px solid var(--border);
+      width: 30px; height: 30px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 5; font-size: 0.7rem; color: var(--ink);
+      transition: background 0.2s, border-color 0.2s;
+      opacity: 0; pointer-events: none;
+    }
+    .carousel:hover .carousel-btn { opacity: 1; pointer-events: all; }
+    .carousel-btn:hover { background: var(--warm-white); border-color: var(--blush); }
+    .carousel-btn--prev { left: 8px; }
+    .carousel-btn--next { right: 8px; }
+    .carousel-btn--hidden { opacity: 0 !important; pointer-events: none !important; }
+
+    /* Dots */
+    .carousel-dots {
+      position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 5px; z-index: 5;
+    }
+    .carousel-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(14,12,12,0.2); cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .carousel-dot.active { background: var(--blush); transform: scale(1.3); }
+
+    /* Single image — hide controls */
+    .carousel[data-count="1"] .carousel-btn,
+    .carousel[data-count="1"] .carousel-dots { display: none; }
+
+    /* ── PRODUCT CARD ── */
+    /* Data attributes used by Claude Code for inventory management:
+       data-sku="ICH-F001"   — unique SKU, matches image filename
+       data-status="available" | "sold"
+       data-category="florals"
+    */
+    .product-card {
+      break-inside: avoid;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+      background: var(--warm-white);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+      position: relative;
+    }
+    .product-card:hover { border-color: var(--blush); transform: translateY(-2px); }
+
+    /* Product image */
+    .product-img {
+      width: 100%; display: block;
+      background: var(--blush-light);
+      position: relative; overflow: hidden;
+    }
+    .product-img img { width: 100%; display: block; transition: transform 0.5s ease; }
+    .product-card:hover .product-img img { transform: scale(1.03); }
+
+    /* Placeholder image (until real photos uploaded) */
+    .product-img-placeholder {
+      width: 100%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 8px;
+      background: linear-gradient(135deg, var(--blush-light) 0%, var(--off-white) 100%);
+    }
+    .product-img-placeholder .ph-kanji { font-family: 'Noto Serif JP', serif; font-size: 2.5rem; font-weight: 200; color: var(--blush); opacity: 0.5; }
+    .product-img-placeholder .ph-sku { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-family: 'DM Sans', sans-serif; }
+
+    /* Sold overlay */
+    .sold-overlay {
+      position: absolute; inset: 0;
+      background: rgba(253,251,248,0.72);
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(2px);
+    }
+    .sold-badge {
+      font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif; color: var(--muted);
+      border: 1px solid var(--muted); padding: 6px 16px;
+      background: var(--warm-white);
+    }
+
+    /* SKU label */
+    .product-sku {
+      position: absolute; top: 12px; left: 12px;
+      font-size: 0.52rem; letter-spacing: 0.2em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif; color: var(--muted);
+      background: rgba(253,251,248,0.88);
+      padding: 3px 8px; backdrop-filter: blur(4px);
+    }
+
+    /* Card body */
+    .product-body { padding: 20px 20px 20px; }
+    .product-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400; color: var(--ink); line-height: 1.2; margin-bottom: 6px; }
+    .product-desc { font-size: 0.74rem; line-height: 1.8; color: var(--muted); margin-bottom: 14px; }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .product-price { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 300; color: var(--ink); }
+    .product-price-note { font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-family: 'DM Sans', sans-serif; display: block; margin-top: 2px; }
+
+    .btn-wa {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--ink); color: var(--off-white);
+      border: 1px solid var(--ink);
+      padding: 8px 14px; text-decoration: none; white-space: nowrap;
+      transition: background 0.2s, color 0.2s; flex-shrink: 0;
+    }
+    .btn-wa:hover { background: transparent; color: var(--ink); }
+    .btn-wa svg { width: 12px; height: 12px; fill: currentColor; }
+
+    /* Sold card styling */
+    .product-card[data-status="sold"] { opacity: 0.6; }
+    .product-card[data-status="sold"]:hover { transform: none; border-color: var(--border); }
+    .product-card[data-status="sold"] .btn-wa { display: none; }
+
+    /* ── SECTION DIVIDER ── */
+    .section-divider {
+      padding: 32px 0 24px;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .section-divider-label { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); font-family: 'DM Sans', sans-serif; white-space: nowrap; }
+    .section-divider-line { flex: 1; height: 1px; background: var(--border); }
+
+    /* ── EMPTY STATE ── */
+    .empty-state { padding: 80px 0; text-align: center; }
+    .empty-state p { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 300; color: var(--muted); font-style: italic; }
+
+    /* ── CTA STRIP ── */
+    .cta-strip {
+      padding: 72px 56px;
+      background: var(--ink); color: var(--off-white);
+      display: flex; align-items: center; justify-content: space-between; gap: 60px;
+    }
+    .cta-strip-left {}
+    .cta-eyebrow { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--blush); font-family: 'DM Sans', sans-serif; margin-bottom: 14px; }
+    .cta-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 2.8vw, 2.8rem); font-weight: 300; color: var(--off-white); line-height: 1.1; }
+    .cta-title em { font-style: italic; color: var(--blush); }
+    .cta-links { display: flex; gap: 20px; align-items: center; flex-shrink: 0; flex-wrap: wrap; }
+    .cta-link { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--off-white); text-decoration: none; border-bottom: 1px solid rgba(247,244,240,0.15); padding-bottom: 8px; transition: color 0.2s, border-color 0.2s; white-space: nowrap; }
+    .cta-link:hover { color: var(--blush); border-color: var(--blush); }
+    .cta-divider { width: 1px; height: 36px; background: rgba(247,244,240,0.15); }
+
+    /* ── FOOTER ── */
+    footer { padding: 28px 56px; border-top: 1px solid rgba(247,244,240,0.08); display: flex; align-items: center; justify-content: space-between; background: var(--ink); color: rgba(247,244,240,0.3); }
+    .footer-copy { font-size: 0.65rem; letter-spacing: 0.15em; font-family: 'DM Sans', sans-serif; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) { .masonry { columns: 2; } }
+    @media (max-width: 900px) {
+      nav { padding: 22px 28px; }
+      .nav-links { display: none; }
+      .hero { padding: 120px 28px 64px; }
+      .toolbar { padding: 18px 28px; top: 82px; }
+      .gallery-main { padding: 36px 28px; }
+      .masonry { columns: 2; column-gap: 12px; }
+      .product-card { margin-bottom: 12px; }
+      .cta-strip { flex-direction: column; align-items: flex-start; padding: 60px 28px; }
+      footer { padding: 22px 28px; flex-direction: column; gap: 12px; }
+    }
+    @media (max-width: 540px) { .masonry { columns: 1; } }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/index.html"><img src="BG removed logo.png" alt="ICHIGO Studio" style="height:38px; display:block;" /></a>
+    <ul class="nav-links">
+      <li><a href="/conservatory.html">Conservatory</a></li>
+      <li><a href="/gallery.html" class="active">Gallery</a></li>
+      <li><a href="/aromatherapy.html">Aromatherapy</a></li>
+      <li><a href="/workshop.html">Workshops</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">花</div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">ICHIGO Gallery</div>
+      <h1 class="hero-title">Preserved.<br><em>Lasting.</em><br>Yours.</h1>
+      <p class="hero-sub">Each piece is made by hand and preserved to last — no water, no maintenance, no fading. Browse below and reach out via WhatsApp to enquire or purchase.</p>
+    </div>
+  </section>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <span class="toolbar-count" id="available-count">— pieces available</span>
+    <div class="toolbar-filters">
+      <button class="filter-pill active" data-filter="all" onclick="filterGallery('all', this)">All</button>
+      <button class="filter-pill" data-filter="available" onclick="filterGallery('available', this)">Available</button>
+      <button class="filter-pill" data-filter="sold" onclick="filterGallery('sold', this)">Sold</button>
+    </div>
+  </div>
+
+  <!-- GALLERY MAIN -->
+  <div class="gallery-main">
+
+    <!-- AVAILABLE ITEMS -->
+    <!-- Claude Code reads from inventory.xlsx and regenerates this section -->
+    <div class="masonry" id="gallery-available">
+
+      <!-- ICH-F001 -->
+      <div class="product-card" data-sku="ICH-F001" data-status="available" data-category="florals">
+        <div class="carousel" data-count="2" data-index="0">
+          <div class="carousel-track">
+            <div class="carousel-slide">
+              <div class="product-img-placeholder" style="aspect-ratio:3/4;">
+                <span class="ph-kanji">花</span><span class="ph-sku">ICH-F001 · 1</span>
+              </div>
+            </div>
+            <div class="carousel-slide">
+              <div class="product-img-placeholder" style="aspect-ratio:3/4;">
+                <span class="ph-kanji">花</span><span class="ph-sku">ICH-F001 · 2</span>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-btn carousel-btn--prev" onclick="carouselPrev(this)">‹</button>
+          <button class="carousel-btn carousel-btn--next" onclick="carouselNext(this)">›</button>
+          <div class="carousel-dots">
+            <div class="carousel-dot active" onclick="carouselGoto(this.parentElement, 0)"></div>
+            <div class="carousel-dot" onclick="carouselGoto(this.parentElement, 1)"></div>
+          </div>
+          <span class="product-sku">ICH-F001</span>
+        </div>
+        <div class="product-body">
+          <h3 class="product-name">Preserved Rose Dome — Small</h3>
+          <p class="product-desc">Single red preserved rose with baby's breath and dried botanicals under a glass cloche with cork base.</p>
+          <div class="product-footer">
+            <span class="product-price">$35</span>
+            <a href="https://wa.me/6580978928?text=Hello%20ICHIGO%2C%20I%27d%20like%20to%20enquire%20about%20ICH-F001%20Preserved%20Rose%20Dome%20(Small)%20at%20%2435." class="btn-wa" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.533 5.849L.057 23.714a.75.75 0 0 0 .93.898l5.998-1.938A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.713 9.713 0 0 1-4.953-1.355l-.355-.211-3.683 1.189 1.09-3.574-.232-.368A9.712 9.712 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
+              Enquire
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ICH-F002 -->
+      <div class="product-card" data-sku="ICH-F002" data-status="available" data-category="florals">
+        <div class="carousel" data-count="2" data-index="0">
+          <div class="carousel-track">
+            <div class="carousel-slide">
+              <div class="product-img-placeholder" style="aspect-ratio:1/1;">
+                <span class="ph-kanji">花</span><span class="ph-sku">ICH-F002 · 1</span>
+              </div>
+            </div>
+            <div class="carousel-slide">
+              <div class="product-img-placeholder" style="aspect-ratio:1/1;">
+                <span class="ph-kanji">花</span><span class="ph-sku">ICH-F002 · 2</span>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-btn carousel-btn--prev" onclick="carouselPrev(this)">‹</button>
+          <button class="carousel-btn carousel-btn--next" onclick="carouselNext(this)">›</button>
+          <div class="carousel-dots">
+            <div class="carousel-dot active" onclick="carouselGoto(this.parentElement, 0)"></div>
+            <div class="carousel-dot" onclick="carouselGoto(this.parentElement, 1)"></div>
+          </div>
+          <span class="product-sku">ICH-F002</span>
+        </div>
+        <div class="product-body">
+          <h3 class="product-name">Dandelion Dome — Small</h3>
+          <p class="product-desc">Delicate dried dandelion seed head with preserved green hydrangeas in a tall glass cylinder dome.</p>
+          <div class="product-footer">
+            <span class="product-price">$35</span>
+            <a href="https://wa.me/6580978928?text=Hello%20ICHIGO%2C%20I%27d%20like%20to%20enquire%20about%20ICH-F002%20Dandelion%20Dome%20(Small)%20at%20%2435." class="btn-wa" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.533 5.849L.057 23.714a.75.75 0 0 0 .93.898l5.998-1.938A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.713 9.713 0 0 1-4.953-1.355l-.355-.211-3.683 1.189 1.09-3.574-.232-.368A9.712 9.712 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
+              Enquire
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ICH-F003 -->
+      <div class="product-card" data-sku="ICH-F003" data-status="available" data-category="florals">
+        <div class="carousel" data-count="2" data-index="0">
+          <div class="carousel-track">
+            <div class="carousel-slide">
+              <div class="product-img-placeholder" style="aspect-ratio:4/5;">
+                <span class="ph-kanji">花</span><span class="ph-sku">ICH-F003 · 1</span>
+              </div>
+            </div>
+            <div class="carousel-slide">
+              <div class="product-img-placeholder" style="aspect-ratio:4/5;">
+                <span class="ph-kanji">花</span><span class="ph-sku">ICH-F003 · 2</span>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-btn carousel-btn--prev" onclick="carouselPrev(this)">‹</button>
+          <button class="carousel-btn carousel-btn--next" onclick="carouselNext(this)">›</button>
+          <div class="carousel-dots">
+            <div class="carousel-dot active" onclick="carouselGoto(this.parentElement, 0)"></div>
+            <div class="carousel-dot" onclick="carouselGoto(this.parentElement, 1)"></div>
+          </div>
+          <span class="product-sku">ICH-F003</span>
+        </div>
+        <div class="product-body">
+          <h3 class="product-name">Preserved Flower Frame — Large</h3>
+          <p class="product-desc">Mixed preserved blooms and botanicals arranged in a wooden shadow frame. Wall-ready, no maintenance required.</p>
+          <div class="product-footer">
+            <span class="product-price">$40</span>
+            <a href="https://wa.me/6580978928?text=Hello%20ICHIGO%2C%20I%27d%20like%20to%20enquire%20about%20ICH-F003%20Preserved%20Flower%20Frame%20(Large)%20at%20%2440." class="btn-wa" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.533 5.849L.057 23.714a.75.75 0 0 0 .93.898l5.998-1.938A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.713 9.713 0 0 1-4.953-1.355l-.355-.211-3.683 1.189 1.09-3.574-.232-.368A9.712 9.712 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
+              Enquire
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ICH-F004 -->
+      <div class="product-card" data-sku="ICH-F004" data-status="available" data-category="florals">
+        <div class="carousel" data-count="2" data-index="0">
+          <div class="carousel-track">
+            <div class="carousel-slide">
+              <div class="product-img-placeholder" style="aspect-ratio:3/4;">
+                <span class="ph-kanji">花</span><span class="ph-sku">ICH-F004 · 1</span>
+              </div>
+            </div>
+            <div class="carousel-slide">
+              <div class="product-img-placeholder" style="aspect-ratio:3/4;">
+                <span class="ph-kanji">花</span><span class="ph-sku">ICH-F004 · 2</span>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-btn carousel-btn--prev" onclick="carouselPrev(this)">‹</button>
+          <button class="carousel-btn carousel-btn--next" onclick="carouselNext(this)">›</button>
+          <div class="carousel-dots">
+            <div class="carousel-dot active" onclick="carouselGoto(this.parentElement, 0)"></div>
+            <div class="carousel-dot" onclick="carouselGoto(this.parentElement, 1)"></div>
+          </div>
+          <span class="product-sku">ICH-F004</span>
+        </div>
+        <div class="product-body">
+          <h3 class="product-name">Preserved Flower Dome — Large</h3>
+          <p class="product-desc">Statement dome with LED-illuminated base. Multiple preserved blooms layered with dried botanicals. Rich and lasting.</p>
+          <div class="product-footer">
+            <span class="product-price">$98</span>
+            <a href="https://wa.me/6580978928?text=Hello%20ICHIGO%2C%20I%27d%20like%20to%20enquire%20about%20ICH-F004%20Preserved%20Flower%20Dome%20(Large)%20at%20%2498." class="btn-wa" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.533 5.849L.057 23.714a.75.75 0 0 0 .93.898l5.998-1.938A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.713 9.713 0 0 1-4.953-1.355l-.355-.211-3.683 1.189 1.09-3.574-.232-.368A9.712 9.712 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
+              Enquire
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ICH-F005 -->
+      <div class="product-card" data-sku="ICH-F005" data-status="available" data-category="florals">
+        <div class="carousel" data-count="2" data-index="0">
+          <div class="carousel-track">
+            <div class="carousel-slide">
+              <div class="product-img-placeholder" style="aspect-ratio:1/1;">
+                <span class="ph-kanji">花</span><span class="ph-sku">ICH-F005 · 1</span>
+              </div>
+            </div>
+            <div class="carousel-slide">
+              <div class="product-img-placeholder" style="aspect-ratio:1/1;">
+                <span class="ph-kanji">花</span><span class="ph-sku">ICH-F005 · 2</span>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-btn carousel-btn--prev" onclick="carouselPrev(this)">‹</button>
+          <button class="carousel-btn carousel-btn--next" onclick="carouselNext(this)">›</button>
+          <div class="carousel-dots">
+            <div class="carousel-dot active" onclick="carouselGoto(this.parentElement, 0)"></div>
+            <div class="carousel-dot" onclick="carouselGoto(this.parentElement, 1)"></div>
+          </div>
+          <span class="product-sku">ICH-F005</span>
+        </div>
+        <div class="product-body">
+          <h3 class="product-name">Preserved Flower Dome — Medium</h3>
+          <p class="product-desc">Fuller arrangement of mixed preserved blooms under a medium glass cloche. Choose your colour palette on enquiry.</p>
+          <div class="product-footer">
+            <span class="product-price">$45</span>
+            <a href="https://wa.me/6580978928?text=Hello%20ICHIGO%2C%20I%27d%20like%20to%20enquire%20about%20ICH-F005%20Preserved%20Flower%20Dome%20(Medium)%20at%20%2445." class="btn-wa" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.533 5.849L.057 23.714a.75.75 0 0 0 .93.898l5.998-1.938A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.713 9.713 0 0 1-4.953-1.355l-.355-.211-3.683 1.189 1.09-3.574-.232-.368A9.712 9.712 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
+              Enquire
+            </a>
+          </div>
+        </div>
+      </div>
+
+    <!-- SOLD SECTION -->
+    <div id="sold-section">
+      <div class="section-divider">
+        <span class="section-divider-label">Sold</span>
+        <div class="section-divider-line"></div>
+      </div>
+      <div class="masonry" id="gallery-sold">
+
+        <!-- ICH-F000 — example sold item -->
+        <div class="product-card" data-sku="ICH-F000" data-status="sold" data-category="florals">
+          <div class="product-img" style="position:relative;">
+            <div class="product-img-placeholder" style="aspect-ratio:3/4;">
+              <span class="ph-kanji">花</span>
+              <span class="ph-sku">ICH-F000</span>
+            </div>
+            <div class="sold-overlay"><span class="sold-badge">Sold</span></div>
+            <span class="product-sku">ICH-F000</span>
+          </div>
+          <div class="product-body">
+            <h3 class="product-name">Rose Dome — Small</h3>
+            <p class="product-desc">Pink preserved rose with white hydrangea and dried foliage.</p>
+            <div class="product-footer">
+              <div>
+                <span class="product-price">$35</span>
+                <span class="product-price-note">before GST</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CTA STRIP -->
+  <div class="cta-strip">
+    <div class="cta-strip-left">
+      <p class="cta-eyebrow">Enquire to Purchase</p>
+      <h2 class="cta-title">Something catch your eye?<br><em>Let's talk.</em></h2>
+    </div>
+    <div class="cta-links">
+      <a href="https://wa.me/6580978928?text=Hello%20ICHIGO%2C%20I%27d%20like%20to%20enquire%20about%20a%20piece%20from%20the%20gallery." class="cta-link" target="_blank" rel="noopener">WhatsApp</a>
+      <div class="cta-divider"></div>
+      <a href="mailto:ichigo.kyanite@gmail.com" class="cta-link">ichigo.kyanite@gmail.com</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">© 2026 ICHIGO Studio. All rights reserved.</span>
+    <img src="BG removed logo.png" alt="ICHIGO Studio" style="height:28px; opacity:0.5;" />
+  </footer>
+
+  <script>
+    // ── Custom cursor ──
+    const cursor = document.getElementById('cursor');
+    const ring   = document.getElementById('cursorRing');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+      ring.style.left   = e.clientX + 'px'; ring.style.top   = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => { cursor.style.width='18px'; cursor.style.height='18px'; ring.style.width='52px'; ring.style.height='52px'; ring.style.borderColor='var(--blush)'; });
+      el.addEventListener('mouseleave', () => { cursor.style.width='10px'; cursor.style.height='10px'; ring.style.width='36px'; ring.style.height='36px'; ring.style.borderColor='var(--ink)'; });
+    });
+
+    // ── Carousel ──
+    function carouselUpdate(carousel) {
+      const idx   = parseInt(carousel.dataset.index) || 0;
+      const count = parseInt(carousel.dataset.count) || 1;
+      carousel.querySelector('.carousel-track').style.transform = `translateX(-${idx * 100}%)`;
+      carousel.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+      const prev = carousel.querySelector('.carousel-btn--prev');
+      const next = carousel.querySelector('.carousel-btn--next');
+      if (prev) prev.classList.toggle('carousel-btn--hidden', idx === 0);
+      if (next) next.classList.toggle('carousel-btn--hidden', idx === count - 1);
+    }
+    function carouselPrev(btn) {
+      const c = btn.closest('.carousel');
+      c.dataset.index = Math.max(0, parseInt(c.dataset.index) - 1);
+      carouselUpdate(c); event.stopPropagation();
+    }
+    function carouselNext(btn) {
+      const c = btn.closest('.carousel');
+      c.dataset.index = Math.min(parseInt(c.dataset.count) - 1, parseInt(c.dataset.index) + 1);
+      carouselUpdate(c); event.stopPropagation();
+    }
+    function carouselGoto(dots, idx) {
+      const c = dots.closest('.carousel');
+      c.dataset.index = idx; carouselUpdate(c); event.stopPropagation();
+    }
+    // Init all carousels
+    document.querySelectorAll('.carousel').forEach(c => carouselUpdate(c));
+    function updateCount() {
+      const n = document.querySelectorAll('.product-card[data-status="available"]').length;
+      document.getElementById('available-count').textContent = n + ' piece' + (n !== 1 ? 's' : '') + ' available';
+    }
+    updateCount();
+
+    // ── Filter ──
+    function filterGallery(filter, btn) {
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach(card => {
+        if (filter === 'all') { card.style.display = ''; }
+        else { card.style.display = card.dataset.status === filter ? '' : 'none'; }
+      });
+      // Hide sold section header if filtering to available only
+      const soldSection = document.getElementById('sold-section');
+      if (soldSection) soldSection.style.display = filter === 'available' ? 'none' : '';
+    }
+  </script>
+
+</body>
+</html>
