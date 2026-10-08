@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="BG removed logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About the Founder — ICHIGO Studio</title>
+  <meta name="description" content="JY is the founder of ICHIGO Studio — a Singapore-based creative studio working across AI systems, business design, aromatherapy, and preserved florals." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://ichigo.studio/founder.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@200;300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink:         #0e0c0c;
+      --off-white:   #f7f4f0;
+      --warm-white:  #fdfbf8;
+      --blush:       #e8a2ad;
+      --blush-light: #f3d5da;
+      --muted:       #8a8480;
+      --border:      rgba(14,12,12,0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--warm-white); color: var(--ink);
+      font-family: 'DM Sans', sans-serif; font-weight: 300;
+      overflow-x: hidden; cursor: none;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: 0.4;
+    }
+
+    /* ── Custom cursor ── */
+    .cursor { position: fixed; width: 10px; height: 10px; background: var(--blush); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width 0.2s ease, height 0.2s ease; }
+    .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid var(--ink); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.35s cubic-bezier(.23,1,.32,1), width 0.25s, height 0.25s, border-color 0.2s; }
+
+    /* ── NAV ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 28px 56px; background: rgba(253,251,248,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); text-decoration: none; opacity: 0.55; transition: opacity 0.2s; font-family: 'DM Sans', sans-serif; font-weight: 400; }
+    .nav-links a:hover { opacity: 1; }
+    .nav-links a.active { opacity: 1; color: var(--blush); }
+    .nav-item { position: relative; }
+    .nav-item:hover .nav-dropdown { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+    .nav-dropdown { position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%) translateY(6px); background: var(--warm-white); border: 1px solid var(--border); min-width: 180px; display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease; z-index: 200; }
+    .nav-dropdown a { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink); text-decoration: none; padding: 12px 18px; border-bottom: 1px solid var(--border); opacity: 0.6; transition: opacity 0.15s, background 0.15s; display: block; font-family: 'DM Sans', sans-serif; font-weight: 400; }
+    .nav-dropdown a:last-child { border-bottom: none; }
+    .nav-dropdown a:hover { opacity: 1; background: var(--off-white); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      padding: 0 56px;
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .hero-bg { position: absolute; font-family: 'Noto Serif JP', serif; font-size: 50vw; font-weight: 200; color: rgba(232,162,173,0.05); bottom: -6vw; right: -4vw; user-select: none; pointer-events: none; line-height: 1; }
+    .hero-left { display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 100px; position: relative; z-index: 2; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 14px; font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; color: var(--blush); margin-bottom: 28px; opacity: 0; animation: fadeUp 0.9s 0.2s ease forwards; }
+    .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--blush); }
+    .hero-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(5rem, 10vw, 11rem); font-weight: 300; line-height: 0.88; letter-spacing: -0.03em; color: var(--ink); margin-bottom: 32px; opacity: 0; animation: fadeUp 1s 0.35s ease forwards; }
+    .hero-name em { font-style: italic; color: var(--blush); display: block; }
+    .hero-role { font-size: 0.82rem; line-height: 2; color: var(--muted); max-width: 400px; opacity: 0; animation: fadeUp 1s 0.55s ease forwards; }
+
+    /* Hero right — decorative circles */
+    .hero-right { display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
+    .hero-photo-wrap {
+      position: relative; width: 360px; height: 460px;
+    }
+    .hero-photo-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(160deg, var(--blush-light) 0%, var(--off-white) 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-photo-placeholder span { font-family: 'Noto Serif JP', serif; font-size: 6rem; font-weight: 200; color: rgba(232,162,173,0.3); }
+    .hero-photo-tag {
+      position: absolute; bottom: -16px; right: -16px;
+      width: 80px; height: 80px; background: var(--ink);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-photo-tag span { font-family: 'Noto Serif JP', serif; font-size: 1.6rem; font-weight: 200; color: var(--blush); }
+
+    /* ── SECTION SHARED ── */
+    .section-wrap { padding: 100px 56px; border-bottom: 1px solid var(--border); }
+    .section-wrap.bg-off { background: var(--off-white); }
+    .two-col { display: grid; grid-template-columns: 1fr 1.6fr; gap: 100px; align-items: start; }
+    .col-left { position: sticky; top: 120px; }
+    .section-number { font-family: 'Cormorant Garamond', serif; font-size: 5rem; font-weight: 300; color: rgba(14,12,12,0.05); line-height: 1; margin-bottom: 8px; }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 2.5vw, 2.4rem); font-weight: 300; line-height: 1.15; color: var(--ink); }
+    .section-title em { font-style: italic; color: var(--blush); }
+    .col-right { display: flex; flex-direction: column; gap: 24px; }
+    .body-lead { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 300; line-height: 1.7; color: var(--ink); font-style: italic; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+    .body-text { font-size: 0.86rem; line-height: 2.1; color: var(--muted); }
+    .text-divider { width: 48px; height: 1px; background: var(--blush); }
+
+    /* ── FOUR THREADS ── */
+    .threads-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; border: 1px solid var(--border); }
+    .thread-card {
+      padding: 48px 40px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+      transition: background 0.25s;
+    }
+    .thread-card:nth-child(even) { border-right: none; }
+    .thread-card:nth-last-child(-n+2) { border-bottom: none; }
+    .thread-card:hover { background: var(--off-white); }
+    .thread-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--blush); transition: width 0.4s ease; }
+    .thread-card:hover::after { width: 100%; }
+    .thread-kanji { font-family: 'Noto Serif JP', serif; font-size: 2rem; font-weight: 200; color: var(--blush); margin-bottom: 20px; display: block; }
+    .thread-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; color: var(--ink); margin-bottom: 14px; line-height: 1.2; }
+    .thread-text { font-size: 0.8rem; line-height: 1.9; color: var(--muted); }
+
+    /* ── CREDENTIALS ── */
+    .credentials-section { padding: 100px 56px; border-bottom: 1px solid var(--border); }
+    .cred-header { display: grid; grid-template-columns: 1fr 1.6fr; gap: 100px; margin-bottom: 64px; align-items: end; }
+    .cred-intro { font-size: 0.86rem; line-height: 2.1; color: var(--muted); }
+
+    .cred-groups { display: flex; flex-direction: column; gap: 0; }
+    .cred-group { border-top: 1px solid var(--border); padding: 36px 0; display: grid; grid-template-columns: 200px 1fr; gap: 60px; align-items: start; }
+    .cred-group:last-child { border-bottom: 1px solid var(--border); }
+    .cred-group-label { font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--blush); font-family: 'DM Sans', sans-serif; padding-top: 4px; }
+    .cred-list { display: flex; flex-direction: column; gap: 12px; }
+    .cred-item { display: flex; align-items: baseline; gap: 14px; }
+    .cred-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--blush); flex-shrink: 0; margin-top: 7px; }
+    .cred-name { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 400; color: var(--ink); line-height: 1.4; }
+    .cred-status { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blush); font-family: 'DM Sans', sans-serif; border: 1px solid var(--blush); padding: 2px 8px; margin-left: 8px; vertical-align: middle; }
+
+    /* ── LANGUAGES ── */
+    .lang-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+    .lang-pill { font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; border: 1px solid var(--border); color: var(--muted); padding: 6px 14px; }
+    .lang-pill.strong { border-color: var(--blush); color: var(--ink); }
+
+    /* ── CTA ── */
+    .cta-section { padding: 120px 56px; background: var(--ink); color: var(--off-white); display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; position: relative; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; top: -200px; right: -200px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(232,162,173,0.1) 0%, transparent 70%); pointer-events: none; }
+    .cta-eyebrow { font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--blush); font-family: 'DM Sans', sans-serif; margin-bottom: 24px; }
+    .cta-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.4rem, 4vw, 4rem); font-weight: 300; line-height: 1.05; }
+    .cta-title em { font-style: italic; color: var(--blush); }
+    .cta-right { display: flex; flex-direction: column; gap: 28px; }
+    .cta-body { font-size: 0.86rem; line-height: 2; color: rgba(247,244,240,0.5); }
+    .contact-link-label { font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--blush); margin-bottom: 8px; font-family: 'DM Sans', sans-serif; }
+    .contact-link { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--off-white); text-decoration: none; border-bottom: 1px solid rgba(247,244,240,0.15); padding-bottom: 12px; margin-bottom: 24px; display: block; transition: color 0.2s, border-color 0.2s; }
+    .contact-link:hover { color: var(--blush); border-color: var(--blush); }
+
+    /* ── FOOTER ── */
+    footer { padding: 28px 56px; border-top: 1px solid rgba(247,244,240,0.08); display: flex; align-items: center; justify-content: space-between; background: var(--ink); color: rgba(247,244,240,0.3); }
+    .footer-copy { font-size: 0.65rem; letter-spacing: 0.15em; font-family: 'DM Sans', sans-serif; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 22px 28px; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 120px 28px 80px; min-height: auto; }
+      .hero-right { display: none; }
+      .section-wrap { padding: 72px 28px; }
+      .two-col { grid-template-columns: 1fr; gap: 40px; }
+      .col-left { position: static; }
+      .threads-grid { grid-template-columns: 1fr; }
+      .thread-card { border-right: none; border-bottom: 1px solid var(--border) !important; }
+      .thread-card:last-child { border-bottom: none !important; }
+      .credentials-section { padding: 72px 28px; }
+      .cred-header { grid-template-columns: 1fr; gap: 28px; margin-bottom: 40px; }
+      .cred-group { grid-template-columns: 1fr; gap: 16px; }
+      .cta-section { grid-template-columns: 1fr; gap: 48px; padding: 80px 28px; }
+      footer { padding: 22px 28px; flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/index.html"><img src="BG removed logo.png" alt="ICHIGO Studio" style="height:38px; display:block;" /></a>
+    <ul class="nav-links">
+      <li class="nav-item">
+        <a href="/studio.html">The Method</a>
+        <div class="nav-dropdown">
+          <a href="/ichigo-method.html">The ICHIGO Method</a>
+          <a href="/work.html">Selected Work</a>
+          <a href="/blog.html">Work Blog</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="/studio.html#about" class="active">About</a>
+        <div class="nav-dropdown">
+          <a href="/studio.html#about">About the Studio</a>
+          <a href="/founder.html" class="active">About the Founder</a>
+        </div>
+      </li>
+      <li><a href="/studio.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ① HERO -->
+  <section class="hero">
+    <div class="hero-bg">人</div>
+    <div class="hero-left">
+      <div class="hero-eyebrow">About the Founder</div>
+      <h1 class="hero-name">JY<em>一期</em></h1>
+      <p class="hero-role">Founder of ICHIGO Studio. Systems thinker, sensory practitioner, retail operator, and lifelong learner. Based in Singapore.</p>
+    </div>
+    <div class="hero-right">
+      <div class="hero-photo-wrap">
+        <div class="hero-photo-placeholder">
+          <span>一</span>
+        </div>
+        <div class="hero-photo-tag"><span>人</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ② INTRO -->
+  <section class="section-wrap">
+    <div class="two-col">
+      <div class="col-left">
+        <div class="section-number">—</div>
+        <h2 class="section-title">Not one<br>thing.<br><em>Several.</em></h2>
+      </div>
+      <div class="col-right">
+        <p class="body-lead">ICHIGO was not built from a single idea. It was built from a decade of working across very different fields — and slowly realising they were never as separate as they looked.</p>
+        <p class="body-text">The thread connecting them is a belief that good work is intentional work. Whether it is a data pipeline, a workshop session, a preserved flower arrangement, or a business process — what makes it work is the same thing: clarity about what it is for, and care in how it is made.</p>
+        <p class="body-text">JY founded ICHIGO Studio to bring that approach to clients who are building something real, and need a partner who has done real things across real contexts.</p>
+        <div class="text-divider"></div>
+        <p class="body-text">Trained in London, built in Singapore. Educated in engineering and law. Practised in data, operations, learning design, and sensory craft. Currently: AI systems, aromatherapy, florals, and an upcoming physical space at Anchorpoint, Singapore.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ③ FOUR THREADS -->
+  <section class="section-wrap bg-off">
+    <div style="margin-bottom: 56px;">
+      <div class="section-number" style="font-family:'Cormorant Garamond',serif; font-size:5rem; font-weight:300; color:rgba(14,12,12,0.05); line-height:1; margin-bottom:8px;">—</div>
+      <h2 class="section-title">The threads<br>that run<br><em>through it all</em></h2>
+    </div>
+    <div class="threads-grid">
+
+      <div class="thread-card">
+        <span class="thread-kanji">系</span>
+        <h3 class="thread-title">Systems & Data</h3>
+        <p class="thread-text">Over four years as a Senior Data Analyst on a large-scale online mapping platform — working across Chinese, English, and European regional datasets. Not the structured kind of data you can sort in a spreadsheet: spatial, contextual, requiring human judgement at scale. This is where the ICHIGO Method began — the belief that a system is only as good as the thinking behind it.</p>
+      </div>
+
+      <div class="thread-card">
+        <span class="thread-kanji">店</span>
+        <h3 class="thread-title">Retail & Operations</h3>
+        <p class="thread-text">Management Trainee at a large multi-outlet supermarket chain — leading sales teams, managing compliance across dry and fresh sections, running logistics, and redesigning staff training materials. Supplemented by front-line service experience in a busy café environment. Opening ICHIGO's physical space at Anchorpoint is not a first step into retail. It is a return to something already known.</p>
+      </div>
+
+      <div class="thread-card">
+        <span class="thread-kanji">學</span>
+        <h3 class="thread-title">Learning & People</h3>
+        <p class="thread-text">Three years in the digital learning division of a local higher education institution — managing departmental budget and procurement, overseeing learning management systems, and reporting directly to faculty leadership. The work was operational, but the context was human: how people learn, how institutions train, and what actually makes knowledge transfer work. ICHIGO's workshops are designed with this in mind.</p>
+      </div>
+
+      <div class="thread-card">
+        <span class="thread-kanji">感</span>
+        <h3 class="thread-title">Sensory & Craft</h3>
+        <p class="thread-text">WSET Level 3 with Merit, US Wine Scholar Guild French Wine Scholar with Honours, ABRSM Pianoforte Grade 8, and currently a NAHA / IFA aromatherapy student with written examinations completed. These are not hobbies — they are years of disciplined sensory training. The aesthetic of ICHIGO, and the care behind each piece in the Conservatory, comes from here.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ④ CREDENTIALS -->
+  <section class="credentials-section">
+    <div class="cred-header">
+      <div>
+        <div class="section-number">—</div>
+        <h2 class="section-title">Credentials<br>&amp; <em>training</em></h2>
+      </div>
+      <p class="cred-intro">A selected record of formal qualifications, certifications, and ongoing training. The full picture is not any one certificate — it is the range.</p>
+    </div>
+
+    <div class="cred-groups">
+
+      <div class="cred-group">
+        <span class="cred-group-label">AI & Systems</span>
+        <div class="cred-list">
+          <div class="cred-item">
+            <div class="cred-dot"></div>
+            <span class="cred-name">ISO/IEC 42001 AI Management Systems — Foundation</span>
+          </div>
+          <div class="cred-item">
+            <div class="cred-dot"></div>
+            <span class="cred-name">AWS Certified AI Practitioner</span>
+          </div>
+          <div class="cred-item">
+            <div class="cred-dot"></div>
+            <span class="cred-name">IBM Cloud Computing Practitioner</span>
+          </div>
+          <div class="cred-item">
+            <div class="cred-dot"></div>
+            <span class="cred-name">IBM Enterprise Design Thinking Graduate</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cred-group">
+        <span class="cred-group-label">Sensory & Craft</span>
+        <div class="cred-list">
+          <div class="cred-item">
+            <div class="cred-dot"></div>
+            <span class="cred-name">NAHA / IFA Aromatherapy — written examinations complete; case studies in progress <span class="cred-status">In Progress</span></span>
+          </div>
+          <div class="cred-item">
+            <div class="cred-dot"></div>
+            <span class="cred-name">WSET Level 3 in Wine & Spirit — with Merit</span>
+          </div>
+          <div class="cred-item">
+            <div class="cred-dot"></div>
+            <span class="cred-name">US Wine Scholar Guild — French Wine Scholar with Honours</span>
+          </div>
+          <div class="cred-item">
+            <div class="cred-dot"></div>
+            <span class="cred-name">ABRSM Pianoforte — Grade 8</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cred-group">
+        <span class="cred-group-label">First Aid</span>
+        <div class="cred-list">
+          <div class="cred-item">
+            <div class="cred-dot"></div>
+            <span class="cred-name">Singapore Red Cross — Advanced Psychological First Aid (APFA)</span>
+          </div>
+          <div class="cred-item">
+            <div class="cred-dot"></div>
+            <span class="cred-name">Hong Kong St John's Ambulance — Adult First Aider</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cred-group">
+        <span class="cred-group-label">Education</span>
+        <div class="cred-list">
+          <div class="cred-item">
+            <div class="cred-dot"></div>
+            <span class="cred-name">BSc Management with Law — University of London (LSE)</span>
+          </div>
+          <div class="cred-item">
+            <div class="cred-dot"></div>
+            <span class="cred-name">BEng Materials Science and Engineering (Years 1–2) — Imperial College London</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cred-group">
+        <span class="cred-group-label">Languages</span>
+        <div>
+          <div class="lang-row">
+            <span class="lang-pill strong">English</span>
+            <span class="lang-pill strong">Cantonese</span>
+            <span class="lang-pill strong">Written Chinese</span>
+            <span class="lang-pill strong">Business Japanese — JLPT N2</span>
+            <span class="lang-pill">Basic Spanish</span>
+            <span class="lang-pill">Basic Mandarin</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ⑤ CTA -->
+  <section class="cta-section">
+    <div>
+      <div class="cta-eyebrow">Work With JY</div>
+      <h2 class="cta-title">Let's build<br>something<br><em>together.</em></h2>
+    </div>
+    <div class="cta-right">
+      <p class="cta-body">Whether you are looking for a business systems partner, a workshop facilitator, or simply want to know more about ICHIGO — the conversation starts the same way.</p>
+      <div>
+        <div class="contact-link-label">WhatsApp</div>
+        <a href="https://wa.me/6580978928" class="contact-link" target="_blank" rel="noopener">Start a conversation</a>
+        <div class="contact-link-label">Email</div>
+        <a href="mailto:ichigo.kyanite@gmail.com" class="contact-link">ichigo.kyanite@gmail.com</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">© 2026 ICHIGO Studio. All rights reserved.</span>
+    <img src="BG removed logo.png" alt="ICHIGO Studio" style="height:28px; opacity:0.5;" />
+  </footer>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    const ring   = document.getElementById('cursorRing');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+      ring.style.left   = e.clientX + 'px'; ring.style.top   = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => { cursor.style.width='18px'; cursor.style.height='18px'; ring.style.width='52px'; ring.style.height='52px'; ring.style.borderColor='var(--blush)'; });
+      el.addEventListener('mouseleave', () => { cursor.style.width='10px'; cursor.style.height='10px'; ring.style.width='36px'; ring.style.height='36px'; ring.style.borderColor='var(--ink)'; });
+    });
+  </script>
+
+</body>
+</html>
