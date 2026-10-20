@@ -128,6 +128,42 @@
       font-size: 0.8rem; color: var(--ink); line-height: 1.6;
     }
 
+    /* ── WALK-IN WORKSHOP TEASER ── */
+    .walkin-block {
+      width: 100%; max-width: 480px;
+      margin-top: 20px;
+      border: 1px solid var(--border);
+      border-radius: 8px; overflow: hidden;
+      background: var(--warm-white);
+      animation: fadeUp 0.8s 0.75s ease both;
+    }
+    .walkin-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      background: var(--off-white);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .walkin-header-kanji { font-family: 'Noto Serif JP', serif; font-size: 1.2rem; font-weight: 200; color: var(--blush); }
+    .walkin-header-label { font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); font-family: 'DM Sans', sans-serif; }
+    .walkin-body { padding: 18px 24px 20px; }
+    .walkin-intro { font-size: 0.78rem; line-height: 1.8; color: var(--muted); }
+    .walkin-list { list-style: none; margin-top: 14px; border-top: 1px solid var(--border); }
+    .walkin-list li { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--border); }
+    .walkin-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--ink); }
+    .walkin-name small { font-family: 'Noto Serif JP', serif; font-size: 0.7rem; color: var(--muted); margin-left: 6px; }
+    .walkin-kits { font-size: 0.56rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blush); font-family: 'DM Sans', sans-serif; white-space: nowrap; }
+    .walkin-soon { font-size: 0.7rem; color: var(--muted); margin-top: 12px; line-height: 1.7; }
+    .walkin-actions { display: flex; gap: 8px; margin-top: 16px; }
+    .walkin-actions a {
+      flex: 1; text-align: center; text-decoration: none; cursor: none;
+      font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; font-weight: 400;
+      padding: 12px 10px; border: 1px solid var(--ink); transition: background 0.25s, color 0.25s;
+    }
+    .walkin-actions .wk-primary { background: var(--ink); color: var(--off-white); }
+    .walkin-actions .wk-primary:hover { background: transparent; color: var(--ink); }
+    .walkin-actions .wk-ghost { color: var(--ink); }
+    .walkin-actions .wk-ghost:hover { background: var(--blush-light); border-color: var(--blush); }
+
     /* ── CALENDAR ── */
     .calendar-block {
       width: 100%; max-width: 480px;
@@ -520,6 +556,28 @@
             <img src="/p/map.png" alt="Anchorpoint B1 map — ICHIGO at #B1-49/50"
               style="width:100%;border-radius:4px;margin-top:6px;display:block;" />
           </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WALK-IN WORKSHOPS TEASER — keep kit counts in sync with workshop.html (#walk-in) -->
+    <div class="walkin-block">
+      <div class="walkin-header">
+        <span class="walkin-header-kanji">作</span>
+        <span class="walkin-header-label">Walk-in Workshops — At the Studio</span>
+      </div>
+      <div class="walkin-body">
+        <p class="walkin-intro">Pick a kit, make it with us, take it home the same day. Please message first so we can hold your kit and seat. 建議先傳訊息確認。</p>
+        <ul class="walkin-list">
+          <li><span class="walkin-name">Night-Light Flower Dome<small>永生花小夜燈</small></span><span class="walkin-kits">12 kits</span></li>
+          <li><span class="walkin-name">Dandelion Wish Dome<small>蒲公英玻璃罩</small></span><span class="walkin-kits">12 kits</span></li>
+          <li><span class="walkin-name">Dried-Flower 3D Frame<small>乾花立體相框</small></span><span class="walkin-kits">10 kits</span></li>
+          <li><span class="walkin-name">Wooden Box Landscape<small>木盒微景觀</small></span><span class="walkin-kits">10 kits</span></li>
+        </ul>
+        <p class="walkin-soon">Coming soon: Christmas wreath · Song brocade lantern · Bead bracelets · Paper crane charm</p>
+        <div class="walkin-actions">
+          <a href="/workshop.html#walk-in" class="wk-primary">See all workshops</a>
+          <a href="https://wa.me/6580978928?text=Hi%20ICHIGO!%20I%27d%20like%20to%20join%20a%20walk-in%20workshop.%20Could%20you%20confirm%20kits%20and%20seats%3F" class="wk-ghost" target="_blank" rel="noopener">WhatsApp us</a>
         </div>
       </div>
     </div>

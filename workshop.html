@@ -273,8 +273,144 @@
         <span class="hero-badge">Children welcome (with adult)</span>
         <span class="hero-badge">From $25 per pax</span>
         <span class="hero-badge">Private &amp; group bookings</span>
+        <a href="#walk-in" class="hero-badge" style="color:var(--blush);border-color:var(--blush);text-decoration:none;">Walk-ins at Anchorpoint · B1-49/50</a>
       </div>
     </div>
+  </section>
+
+  <!-- ⓪ WALK-IN AT THE STUDIO (kit dashboard) -->
+  <style>
+    .wi-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-bottom: 28px; }
+    .wi-asof { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-family: 'DM Sans', sans-serif; }
+    .wi-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+    .wi-chips button { font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; background: transparent; color: var(--muted); border: 1px solid var(--border); padding: 7px 14px; cursor: none; transition: color 0.2s, border-color 0.2s, background 0.2s; }
+    .wi-chips button:hover { color: var(--ink); border-color: var(--ink); }
+    .wi-chips button[aria-pressed="true"] { background: var(--ink); color: var(--off-white); border-color: var(--ink); }
+    .wi-chips button:focus-visible { outline: 1px solid var(--blush); outline-offset: 2px; }
+
+    .wi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 2px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--border); }
+    .wi-card { background: var(--warm-white); display: flex; flex-direction: column; position: relative; transition: background 0.25s; }
+    .wi-card[hidden] { display: none; }
+    .wi-card:hover { background: var(--off-white); }
+    .wi-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--blush); transition: width 0.4s ease; }
+    .wi-card:hover::after { width: 100%; }
+
+    .wi-art { aspect-ratio: 16/10; display: grid; place-items: center; position: relative; color: var(--blush); background: linear-gradient(135deg, var(--blush-light) 0%, var(--off-white) 100%); }
+    .wi-art svg { width: 38%; height: auto; }
+    .wi-status, .wi-kits { position: absolute; top: 14px; font-size: 0.54rem; letter-spacing: 0.2em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; font-weight: 400; padding: 5px 10px; }
+    .wi-status { left: 14px; background: var(--warm-white); color: var(--ink); display: inline-flex; align-items: center; gap: 6px; }
+    .wi-status::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--blush); }
+    .wi-status.soon { color: var(--muted); }
+    .wi-status.soon::before { background: transparent; border: 1px solid var(--muted); }
+    .wi-kits { right: 14px; background: var(--ink); color: var(--off-white); }
+
+    .wi-body { padding: 24px 26px 26px; display: flex; flex-direction: column; flex: 1; }
+    .wi-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; color: var(--ink); line-height: 1.2; }
+    .wi-zh { font-family: 'Noto Serif JP', serif; font-weight: 300; font-size: 0.8rem; color: var(--muted); margin-top: 4px; margin-bottom: 12px; }
+    .wi-desc { font-size: 0.78rem; line-height: 1.9; color: var(--muted); flex: 1; }
+    .wi-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+    .wi-tag { font-size: 0.54rem; letter-spacing: 0.16em; text-transform: uppercase; border: 1px solid var(--border); color: var(--muted); padding: 4px 9px; font-family: 'DM Sans', sans-serif; }
+    .wi-cta { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 0.64rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); text-decoration: none; font-family: 'DM Sans', sans-serif; font-weight: 400; transition: color 0.2s; }
+    .wi-cta:hover { color: var(--blush); }
+    .wi-cta span:last-child { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; letter-spacing: 0; text-transform: none; }
+
+    .wi-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; border: 1px solid var(--border); margin-top: 48px; background: var(--border); }
+    .wi-step { background: var(--warm-white); padding: 28px 26px; }
+    .wi-step-num { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--blush); line-height: 1; margin-bottom: 12px; display: block; }
+    .wi-step-title { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 400; color: var(--ink); margin-bottom: 8px; }
+    .wi-step-text { font-size: 0.74rem; line-height: 1.8; color: var(--muted); }
+
+    @media (max-width: 900px) {
+      .wi-steps { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 520px) {
+      .wi-steps { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <section class="section-wrap" id="walk-in">
+    <div class="section-header">
+      <div>
+        <div class="section-number">00</div>
+        <h2 class="section-title">Walk-in at<br><em>the Studio</em></h2>
+      </div>
+      <p class="section-intro">Drop by ICHIGO Studio at Anchorpoint (#B1-49/50) — pick a kit, we guide you through it, and you take it home the same day. Walk-ins are welcome, but please message us first so we can make sure your kit and a seat are free. 歡迎即場參加，建議先傳訊息確認材料包同座位。</p>
+    </div>
+
+    <div class="wi-meta">
+      <div class="wi-chips" id="wiChips" role="group" aria-label="Filter walk-in workshops"></div>
+      <span class="wi-asof" id="wiAsof"></span>
+    </div>
+
+    <div class="wi-grid" id="wiGrid"></div>
+
+    <div class="wi-steps">
+      <div class="wi-step"><span class="wi-step-num">一</span><h3 class="wi-step-title">Message us</h3><p class="wi-step-text">Tell us which workshop and how many people. We'll confirm kits and seats. 先傳訊息確認。</p></div>
+      <div class="wi-step"><span class="wi-step-num">二</span><h3 class="wi-step-title">Drop by &amp; pick a kit</h3><p class="wi-step-text">Come to the studio and choose your design and colours.</p></div>
+      <div class="wi-step"><span class="wi-step-num">三</span><h3 class="wi-step-title">Make it</h3><p class="wi-step-text">We show you each step. All tools are provided.</p></div>
+      <div class="wi-step"><span class="wi-step-num">四</span><h3 class="wi-step-title">Take it home</h3><p class="wi-step-text">Gift-ready, packed for you to carry home.</p></div>
+    </div>
+
+    <script>
+      (function () {
+        // ── UPDATE HERE ── Kit counts as of this date. Update from the stock sheet.
+        const KITS_ASOF = '20 Oct 2026';
+        const WA_NUMBER = '6580978928';
+        // status: "now" = kits in the studio · "soon" = kits on the way
+        const W = [
+          { en: 'Preserved-Flower Night-Light Dome', zh: '永生花玻璃罩小夜燈', kits: 12, status: 'now',  tags: ['Gift', 'Beginner'],          art: 'dome',      desc: 'Arrange preserved roses and dried blooms under a glass dome with a warm LED base.' },
+          { en: 'Dandelion Wish Dome',               zh: '蒲公英玻璃罩',       kits: 12, status: 'now',  tags: ['Quick make', 'Kids'],        art: 'dandelion', desc: 'Seal a real preserved dandelion inside a mini glass dome. Small, quick and very giftable.' },
+          { en: 'Dried-Flower 3D Frame',             zh: '乾花立體相框',       kits: 10, status: 'now',  tags: ['Gift', 'Home décor'],        art: 'frame',     desc: 'Build a layered botanical scene inside a deep wooden frame, ready to hang or stand.' },
+          { en: 'Wooden Box Landscape',              zh: '木盒微景觀',         kits: 10, status: 'now',  tags: ['Home décor'],                art: 'box',       desc: 'Create a tiny meadow of moss, dried flowers and pebbles in a clear-front wooden box.' },
+          { en: 'Christmas Rattan Wreath',           zh: '聖誕藤圈',           kits: 10, status: 'soon', tags: ['Seasonal', 'Door décor'],    art: 'wreath',    desc: 'Dress a 20 cm rattan ring with seasonal sprigs, berries and ribbon.' },
+          { en: 'Song Brocade Mini Lantern',         zh: '宋錦小夜燈',         kits: 13, status: 'soon', tags: ['Heritage craft', 'Gift'],    art: 'lantern',   desc: 'Wrap a small lamp in traditional Song brocade patterns: magpies, butterflies, rabbits.' },
+          { en: 'Bead Bracelet & Phone Charm',       zh: '串珠手鏈·手機鏈',    kits: 26, status: 'soon', tags: ['Kids', 'Quick make'],        art: 'beads',     desc: 'String your own bracelet or phone charm from glass, ceramic and pearl beads.' },
+          { en: 'Paper Crane Lucky Charm',           zh: '千紙鶴福牌',         kits: 12, status: 'soon', tags: ['Kids', 'Gift'],              art: 'crane',     desc: 'Fold paper cranes and hang them with a good-luck charm. A thoughtful gift for parents and teachers.' }
+        ];
+        const ART = {
+          dome: '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M30 92V52a30 30 0 0 1 60 0v40"/><rect x="22" y="92" width="76" height="12" rx="4" fill="currentColor" fill-opacity=".15"/><circle cx="60" cy="62" r="9" fill="currentColor" fill-opacity=".35"/><path d="M60 71v21M60 80l-8-6M60 84l8-6"/></svg>',
+          dandelion: '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M40 92V58a20 20 0 0 1 40 0v34"/><rect x="34" y="92" width="52" height="10" rx="3" fill="currentColor" fill-opacity=".15"/><path d="M60 92V62"/><path stroke-width="1.5" d="M60 58l0-10M60 58l8-7M60 58l10 0M60 58l8 7M60 58l-8 7M60 58l-10 0M60 58l-8-7"/></svg>',
+          frame: '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="20" y="22" width="80" height="76" rx="4"/><rect x="30" y="32" width="60" height="56" rx="2" stroke-width="1.5"/><circle cx="48" cy="56" r="7" fill="currentColor" fill-opacity=".3"/><circle cx="70" cy="50" r="5" fill="currentColor" fill-opacity=".3"/><path d="M48 63v20M70 55v28M58 70l6-6" stroke-width="1.5"/></svg>',
+          box: '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="14" y="38" width="92" height="50" rx="4"/><path d="M14 74c14-8 26-6 38 0s28 6 54-4" stroke-width="1.5"/><path d="M34 74V58M44 72V50M78 70V54M88 68V60" stroke-width="1.5" stroke-linecap="round"/><circle cx="44" cy="48" r="4" fill="currentColor" fill-opacity=".35"/><circle cx="78" cy="52" r="4" fill="currentColor" fill-opacity=".35"/></svg>',
+          wreath: '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="60" cy="62" r="32"/><circle cx="60" cy="62" r="22" stroke-width="1.5"/><circle cx="40" cy="42" r="4" fill="currentColor" fill-opacity=".4"/><circle cx="86" cy="70" r="4" fill="currentColor" fill-opacity=".4"/><circle cx="52" cy="92" r="4" fill="currentColor" fill-opacity=".4"/><path d="M52 26l8 6 8-6M60 32v-8"/></svg>',
+          lantern: '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M42 30h36l6 56H36z"/><path d="M38 54h44M37 70h46" stroke-width="1.5"/><rect x="34" y="86" width="52" height="10" rx="3" fill="currentColor" fill-opacity=".15"/><path d="M60 18v12" stroke-linecap="round"/></svg>',
+          beads: '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2"><circle cx="60" cy="60" r="30" stroke-width="1" stroke-dasharray="2 4"/><g fill="currentColor" fill-opacity=".3"><circle cx="60" cy="30" r="7"/><circle cx="86" cy="45" r="7"/><circle cx="86" cy="75" r="7"/><circle cx="60" cy="90" r="7"/><circle cx="34" cy="75" r="7"/><circle cx="34" cy="45" r="7"/></g></svg>',
+          crane: '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20 70l40-12 40 12-40 6z" fill="currentColor" fill-opacity=".15"/><path d="M60 58l-14-26 14 18 14-18-14 26M100 70l6-14"/><path d="M60 76v20" stroke-width="1.5" stroke-linecap="round"/><rect x="52" y="96" width="16" height="10" rx="2"/></svg>'
+        };
+        const waLink = w => 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(
+          `Hi ICHIGO! I'd like to join the ${w.en} (${w.zh}) workshop.\nDate: \nTime: \nNumber of people: \nCould you confirm a kit and seats are available? Thank you!\n\n你好！我想參加「${w.zh}」工作坊，想確認材料包同座位。`);
+        const F = [['all', 'All 全部'], ['now', 'Available now 現有'], ['soon', 'Coming soon 即將推出'], ['Kids', 'Kids 小朋友'], ['Gift', 'Gift 送禮']];
+
+        const grid = document.getElementById('wiGrid');
+        grid.innerHTML = W.map(w => `
+          <article class="wi-card" data-status="${w.status}" data-tags="${w.tags.join('|')}">
+            <div class="wi-art">
+              <span class="wi-status ${w.status}">${w.status === 'now' ? 'Available now' : 'Coming soon'}</span>
+              <span class="wi-kits">${w.status === 'now' ? (w.kits <= 5 ? 'Only ' + w.kits + ' left' : w.kits + ' kits in studio') : w.kits + ' kits arriving'}</span>
+              ${ART[w.art]}
+            </div>
+            <div class="wi-body">
+              <h3 class="wi-title">${w.en}</h3>
+              <div class="wi-zh">${w.zh}</div>
+              <p class="wi-desc">${w.desc}</p>
+              <div class="wi-tags">${w.tags.map(t => `<span class="wi-tag">${t}</span>`).join('')}</div>
+              <a class="wi-cta" href="${waLink(w)}" target="_blank" rel="noopener"><span>${w.status === 'now' ? 'Check availability on WhatsApp' : 'Ask to be notified'}</span><span>→</span></a>
+            </div>
+          </article>`).join('');
+
+        const chips = document.getElementById('wiChips');
+        chips.innerHTML = F.map(([k, l]) => `<button type="button" data-f="${k}" aria-pressed="${k === 'all'}">${l}</button>`).join('');
+        chips.addEventListener('click', e => {
+          const b = e.target.closest('button'); if (!b) return;
+          const f = b.dataset.f;
+          chips.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
+          grid.querySelectorAll('.wi-card').forEach(c => {
+            c.hidden = !(f === 'all' || c.dataset.status === f || c.dataset.tags.split('|').includes(f));
+          });
+        });
+        document.getElementById('wiAsof').textContent = 'Kits in studio as of ' + KITS_ASOF + ' · 材料包數量每日更新';
+      })();
+    </script>
   </section>
 
   <!-- ① AROMATHERAPY WORKSHOPS -->
