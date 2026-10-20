@@ -1,0 +1,112 @@
+{
+  "asof": "2026-10-20",
+  "_note": "Generated daily from the ICHIGO stock sheet. Do not edit by hand. status: now = kits in studio, soon = kits on the way. art: dome|dandelion|frame|box|wreath|lantern|beads|crane",
+  "workshops": [
+    {
+      "id": "dome",
+      "en": "Preserved-Flower Night-Light Dome",
+      "zh": "永生花玻璃罩小夜燈",
+      "kits": 12,
+      "status": "now",
+      "tags": [
+        "Gift",
+        "Beginner"
+      ],
+      "art": "dome",
+      "desc": "Arrange preserved roses and dried blooms under a glass dome with a warm LED base."
+    },
+    {
+      "id": "dandelion",
+      "en": "Dandelion Wish Dome",
+      "zh": "蒲公英玻璃罩",
+      "kits": 12,
+      "status": "now",
+      "tags": [
+        "Quick make",
+        "Kids"
+      ],
+      "art": "dandelion",
+      "desc": "Seal a real preserved dandelion inside a mini glass dome. Small, quick and very giftable."
+    },
+    {
+      "id": "frame",
+      "en": "Dried-Flower 3D Frame",
+      "zh": "乾花立體相框",
+      "kits": 10,
+      "status": "now",
+      "tags": [
+        "Gift",
+        "Home décor"
+      ],
+      "art": "frame",
+      "desc": "Build a layered botanical scene inside a deep wooden frame, ready to hang or stand."
+    },
+    {
+      "id": "box",
+      "en": "Wooden Box Landscape",
+      "zh": "木盒微景觀",
+      "kits": 10,
+      "status": "now",
+      "tags": [
+        "Home décor"
+      ],
+      "art": "box",
+      "desc": "Create a tiny meadow of moss, dried flowers and pebbles in a clear-front wooden box."
+    },
+    {
+      "id": "wreath",
+      "en": "Christmas Rattan Wreath",
+      "zh": "聖誕藤圈",
+      "kits": 10,
+      "status": "soon",
+      "tags": [
+        "Seasonal",
+        "Door décor"
+      ],
+      "art": "wreath",
+      "desc": "Dress a 20 cm rattan ring with seasonal sprigs, berries and ribbon."
+    },
+    {
+      "id": "lantern",
+      "en": "Song Brocade Mini Lantern",
+      "zh": "宋錦小夜燈",
+      "kits": 13,
+      "status": "soon",
+      "tags": [
+        "Heritage craft",
+        "Gift"
+      ],
+      "art": "lantern",
+      "desc": "Wrap a small lamp in traditional Song brocade patterns: magpies, butterflies, rabbits."
+    },
+    {
+      "id": "beads",
+      "en": "Bead Bracelet & Phone Charm",
+      "zh": "串珠手鏈·手機鏈",
+      "kits": 26,
+      "status": "soon",
+      "tags": [
+        "Kids",
+        "Quick make"
+      ],
+      "art": "beads",
+      "desc": "String your own bracelet or phone charm from glass, ceramic and pearl beads."
+    },
+    {
+      "id": "crane",
+      "en": "Paper Crane Lucky Charm",
+      "zh": "千紙鶴福牌",
+      "kits": 12,
+      "status": "soon",
+      "tags": [
+        "Kids",
+        "Gift"
+      ],
+      "art": "crane",
+      "desc": "Fold paper cranes and hang them with a good-luck charm. A thoughtful gift for parents and teachers."
+    }
+  ],
+  "instagram": [
+    "https://www.instagram.com/p/DerHB5zHRS4/"
+  ]
+}
