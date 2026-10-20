@@ -153,6 +153,13 @@
     .walkin-name small { font-family: 'Noto Serif JP', serif; font-size: 0.7rem; color: var(--muted); margin-left: 6px; }
     .walkin-kits { font-size: 0.56rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blush); font-family: 'DM Sans', sans-serif; white-space: nowrap; }
     .walkin-soon { font-size: 0.7rem; color: var(--muted); margin-top: 12px; line-height: 1.7; }
+    .walkin-soon:empty { display: none; }
+    .walkin-list:empty { display: none; }
+
+    /* ── INSTAGRAM ── */
+    .ig-block { width: 100%; max-width: 480px; margin-top: 20px; animation: fadeUp 0.8s 0.78s ease both; }
+    .ig-block[hidden] { display: none; }
+    #igPosts { display: flex; flex-direction: column; gap: 12px; align-items: center; }
     .walkin-actions { display: flex; gap: 8px; margin-top: 16px; }
     .walkin-actions a {
       flex: 1; text-align: center; text-decoration: none; cursor: none;
@@ -560,7 +567,7 @@
       </div>
     </div>
 
-    <!-- WALK-IN WORKSHOPS TEASER — keep kit counts in sync with workshop.html (#walk-in) -->
+    <!-- WALK-IN WORKSHOPS TEASER — reads /data/workshops.json (same source as workshop.html) -->
     <div class="walkin-block">
       <div class="walkin-header">
         <span class="walkin-header-kanji">作</span>
@@ -568,18 +575,18 @@
       </div>
       <div class="walkin-body">
         <p class="walkin-intro">Pick a kit, make it with us, take it home the same day. Please message first so we can hold your kit and seat. 建議先傳訊息確認。</p>
-        <ul class="walkin-list">
-          <li><span class="walkin-name">Night-Light Flower Dome<small>永生花小夜燈</small></span><span class="walkin-kits">12 kits</span></li>
-          <li><span class="walkin-name">Dandelion Wish Dome<small>蒲公英玻璃罩</small></span><span class="walkin-kits">12 kits</span></li>
-          <li><span class="walkin-name">Dried-Flower 3D Frame<small>乾花立體相框</small></span><span class="walkin-kits">10 kits</span></li>
-          <li><span class="walkin-name">Wooden Box Landscape<small>木盒微景觀</small></span><span class="walkin-kits">10 kits</span></li>
-        </ul>
-        <p class="walkin-soon">Coming soon: Christmas wreath · Song brocade lantern · Bead bracelets · Paper crane charm</p>
+        <ul class="walkin-list" id="walkinList"></ul>
+        <p class="walkin-soon" id="walkinSoon"></p>
         <div class="walkin-actions">
           <a href="/workshop.html#walk-in" class="wk-primary">See all workshops</a>
           <a href="https://wa.me/6580978928?text=Hi%20ICHIGO!%20I%27d%20like%20to%20join%20a%20walk-in%20workshop.%20Could%20you%20confirm%20kits%20and%20seats%3F" class="wk-ghost" target="_blank" rel="noopener">WhatsApp us</a>
         </div>
       </div>
+    </div>
+
+    <!-- INSTAGRAM — posts listed in /data/workshops.json -->
+    <div class="ig-block" data-ig-section hidden>
+      <div id="igPosts"></div>
     </div>
 
     <!-- CALENDAR -->
@@ -605,6 +612,25 @@
     </div>
 
   </div>
+
+  <script src="/ig.js"></script>
+  <script>
+    (function () {
+      const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+      fetch('/data/workshops.json', { cache: 'no-cache' })
+        .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(d => {
+          const W = d.workshops || [];
+          const now = W.filter(w => w.status === 'now' && w.kits > 0);
+          const soon = W.filter(w => w.status === 'soon');
+          document.getElementById('walkinList').innerHTML = now.map(w =>
+            `<li><span class="walkin-name">${esc(w.en)}<small>${esc(w.zh)}</small></span><span class="walkin-kits">${w.kits <= 5 ? 'Only ' + w.kits + ' left' : w.kits + ' kits'}</span></li>`).join('');
+          document.getElementById('walkinSoon').textContent = soon.length ? 'Coming soon: ' + soon.map(w => w.en).join(' · ') : '';
+          if (window.renderInstagram) window.renderInstagram(d.instagram || []);
+        })
+        .catch(() => {});
+    })();
+  </script>
 
   <script>
     const cursor = document.getElementById('cursor');

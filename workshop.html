@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Workshops — ICHIGO Conservatory</title>
+  <title>Workshops — ICHIGO Studio</title>
   <meta name="description" content="Hands-on workshops in Singapore — aromatherapy crafting and preserved floral making. Private and group sessions available. From $25 per pax." />
   <meta name="keywords" content="flower dome workshop Singapore, aromatherapy workshop Singapore, preserved flowers Singapore, plaster painting workshop Singapore, ICHIGO workshop" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://ichigo.studio/workshop.html" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://ichigo.studio/workshop.html" />
-  <meta property="og:title" content="Workshops — ICHIGO Conservatory" />
+  <meta property="og:title" content="Workshops — ICHIGO Studio" />
   <meta property="og:description" content="Hands-on aromatherapy and floral workshops in Singapore. From $25 per pax." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -320,6 +320,13 @@
     .wi-step-title { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 400; color: var(--ink); margin-bottom: 8px; }
     .wi-step-text { font-size: 0.74rem; line-height: 1.8; color: var(--muted); }
 
+    .wi-ig { margin-top: 64px; }
+    .wi-ig[hidden] { display: none; }
+    .wi-ig-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+    .wi-ig-title { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; color: var(--ink); }
+    .wi-ig-title em { font-style: italic; color: var(--blush); }
+    #igPosts { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 20px; align-items: start; }
+
     @media (max-width: 900px) {
       .wi-steps { grid-template-columns: repeat(2, 1fr); }
     }
@@ -351,22 +358,20 @@
       <div class="wi-step"><span class="wi-step-num">四</span><h3 class="wi-step-title">Take it home</h3><p class="wi-step-text">Gift-ready, packed for you to carry home.</p></div>
     </div>
 
+    <div class="wi-ig" data-ig-section hidden>
+      <div class="wi-ig-head">
+        <h3 class="wi-ig-title">From the <em>studio</em></h3>
+        <a href="https://www.instagram.com/ichigo_1975/" class="btn-ghost" target="_blank" rel="noopener">@ichigo_1975 on Instagram</a>
+      </div>
+      <div id="igPosts"></div>
+    </div>
+
+    <script src="/ig.js"></script>
+
     <script>
       (function () {
-        // ── UPDATE HERE ── Kit counts as of this date. Update from the stock sheet.
-        const KITS_ASOF = '20 Oct 2026';
+        // Data comes from /data/workshops.json — generated daily from the stock sheet. Do not edit counts here.
         const WA_NUMBER = '6580978928';
-        // status: "now" = kits in the studio · "soon" = kits on the way
-        const W = [
-          { en: 'Preserved-Flower Night-Light Dome', zh: '永生花玻璃罩小夜燈', kits: 12, status: 'now',  tags: ['Gift', 'Beginner'],          art: 'dome',      desc: 'Arrange preserved roses and dried blooms under a glass dome with a warm LED base.' },
-          { en: 'Dandelion Wish Dome',               zh: '蒲公英玻璃罩',       kits: 12, status: 'now',  tags: ['Quick make', 'Kids'],        art: 'dandelion', desc: 'Seal a real preserved dandelion inside a mini glass dome. Small, quick and very giftable.' },
-          { en: 'Dried-Flower 3D Frame',             zh: '乾花立體相框',       kits: 10, status: 'now',  tags: ['Gift', 'Home décor'],        art: 'frame',     desc: 'Build a layered botanical scene inside a deep wooden frame, ready to hang or stand.' },
-          { en: 'Wooden Box Landscape',              zh: '木盒微景觀',         kits: 10, status: 'now',  tags: ['Home décor'],                art: 'box',       desc: 'Create a tiny meadow of moss, dried flowers and pebbles in a clear-front wooden box.' },
-          { en: 'Christmas Rattan Wreath',           zh: '聖誕藤圈',           kits: 10, status: 'soon', tags: ['Seasonal', 'Door décor'],    art: 'wreath',    desc: 'Dress a 20 cm rattan ring with seasonal sprigs, berries and ribbon.' },
-          { en: 'Song Brocade Mini Lantern',         zh: '宋錦小夜燈',         kits: 13, status: 'soon', tags: ['Heritage craft', 'Gift'],    art: 'lantern',   desc: 'Wrap a small lamp in traditional Song brocade patterns: magpies, butterflies, rabbits.' },
-          { en: 'Bead Bracelet & Phone Charm',       zh: '串珠手鏈·手機鏈',    kits: 26, status: 'soon', tags: ['Kids', 'Quick make'],        art: 'beads',     desc: 'String your own bracelet or phone charm from glass, ceramic and pearl beads.' },
-          { en: 'Paper Crane Lucky Charm',           zh: '千紙鶴福牌',         kits: 12, status: 'soon', tags: ['Kids', 'Gift'],              art: 'crane',     desc: 'Fold paper cranes and hang them with a good-luck charm. A thoughtful gift for parents and teachers.' }
-        ];
         const ART = {
           dome: '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M30 92V52a30 30 0 0 1 60 0v40"/><rect x="22" y="92" width="76" height="12" rx="4" fill="currentColor" fill-opacity=".15"/><circle cx="60" cy="62" r="9" fill="currentColor" fill-opacity=".35"/><path d="M60 71v21M60 80l-8-6M60 84l8-6"/></svg>',
           dandelion: '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M40 92V58a20 20 0 0 1 40 0v34"/><rect x="34" y="92" width="52" height="10" rx="3" fill="currentColor" fill-opacity=".15"/><path d="M60 92V62"/><path stroke-width="1.5" d="M60 58l0-10M60 58l8-7M60 58l10 0M60 58l8 7M60 58l-8 7M60 58l-10 0M60 58l-8-7"/></svg>',
@@ -379,27 +384,44 @@
         };
         const waLink = w => 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(
           `Hi ICHIGO! I'd like to join the ${w.en} (${w.zh}) workshop.\nDate: \nTime: \nNumber of people: \nCould you confirm a kit and seats are available? Thank you!\n\n你好！我想參加「${w.zh}」工作坊，想確認材料包同座位。`);
+        const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+        const fmtDate = d => { const t = new Date(d + 'T00:00:00'); return isNaN(t) ? d : t.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }); };
         const F = [['all', 'All 全部'], ['now', 'Available now 現有'], ['soon', 'Coming soon 即將推出'], ['Kids', 'Kids 小朋友'], ['Gift', 'Gift 送禮']];
-
         const grid = document.getElementById('wiGrid');
-        grid.innerHTML = W.map(w => `
-          <article class="wi-card" data-status="${w.status}" data-tags="${w.tags.join('|')}">
+        const chips = document.getElementById('wiChips');
+
+        function bindCursor(root) {
+          const c = document.getElementById('cursor'), r = document.getElementById('cursorRing');
+          if (!c || !r) return;
+          root.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => { c.style.width = c.style.height = '18px'; r.style.width = r.style.height = '52px'; r.style.borderColor = 'var(--blush)'; });
+            el.addEventListener('mouseleave', () => { c.style.width = c.style.height = '10px'; r.style.width = r.style.height = '36px'; r.style.borderColor = 'var(--ink)'; });
+          });
+        }
+
+        function render(data) {
+          const W = data.workshops || [];
+          grid.innerHTML = W.map(w => `
+          <article class="wi-card" data-status="${esc(w.status)}" data-tags="${esc((w.tags || []).join('|'))}">
             <div class="wi-art">
-              <span class="wi-status ${w.status}">${w.status === 'now' ? 'Available now' : 'Coming soon'}</span>
+              <span class="wi-status ${esc(w.status)}">${w.status === 'now' ? (w.kits > 0 ? 'Available now' : 'Sold out today') : 'Coming soon'}</span>
               <span class="wi-kits">${w.status === 'now' ? (w.kits <= 5 ? 'Only ' + w.kits + ' left' : w.kits + ' kits in studio') : w.kits + ' kits arriving'}</span>
-              ${ART[w.art]}
+              ${ART[w.art] || ''}
             </div>
             <div class="wi-body">
-              <h3 class="wi-title">${w.en}</h3>
-              <div class="wi-zh">${w.zh}</div>
-              <p class="wi-desc">${w.desc}</p>
-              <div class="wi-tags">${w.tags.map(t => `<span class="wi-tag">${t}</span>`).join('')}</div>
+              <h3 class="wi-title">${esc(w.en)}</h3>
+              <div class="wi-zh">${esc(w.zh)}</div>
+              <p class="wi-desc">${esc(w.desc || '')}</p>
+              <div class="wi-tags">${(w.tags || []).map(t => `<span class="wi-tag">${esc(t)}</span>`).join('')}</div>
               <a class="wi-cta" href="${waLink(w)}" target="_blank" rel="noopener"><span>${w.status === 'now' ? 'Check availability on WhatsApp' : 'Ask to be notified'}</span><span>→</span></a>
             </div>
           </article>`).join('');
+          chips.innerHTML = F.map(([k, l]) => `<button type="button" data-f="${k}" aria-pressed="${k === 'all'}">${l}</button>`).join('');
+          document.getElementById('wiAsof').textContent = 'Kits in studio as of ' + fmtDate(data.asof) + ' · 材料包數量每日更新';
+          bindCursor(document.getElementById('walk-in'));
+          if (window.renderInstagram) window.renderInstagram(data.instagram || []);
+        }
 
-        const chips = document.getElementById('wiChips');
-        chips.innerHTML = F.map(([k, l]) => `<button type="button" data-f="${k}" aria-pressed="${k === 'all'}">${l}</button>`).join('');
         chips.addEventListener('click', e => {
           const b = e.target.closest('button'); if (!b) return;
           const f = b.dataset.f;
@@ -408,7 +430,13 @@
             c.hidden = !(f === 'all' || c.dataset.status === f || c.dataset.tags.split('|').includes(f));
           });
         });
-        document.getElementById('wiAsof').textContent = 'Kits in studio as of ' + KITS_ASOF + ' · 材料包數量每日更新';
+
+        fetch('/data/workshops.json', { cache: 'no-cache' })
+          .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+          .then(render)
+          .catch(() => {
+            grid.innerHTML = `<div style="background:var(--warm-white);padding:40px 28px;grid-column:1/-1;text-align:center;" class="section-intro">Today's kit list is loading slowly — please <a href="https://wa.me/${WA_NUMBER}" target="_blank" rel="noopener" style="color:var(--blush);">WhatsApp us</a> to check what's available. 請 WhatsApp 我們查詢今日材料包。</div>`;
+          });
       })();
     </script>
   </section>
