@@ -26,6 +26,8 @@
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { min-height: 100%; }
+    html { scroll-behavior: smooth; }
+    #walkin { scroll-margin-top: 24px; }
 
     body {
       background: var(--warm-white);
@@ -80,6 +82,16 @@
       font-family: 'DM Sans', sans-serif; line-height: 1.5;
     }
     .announcement-text strong { color: var(--blush); font-weight: 400; }
+    .announcement-text { flex: 1; }
+    .announcement-btn {
+      flex-shrink: 0; cursor: none;
+      font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif; font-weight: 400;
+      color: var(--ink); background: var(--blush); text-decoration: none;
+      padding: 9px 14px; border-radius: 3px; white-space: nowrap;
+      transition: background 0.2s, color 0.2s;
+    }
+    .announcement-btn:hover { background: var(--off-white); }
 
     /* ── SHOP DETAILS ── */
     .shop-block {
@@ -404,8 +416,9 @@
     <div class="announcement">
       <div class="announcement-dot"></div>
       <p class="announcement-text">
-        <strong>Now Open</strong> — ICHIGO Studio is at <strong>Anchorpoint Shopping Centre, #B1-49/50</strong>, Singapore. Come visit us.
+        <strong>Walk-in Workshops</strong> — now open for registration at ICHIGO Studio, Anchorpoint #B1-49/50. 手作工作坊现已开放报名。
       </p>
+      <a href="#walkin" class="announcement-btn">Register ↓</a>
     </div>
 
     <!-- HEADER -->
@@ -568,13 +581,13 @@
     </div>
 
     <!-- WALK-IN WORKSHOPS TEASER — reads /data/workshops.json (same source as workshop.html) -->
-    <div class="walkin-block">
+    <div class="walkin-block" id="walkin">
       <div class="walkin-header">
         <span class="walkin-header-kanji">作</span>
         <span class="walkin-header-label">Walk-in Workshops — At the Studio</span>
       </div>
       <div class="walkin-body">
-        <p class="walkin-intro">Pick a kit, make it with us, take it home the same day. Please message first so we can hold your kit and seat. 建議先傳訊息確認。</p>
+        <p class="walkin-intro">Pick a kit, make it with us, take it home the same day. Please message first so we can hold your kit and seat. 建议先发信息确认。</p>
         <ul class="walkin-list" id="walkinList"></ul>
         <p class="walkin-soon" id="walkinSoon"></p>
         <div class="walkin-actions">

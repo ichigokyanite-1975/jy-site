@@ -341,7 +341,7 @@
         <div class="section-number">00</div>
         <h2 class="section-title">Walk-in at<br><em>the Studio</em></h2>
       </div>
-      <p class="section-intro">Drop by ICHIGO Studio at Anchorpoint (#B1-49/50) — pick a kit, we guide you through it, and you take it home the same day. Walk-ins are welcome, but please message us first so we can make sure your kit and a seat are free. 歡迎即場參加，建議先傳訊息確認材料包同座位。</p>
+      <p class="section-intro">Drop by ICHIGO Studio at Anchorpoint (#B1-49/50) — pick a kit, we guide you through it, and you take it home the same day. Walk-ins are welcome, but please message us first so we can make sure your kit and a seat are free. 欢迎随时参加，建议先发信息确认材料包和座位。</p>
     </div>
 
     <div class="wi-meta">
@@ -352,7 +352,7 @@
     <div class="wi-grid" id="wiGrid"></div>
 
     <div class="wi-steps">
-      <div class="wi-step"><span class="wi-step-num">一</span><h3 class="wi-step-title">Message us</h3><p class="wi-step-text">Tell us which workshop and how many people. We'll confirm kits and seats. 先傳訊息確認。</p></div>
+      <div class="wi-step"><span class="wi-step-num">一</span><h3 class="wi-step-title">Message us</h3><p class="wi-step-text">Tell us which workshop and how many people. We'll confirm kits and seats. 请先发信息确认。</p></div>
       <div class="wi-step"><span class="wi-step-num">二</span><h3 class="wi-step-title">Drop by &amp; pick a kit</h3><p class="wi-step-text">Come to the studio and choose your design and colours.</p></div>
       <div class="wi-step"><span class="wi-step-num">三</span><h3 class="wi-step-title">Make it</h3><p class="wi-step-text">We show you each step. All tools are provided.</p></div>
       <div class="wi-step"><span class="wi-step-num">四</span><h3 class="wi-step-title">Take it home</h3><p class="wi-step-text">Gift-ready, packed for you to carry home.</p></div>
@@ -383,10 +383,10 @@
           crane: '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20 70l40-12 40 12-40 6z" fill="currentColor" fill-opacity=".15"/><path d="M60 58l-14-26 14 18 14-18-14 26M100 70l6-14"/><path d="M60 76v20" stroke-width="1.5" stroke-linecap="round"/><rect x="52" y="96" width="16" height="10" rx="2"/></svg>'
         };
         const waLink = w => 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(
-          `Hi ICHIGO! I'd like to join the ${w.en} (${w.zh}) workshop.\nDate: \nTime: \nNumber of people: \nCould you confirm a kit and seats are available? Thank you!\n\n你好！我想參加「${w.zh}」工作坊，想確認材料包同座位。`);
+          `Hi ICHIGO! I'd like to join the ${w.en} (${w.zh}) workshop.\nDate: \nTime: \nNumber of people: \nCould you confirm a kit and seats are available? Thank you!\n\n你好！我想参加“${w.zh}”工作坊，想确认是否还有材料包和座位。`);
         const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
         const fmtDate = d => { const t = new Date(d + 'T00:00:00'); return isNaN(t) ? d : t.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }); };
-        const F = [['all', 'All 全部'], ['now', 'Available now 現有'], ['soon', 'Coming soon 即將推出'], ['Kids', 'Kids 小朋友'], ['Gift', 'Gift 送禮']];
+        const F = [['all', 'All 全部'], ['now', 'Available now 现有'], ['soon', 'Coming soon 即将推出'], ['Kids', 'Kids 小朋友'], ['Gift', 'Gift 送礼']];
         const grid = document.getElementById('wiGrid');
         const chips = document.getElementById('wiChips');
 
@@ -417,7 +417,7 @@
             </div>
           </article>`).join('');
           chips.innerHTML = F.map(([k, l]) => `<button type="button" data-f="${k}" aria-pressed="${k === 'all'}">${l}</button>`).join('');
-          document.getElementById('wiAsof').textContent = 'Kits in studio as of ' + fmtDate(data.asof) + ' · 材料包數量每日更新';
+          document.getElementById('wiAsof').textContent = 'Kits in studio as of ' + fmtDate(data.asof) + ' · 材料包数量每日更新';
           bindCursor(document.getElementById('walk-in'));
           if (window.renderInstagram) window.renderInstagram(data.instagram || []);
         }
@@ -435,7 +435,7 @@
           .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
           .then(render)
           .catch(() => {
-            grid.innerHTML = `<div style="background:var(--warm-white);padding:40px 28px;grid-column:1/-1;text-align:center;" class="section-intro">Today's kit list is loading slowly — please <a href="https://wa.me/${WA_NUMBER}" target="_blank" rel="noopener" style="color:var(--blush);">WhatsApp us</a> to check what's available. 請 WhatsApp 我們查詢今日材料包。</div>`;
+            grid.innerHTML = `<div style="background:var(--warm-white);padding:40px 28px;grid-column:1/-1;text-align:center;" class="section-intro">Today's kit list is loading slowly — please <a href="https://wa.me/${WA_NUMBER}" target="_blank" rel="noopener" style="color:var(--blush);">WhatsApp us</a> to check what's available. 请通过 WhatsApp 向我们查询今日材料包。</div>`;
           });
       })();
     </script>
