@@ -109,5 +109,55 @@
   "instagram": [
     "https://www.instagram.com/p/Dex_ut2nYhU/",
     "https://www.instagram.com/p/DerHB5zHRS4/"
-  ]
+  ],
+  "schedule": {
+    "_note": "Monthly event calendar for workshop.html section 00. Optional fields per event (shown only when filled): time, duration, price, age, language, includes.",
+    "title_en": "November at the Studio",
+    "title_zh": "十一月工作坊",
+    "month": "2026-11",
+    "events": [
+      {
+        "id": "coaster",
+        "date": "2026-11-03",
+        "date_end": "2026-11-05",
+        "title_en": "Creative Coaster Workshops",
+        "title_zh": "创意杯垫工作坊",
+        "partner": "The PAL World",
+        "desc": "Explore snow casting, marbling and decoupage to make your own coasters."
+      },
+      {
+        "id": "incense-bracelet",
+        "date": "2026-11-07",
+        "title_en": "Traditional Incense Bead Bracelet Workshop",
+        "title_zh": "传统香珠手链工作坊",
+        "partner": "He Xiang Ji",
+        "desc": "Create your own traditional Chinese incense bead bracelet."
+      },
+      {
+        "id": "incense-pendant",
+        "date": "2026-11-14",
+        "title_en": "Traditional Incense Pendant Workshop",
+        "title_zh": "传统香牌工作坊",
+        "partner": "He Xiang Ji",
+        "desc": "Explore traditional Chinese incense culture through pendant making."
+      },
+      {
+        "id": "preserved-holiday",
+        "date_label": "Late Nov · School holidays",
+        "title_en": "School Holiday Preserved Flower Workshops",
+        "title_zh": "学校假期永生花工作坊",
+        "desc": "Create your own floral wreath, flower basket or framed floral artwork — a relaxing hands-on activity for adults and children to enjoy together.",
+        "promo": "early-bird"
+      }
+    ],
+    "promos": {
+      "early-bird": {
+        "title_en": "School Holiday Early Bird",
+        "title_zh": "早鸟优惠",
+        "text_en": "Book 2 places and receive 1 FREE DIY Crystal Phone Charm. Limited to the first 20 qualifying bookings. For ICHIGO Studio preserved flower workshops only.",
+        "text_zh": "预订两个名额，即送 DIY 水晶手机挂饰一个。限首 20 个符合条件的预订，只适用于 ICHIGO Studio 永生花工作坊。"
+      }
+    },
+    "terms": {}
+  }
 }
