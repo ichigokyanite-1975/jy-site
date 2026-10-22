@@ -273,12 +273,141 @@
         <span class="hero-badge">Children welcome (with adult)</span>
         <span class="hero-badge">From $25 per pax</span>
         <span class="hero-badge">Private &amp; group bookings</span>
-        <a href="#walk-in" class="hero-badge" style="color:var(--blush);border-color:var(--blush);text-decoration:none;">Walk-ins at Anchorpoint · B1-49/50</a>
+        <a href="#walk-in" class="hero-badge" style="color:var(--blush);border-color:var(--blush);text-decoration:none;">ICHIGO Studio · #B1-49/50 Anchorpoint</a>
+      </div>
+      <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-top:32px;opacity:0;animation:fadeUp 1s 0.8s ease forwards;">
+        <a href="#this-month" class="btn-primary">See this month's workshops</a>
+        <a href="https://wa.me/6580978928" class="btn-ghost" target="_blank" rel="noopener">Register on WhatsApp</a>
       </div>
     </div>
   </section>
 
-  <!-- ⓪ WALK-IN AT THE STUDIO (kit dashboard) -->
+  <!-- ⓪ THIS MONTH — event calendar (reads data/workshops.json → schedule) -->
+  <style>
+    .ev-list { display: flex; flex-direction: column; border-top: 1px solid var(--border); }
+    .ev { display: grid; grid-template-columns: 120px 1fr auto; gap: 32px; align-items: start; padding: 32px 0; border-bottom: 1px solid var(--border); }
+    .ev-date { font-family: 'Cormorant Garamond', serif; color: var(--ink); line-height: 1; }
+    .ev-day { font-size: 2.6rem; font-weight: 300; display: block; }
+    .ev-day small { font-size: 1.4rem; color: var(--muted); }
+    .ev-mon { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--blush); font-family: 'DM Sans', sans-serif; display: block; margin-top: 8px; }
+    .ev-label { font-size: 1.3rem; font-weight: 300; font-style: italic; color: var(--blush); }
+    .ev-partner { display: inline-flex; align-items: center; gap: 10px; font-size: 0.56rem; letter-spacing: 0.25em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; color: var(--blush); margin-bottom: 8px; }
+    .ev-partner::before { content: ''; width: 16px; height: 1px; background: var(--blush); }
+    .ev-title { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; font-weight: 400; color: var(--ink); line-height: 1.2; }
+    .ev-zh { font-family: 'Noto Serif JP', serif; font-weight: 300; font-size: 0.82rem; color: var(--muted); margin: 4px 0 10px; }
+    .ev-desc { font-size: 0.8rem; line-height: 1.9; color: var(--muted); max-width: 560px; }
+    .ev-facts { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 14px; }
+    .ev-facts span { font-size: 0.74rem; color: var(--ink); }
+    .ev-facts b { font-weight: 400; font-size: 0.56rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-right: 6px; font-family: 'DM Sans', sans-serif; }
+    .ev-promo { margin-top: 16px; padding: 14px 18px; background: var(--blush-light); border-left: 2px solid var(--blush); font-size: 0.78rem; line-height: 1.8; color: var(--ink); max-width: 560px; }
+    .ev-promo strong { font-weight: 500; display: block; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink); margin-bottom: 4px; }
+    .ev-promo span { color: var(--muted); display: block; margin-top: 4px; font-size: 0.74rem; }
+    .ev-book { align-self: center; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; padding: 13px 22px; background: var(--ink); color: var(--off-white); border: 1px solid var(--ink); text-decoration: none; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; font-weight: 400; cursor: none; transition: background 0.25s, color 0.25s; }
+    .ev-book:hover { background: transparent; color: var(--ink); }
+    .ev-where { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-top: 32px; padding: 20px 24px; border: 1px solid var(--border); background: var(--warm-white); }
+    .ev-where p { font-size: 0.8rem; color: var(--ink); line-height: 1.7; }
+    .ev-where p b { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 400; }
+    .ev-terms { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; border: 1px solid var(--border); margin-top: 32px; background: var(--border); }
+    .ev-terms:empty { display: none; }
+    .ev-term { background: var(--warm-white); padding: 22px 24px; }
+    .ev-term .policy-key { margin-bottom: 8px; }
+    .ev-term p { font-size: 0.78rem; line-height: 1.8; color: var(--ink); }
+    @media (max-width: 900px) {
+      .ev { grid-template-columns: 72px 1fr; gap: 18px; }
+      .ev-book { grid-column: 2; justify-self: start; margin-top: 4px; }
+      .ev-day { font-size: 2rem; }
+      .ev-terms { grid-template-columns: 1fr; }
+    }
+
+    /* Floating WhatsApp booking button (all sections) */
+    .wa-float { position: fixed; right: 20px; bottom: 20px; z-index: 90; display: inline-flex; align-items: center; gap: 10px; padding: 14px 20px; background: var(--ink); color: var(--off-white); text-decoration: none; border-radius: 999px; font-size: 0.64rem; letter-spacing: 0.18em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; font-weight: 400; box-shadow: 0 6px 24px rgba(14,12,12,0.18); cursor: none; transition: background 0.25s; }
+    .wa-float:hover { background: var(--blush); color: var(--ink); }
+    .wa-float svg { width: 18px; height: 18px; fill: currentColor; }
+    @media (max-width: 520px) { .wa-float { right: 12px; bottom: 12px; padding: 11px 16px; font-size: 0.56rem; } }
+  </style>
+
+  <section class="section-wrap" id="this-month">
+    <div class="section-header">
+      <div>
+        <div class="section-number">00</div>
+        <h2 class="section-title" id="evTitle">This month at<br><em>the Studio</em></h2>
+      </div>
+      <p class="section-intro">Hands-on workshops at ICHIGO Studio, Anchorpoint. Seats are limited — tap Register to book on WhatsApp and we'll confirm your place. 名额有限，请通过 WhatsApp 报名。</p>
+    </div>
+
+    <div class="ev-list" id="evList"></div>
+    <div class="ev-terms" id="evTerms"></div>
+
+    <div class="ev-where">
+      <p><b>ICHIGO Studio · #B1-49/50 Anchorpoint</b><br>370 Alexandra Road, Singapore 159953 · In front of Rob Think &amp; Aureus, next to Nakanishi</p>
+      <a class="btn-ghost" href="https://maps.app.goo.gl/wcmJZzjfUg7K47536" target="_blank" rel="noopener">Get directions</a>
+    </div>
+
+    <script>
+      (function () {
+        const WA = '6580978928';
+        const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+        const d0 = s => new Date(s + 'T00:00:00');
+        const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        const WD = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+        const pad = n => String(n).padStart(2, '0');
+        const waLink = e => 'https://wa.me/' + WA + '?text=' + encodeURIComponent(
+          `Hi ICHIGO! I'd like to register for the ${e.title_en} (${e.title_zh}).\nPreferred date: \nNumber of people: \n\n你好！我想报名参加“${e.title_zh}”。`);
+
+        function dateHtml(e) {
+          if (!e.date) return `<span class="ev-label">${esc(e.date_label || 'TBA')}</span>`;
+          const a = d0(e.date), b = e.date_end ? d0(e.date_end) : null;
+          const day = b ? `${pad(a.getDate())}<small>–${pad(b.getDate())}</small>` : pad(a.getDate());
+          const sub = b ? `${MON[a.getMonth()]} · ${WD[a.getDay()]}–${WD[b.getDay()]}` : `${MON[a.getMonth()]} · ${WD[a.getDay()]}`;
+          return `<span class="ev-day">${day}</span><span class="ev-mon">${sub}</span>`;
+        }
+        const FACTS = [['time','Time'],['duration','Duration'],['price','Price'],['age','Age'],['language','Language'],['includes','Includes']];
+
+        function render(s) {
+          if (!s || !(s.events || []).length) { document.getElementById('this-month').hidden = true; return; }
+          if (s.title_en) {
+            const parts = s.title_en.split(' at ');
+            document.getElementById('evTitle').innerHTML = parts.length === 2 ? `${esc(parts[0])} at<br><em>${esc(parts[1])}</em>` : esc(s.title_en);
+          }
+          const promos = s.promos || {};
+          document.getElementById('evList').innerHTML = s.events.map(e => {
+            const facts = FACTS.filter(([k]) => e[k]).map(([k, l]) => `<span><b>${l}</b>${esc(e[k])}</span>`).join('');
+            const p = e.promo && promos[e.promo];
+            return `<article class="ev" id="ev-${esc(e.id)}">
+              <div class="ev-date">${dateHtml(e)}</div>
+              <div>
+                ${e.partner ? `<div class="ev-partner">With ${esc(e.partner)}</div>` : '<div class="ev-partner">By ICHIGO Studio</div>'}
+                <h3 class="ev-title">${esc(e.title_en)}</h3>
+                <div class="ev-zh">${esc(e.title_zh || '')}</div>
+                <p class="ev-desc">${esc(e.desc || '')}</p>
+                ${facts ? `<div class="ev-facts">${facts}</div>` : ''}
+                ${p ? `<div class="ev-promo"><strong>${esc(p.title_en)} · ${esc(p.title_zh)}</strong>${esc(p.text_en)}<span>${esc(p.text_zh)}</span></div>` : ''}
+              </div>
+              <a class="ev-book" href="${waLink(e)}" target="_blank" rel="noopener">Register →</a>
+            </article>`;
+          }).join('');
+          const t = s.terms || {};
+          const TERMS = [['min','Minimum participants'],['payment','Payment'],['cancellation','Cancellation']];
+          document.getElementById('evTerms').innerHTML = TERMS.filter(([k]) => t[k]).map(([k, l]) => `<div class="ev-term"><div class="policy-key">${l}</div><p>${esc(t[k])}</p></div>`).join('');
+          const c = document.getElementById('cursor'), r = document.getElementById('cursorRing');
+          if (c && r) document.querySelectorAll('#this-month a').forEach(el => {
+            el.addEventListener('mouseenter', () => { c.style.width = c.style.height = '18px'; r.style.width = r.style.height = '52px'; r.style.borderColor = 'var(--blush)'; });
+            el.addEventListener('mouseleave', () => { c.style.width = c.style.height = '10px'; r.style.width = r.style.height = '36px'; r.style.borderColor = 'var(--ink)'; });
+          });
+        }
+        fetch('/data/workshops.json', { cache: 'no-cache' }).then(r => r.json()).then(d => render(d.schedule)).catch(() => {
+          document.getElementById('evList').innerHTML = `<p class="section-intro" style="padding:32px 0;">Please <a href="https://wa.me/${WA}" style="color:var(--blush);">WhatsApp us</a> for this month's workshop dates. 请通过 WhatsApp 查询本月工作坊。</p>`;
+        });
+      })();
+    </script>
+  </section>
+
+  <a class="wa-float" href="https://wa.me/6580978928?text=Hi%20ICHIGO!%20I%27d%20like%20to%20book%20a%20workshop.%20%E4%BD%A0%E5%A5%BD%EF%BC%81%E6%88%91%E6%83%B3%E6%8A%A5%E5%90%8D%E5%B7%A5%E4%BD%9C%E5%9D%8A%E3%80%82" target="_blank" rel="noopener" aria-label="Book on WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.4-.3z"/></svg>
+    Register · WhatsApp
+  </a>
+
+  <!-- ① WALK-IN AT THE STUDIO (kit dashboard) -->
   <style>
     .wi-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-bottom: 28px; }
     .wi-asof { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-family: 'DM Sans', sans-serif; }
@@ -338,7 +467,7 @@
   <section class="section-wrap" id="walk-in">
     <div class="section-header">
       <div>
-        <div class="section-number">00</div>
+        <div class="section-number">01</div>
         <h2 class="section-title">Walk-in at<br><em>the Studio</em></h2>
       </div>
       <p class="section-intro">Drop by ICHIGO Studio at Anchorpoint (#B1-49/50) — pick a kit, we guide you through it, and you take it home the same day. Walk-ins are welcome, but please message us first so we can make sure your kit and a seat are free. 欢迎随时参加，建议先发信息确认材料包和座位。</p>
@@ -441,11 +570,11 @@
     </script>
   </section>
 
-  <!-- ① AROMATHERAPY WORKSHOPS -->
+  <!-- ② AROMATHERAPY WORKSHOPS -->
   <section class="section-wrap" id="aromatherapy">
     <div class="section-header">
       <div>
-        <div class="section-number">01</div>
+        <div class="section-number">02</div>
         <h2 class="section-title">Aromatherapy<br><em>Workshops</em></h2>
       </div>
       <p class="section-intro">Each session is guided with explanation — you learn what each oil does, how blending works, and why the ratios matter. Every product you make is yours to take home, ready to use.</p>
@@ -570,11 +699,11 @@
     </div>
   </section>
 
-  <!-- ② FLORAL WORKSHOPS -->
+  <!-- ③ FLORAL WORKSHOPS -->
   <section class="section-wrap bg-off" id="florals">
     <div class="section-header">
       <div>
-        <div class="section-number">02</div>
+        <div class="section-number">03</div>
         <h2 class="section-title">Preserved Floral<br><em>Workshops</em></h2>
       </div>
       <p class="section-intro">Preserved flowers retain their shape and texture for years without water or care. Each piece you make is a lasting object — to display at home, give as a gift, or keep as a memory of the session. Prices shown are before GST.</p>
@@ -657,11 +786,11 @@
     </div>
   </section>
 
-  <!-- ③ CUSTOM -->
+  <!-- ④ CUSTOM -->
   <section class="section-wrap">
     <div class="section-header">
       <div>
-        <div class="section-number">03</div>
+        <div class="section-number">04</div>
         <h2 class="section-title">Custom &amp;<br><em>Creative Projects</em></h2>
       </div>
       <p class="section-intro">Have something else in mind? Bespoke workshops and creative projects can be arranged — with enough lead time to plan, source materials, and prepare properly.</p>
@@ -684,7 +813,7 @@
     </div>
   </section>
 
-  <!-- ④ PRACTICAL INFO -->
+  <!-- ⑤ PRACTICAL INFO -->
   <section class="section-wrap bg-off">
     <div class="section-header">
       <div>
@@ -717,7 +846,7 @@
     </div>
   </section>
 
-  <!-- ⑤ VENUES -->
+  <!-- ⑥ VENUES -->
   <section class="section-wrap">
     <div class="section-header">
       <div>
@@ -754,7 +883,7 @@
     </div>
   </section>
 
-  <!-- ⑥ BOOKING POLICY -->
+  <!-- ⑦ BOOKING POLICY -->
   <section class="section-wrap bg-off">
     <div class="section-header">
       <div>
@@ -783,7 +912,7 @@
     </div>
   </section>
 
-  <!-- ⑦ CTA -->
+  <!-- ⑧ CTA -->
   <section class="cta-section">
     <div>
       <div class="cta-eyebrow">Book a Session</div>
