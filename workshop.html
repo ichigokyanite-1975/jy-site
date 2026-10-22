@@ -417,7 +417,8 @@
     .wi-chips button[aria-pressed="true"] { background: var(--ink); color: var(--off-white); border-color: var(--ink); }
     .wi-chips button:focus-visible { outline: 1px solid var(--blush); outline-offset: 2px; }
 
-    .wi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 2px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--border); }
+    .wi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 1px; border-radius: 8px; overflow: hidden; }
+    .wi-grid .wi-card { box-shadow: 0 0 0 1px var(--border); }
     .wi-card { background: var(--warm-white); display: flex; flex-direction: column; position: relative; transition: background 0.25s; }
     .wi-card[hidden] { display: none; }
     .wi-card:hover { background: var(--off-white); }
@@ -426,12 +427,25 @@
 
     .wi-art { aspect-ratio: 16/10; display: grid; place-items: center; position: relative; color: var(--blush); background: linear-gradient(135deg, var(--blush-light) 0%, var(--off-white) 100%); }
     .wi-art svg { width: 38%; height: auto; }
+    .wi-car { position: absolute; inset: 0; }
+    .wi-track { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+    .wi-track::-webkit-scrollbar { display: none; }
+    .wi-track img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; display: block; }
+    .wi-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; width: 30px; height: 30px; border-radius: 50%; border: 0; background: rgba(253,251,248,0.88); color: var(--ink); font-size: 18px; line-height: 1; cursor: none; display: grid; place-items: center; }
+    .wi-nav.prev { left: 10px; } .wi-nav.next { right: 10px; }
+    .wi-dots { position: absolute; bottom: 12px; right: 14px; display: flex; gap: 5px; z-index: 2; }
+    .wi-dots i { width: 6px; height: 6px; border-radius: 50%; background: rgba(253,251,248,0.7); }
+    .wi-dots i.on { background: var(--blush); }
+    .wi-art .wi-status, .wi-art .wi-kits { z-index: 1; }
+    .wi-price { display: flex; justify-content: space-between; align-items: baseline; margin-top: 16px; }
+    .wi-price span { font-size: 0.56rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-family: 'DM Sans', sans-serif; }
+    .wi-price b { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 300; color: var(--ink); }
     .wi-status, .wi-kits { position: absolute; top: 14px; font-size: 0.54rem; letter-spacing: 0.2em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; font-weight: 400; padding: 5px 10px; }
     .wi-status { left: 14px; background: var(--warm-white); color: var(--ink); display: inline-flex; align-items: center; gap: 6px; }
     .wi-status::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--blush); }
     .wi-status.soon { color: var(--muted); }
     .wi-status.soon::before { background: transparent; border: 1px solid var(--muted); }
-    .wi-kits { right: 14px; background: var(--ink); color: var(--off-white); }
+    .wi-kits { top: auto; bottom: 14px; left: 14px; background: var(--ink); color: var(--off-white); }
 
     .wi-body { padding: 24px 26px 26px; display: flex; flex-direction: column; flex: 1; }
     .wi-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; color: var(--ink); line-height: 1.2; }
@@ -528,20 +542,41 @@
           });
         }
 
+        function kitLabel(w) {
+          const now = w.now ?? (w.status === 'now' ? w.kits : 0), soon = w.soon ?? (w.status === 'soon' ? w.kits : 0);
+          if (now > 0) return (now <= 5 ? 'Only ' + now + ' left' : now + ' kits in studio') + (soon ? ' · ' + soon + ' arriving' : '');
+          return soon ? soon + ' kits arriving' : 'Sold out';
+        }
+        function carousel(w) {
+          const n = w.imgs.length;
+          return `<div class="wi-car"><div class="wi-track">${w.imgs.map((src, i) => `<img src="${esc(src)}" alt="${esc(w.en)} ${i + 1}" loading="lazy">`).join('')}</div>${n > 1 ? `<button class="wi-nav prev" type="button" aria-label="Previous photo">‹</button><button class="wi-nav next" type="button" aria-label="Next photo">›</button><div class="wi-dots">${w.imgs.map((_, i) => `<i class="${i ? '' : 'on'}"></i>`).join('')}</div>` : ''}</div>`;
+        }
+        grid.addEventListener('click', e => {
+          const b = e.target.closest('.wi-nav'); if (!b) return;
+          const t = b.parentElement.querySelector('.wi-track');
+          t.scrollBy({ left: (b.classList.contains('next') ? 1 : -1) * t.clientWidth, behavior: 'smooth' });
+        });
+        grid.addEventListener('scroll', e => {
+          const t = e.target; if (!t.classList || !t.classList.contains('wi-track')) return;
+          const i = Math.round(t.scrollLeft / t.clientWidth);
+          t.parentElement.querySelectorAll('.wi-dots i').forEach((d, k) => d.classList.toggle('on', k === i));
+        }, true);
+
         function render(data) {
           const W = data.workshops || [];
           grid.innerHTML = W.map(w => `
           <article class="wi-card" data-status="${esc(w.status)}" data-tags="${esc((w.tags || []).join('|'))}">
             <div class="wi-art">
-              <span class="wi-status ${esc(w.status)}">${w.status === 'now' ? (w.kits > 0 ? 'Available now' : 'Sold out today') : 'Coming soon'}</span>
-              <span class="wi-kits">${w.status === 'now' ? (w.kits <= 5 ? 'Only ' + w.kits + ' left' : w.kits + ' kits in studio') : w.kits + ' kits arriving'}</span>
-              ${ART[w.art] || ''}
+              ${(w.imgs || []).length ? carousel(w) : (ART[w.art] || '')}
+              <span class="wi-status ${esc(w.status)}">${w.status === 'now' ? 'Available now' : 'Coming soon'}</span>
+              <span class="wi-kits">${kitLabel(w)}</span>
             </div>
             <div class="wi-body">
               <h3 class="wi-title">${esc(w.en)}</h3>
               <div class="wi-zh">${esc(w.zh)}</div>
               <p class="wi-desc">${esc(w.desc || '')}</p>
               <div class="wi-tags">${(w.tags || []).map(t => `<span class="wi-tag">${esc(t)}</span>`).join('')}</div>
+              ${w.price ? `<div class="wi-price"><span>Per pax</span><b>S$${esc(w.price)}</b></div>` : ''}
               <a class="wi-cta" href="${waLink(w)}" target="_blank" rel="noopener"><span>${w.status === 'now' ? 'Check availability on WhatsApp' : 'Ask to be notified'}</span><span>→</span></a>
             </div>
           </article>`).join('');
@@ -819,8 +854,9 @@
       <div>
         <div class="section-number">—</div>
         <h2 class="section-title">Practical<br><em>details</em></h2>
+        <div class="hero-badge" style="display:inline-block;margin-top:14px;opacity:1;">Corporate &amp; large-group bookings</div>
       </div>
-      <p class="section-intro">Everything you need to know before getting in touch.</p>
+      <p class="section-intro">For corporate events, team-building and large group orders. Walk-in workshops and the monthly sessions above are booked directly with us on WhatsApp.</p>
     </div>
     <div class="info-grid">
       <div class="info-card">
@@ -852,6 +888,7 @@
       <div>
         <div class="section-number">—</div>
         <h2 class="section-title">Example<br><em>Venues</em></h2>
+        <div class="hero-badge" style="display:inline-block;margin-top:14px;opacity:1;">Corporate &amp; large-group bookings</div>
       </div>
       <p class="section-intro">These are examples of the types of classroom and studio spaces we are exploring across Singapore. Availability is subject to dates and confirmation — please enquire and we will work with you to find a suitable arrangement. A venue fee of <strong>$100</strong> applies on top of the Transport &amp; Tutor fee where a venue is sourced on your behalf.</p>
     </div>
@@ -889,8 +926,9 @@
       <div>
         <div class="section-number">—</div>
         <h2 class="section-title">Booking<br><em>policy</em></h2>
+        <div class="hero-badge" style="display:inline-block;margin-top:14px;opacity:1;">Corporate &amp; large-group bookings</div>
       </div>
-      <p class="section-intro">We are a small independent studio. These terms exist so we can prepare properly and deliver the session well.</p>
+      <p class="section-intro">These terms apply to corporate bookings and large group orders. We are a small independent studio — they let us source materials and prepare each session properly.</p>
     </div>
     <div class="policy-grid">
       <div class="policy-item">

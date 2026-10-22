@@ -634,10 +634,10 @@
         .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
         .then(d => {
           const W = d.workshops || [];
-          const now = W.filter(w => w.status === 'now' && w.kits > 0);
+          const n = w => w.now ?? w.kits; const now = W.filter(w => w.status === 'now' && n(w) > 0);
           const soon = W.filter(w => w.status === 'soon');
           document.getElementById('walkinList').innerHTML = now.map(w =>
-            `<li><span class="walkin-name">${esc(w.en)}<small>${esc(w.zh)}</small></span><span class="walkin-kits">${w.kits <= 5 ? 'Only ' + w.kits + ' left' : w.kits + ' kits'}</span></li>`).join('');
+            `<li><span class="walkin-name">${esc(w.en)}<small>${esc(w.zh)}</small></span><span class="walkin-kits">${n(w) <= 5 ? 'Only ' + n(w) + ' left' : n(w) + ' kits'}</span></li>`).join('');
           document.getElementById('walkinSoon').textContent = soon.length ? 'Coming soon: ' + soon.map(w => w.en).join(' · ') : '';
           if (window.renderInstagram) window.renderInstagram(d.instagram || []);
         })
