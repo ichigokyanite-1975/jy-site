@@ -1,14 +1,50 @@
 {
-  "asof": "2026-10-21",
+  "asof": "2026-10-23",
   "_note": "Mirrors the ICHIGO walk-in dashboard (stock sheet). now = kits in studio, soon = kits arriving, price = S$ per pax, imgs = /p/workshops/*.jpg. Do not edit by hand.",
   "workshops": [
     {
       "id": "dome",
-      "en": "Preserved-Flower Night-Light Dome",
-      "zh": "永生花玻璃罩小夜灯",
-      "desc": "Arrange preserved roses and dried blooms under a glass dome with a warm LED base.",
-      "now": 27,
-      "soon": 32,
+      "en": "Wood-Base Night-Light Dome · Style 1",
+      "zh": "木底永生花玻璃罩小夜灯 · 款式一",
+      "desc": "Arrange preserved roses and dried blooms under a round glass dome on a wooden LED base.",
+      "now": 0,
+      "soon": 20,
+      "status": "soon",
+      "price": 35,
+      "tags": [
+        "Gift",
+        "Beginner"
+      ],
+      "art": "dome",
+      "imgs": [
+        "/p/workshops/dome-1.jpg"
+      ]
+    },
+    {
+      "id": "dome2",
+      "en": "Wood-Base Night-Light Dome · Style 2",
+      "zh": "木底永生花玻璃罩小夜灯 · 款式二",
+      "desc": "Choose a named colour set and build a glowing mini flower dome on a wooden LED base.",
+      "now": 0,
+      "soon": 12,
+      "status": "soon",
+      "price": 35,
+      "tags": [
+        "Gift",
+        "Beginner"
+      ],
+      "art": "dome",
+      "imgs": [
+        "/p/workshops/dome2-1.jpg"
+      ]
+    },
+    {
+      "id": "domecork",
+      "en": "Cork-Base Flower Dome",
+      "zh": "软木底永生花玻璃罩",
+      "desc": "A taller glass dome on a cork base, filled with a preserved rose and soft dried flowers.",
+      "now": 7,
+      "soon": 20,
       "status": "now",
       "price": 35,
       "tags": [
@@ -17,9 +53,7 @@
       ],
       "art": "dome",
       "imgs": [
-        "/p/workshops/dome-1.jpg",
-        "/p/workshops/dome-2.jpg",
-        "/p/workshops/dome-3.jpg"
+        "/p/workshops/domecork-1.jpg"
       ]
     },
     {
@@ -42,16 +76,16 @@
     },
     {
       "id": "frame",
-      "en": "Dried-Flower 3D Frame",
-      "zh": "干花立体相框",
-      "desc": "Build a layered botanical scene inside a deep wooden frame, ready to hang or stand.",
+      "en": "Dried-Flower Picture Frame",
+      "zh": "干花相框",
+      "desc": "Press and arrange dried flowers into a keepsake picture frame.",
       "now": 10,
       "soon": 0,
       "status": "now",
       "price": 20,
       "tags": [
         "Gift",
-        "Home décor"
+        "Kids"
       ],
       "art": "frame",
       "imgs": [
@@ -60,9 +94,9 @@
     },
     {
       "id": "box",
-      "en": "Wooden Box Landscape",
-      "zh": "木盒微景观",
-      "desc": "Create a tiny meadow of moss, dried flowers and pebbles in a clear-front wooden box.",
+      "en": "Wooden Frame Landscape",
+      "zh": "木框立体微景观",
+      "desc": "Build a layered botanical scene of moss, dried flowers and pebbles inside a deep wooden frame.",
       "now": 10,
       "soon": 0,
       "status": "now",
@@ -76,21 +110,21 @@
       ]
     },
     {
-      "id": "wreath",
-      "en": "Christmas Rattan Wreath",
-      "zh": "圣诞藤圈",
-      "desc": "Dress a 20 cm rattan ring with seasonal sprigs, berries and ribbon.",
-      "now": 0,
-      "soon": 10,
-      "status": "soon",
-      "price": 25,
+      "id": "garland",
+      "en": "Flower Hoop Wreath",
+      "zh": "花环挂饰",
+      "desc": "Wrap a colourful hoop with dried flowers and ribbons to hang on a wall or door.",
+      "now": 10,
+      "soon": 0,
+      "status": "now",
+      "price": 15,
       "tags": [
-        "Seasonal",
-        "Door décor"
+        "Kids",
+        "Home décor"
       ],
       "art": "wreath",
       "imgs": [
-        "/p/workshops/wreath-1.jpg"
+        "/p/workshops/garland-1.jpg"
       ]
     },
     {
@@ -109,6 +143,42 @@
       "art": "wreath",
       "imgs": [
         "/p/workshops/basket-1.jpg"
+      ]
+    },
+    {
+      "id": "lantern",
+      "en": "Song Brocade Mini Lantern",
+      "zh": "宋锦小夜灯",
+      "desc": "Wrap a small lamp in traditional Song brocade patterns: magpies, butterflies, rabbits.",
+      "now": 0,
+      "soon": 13,
+      "status": "soon",
+      "price": 25,
+      "tags": [
+        "Heritage craft",
+        "Gift"
+      ],
+      "art": "lantern",
+      "imgs": [
+        "/p/workshops/lantern-1.jpg"
+      ]
+    },
+    {
+      "id": "wreath",
+      "en": "Christmas Rattan Wreath",
+      "zh": "圣诞藤圈",
+      "desc": "Dress a 20 cm rattan ring with seasonal sprigs, berries and ribbon.",
+      "now": 0,
+      "soon": 10,
+      "status": "soon",
+      "price": 25,
+      "tags": [
+        "Seasonal",
+        "Door décor"
+      ],
+      "art": "wreath",
+      "imgs": [
+        "/p/workshops/wreath-1.jpg"
       ]
     },
     {
@@ -131,9 +201,9 @@
     },
     {
       "id": "jelly",
-      "en": "Jellyfish Wind Chime",
-      "zh": "水母风铃",
-      "desc": "Make a dreamy jellyfish chime with clear beads and ribbon tails that catch the light.",
+      "en": "Jellyfish Phone Charm",
+      "zh": "水母手机挂饰",
+      "desc": "String a dreamy jellyfish charm with clear beads and ribbon tails for your phone or bag.",
       "now": 0,
       "soon": 40,
       "status": "soon",
@@ -145,24 +215,6 @@
       "art": "beads",
       "imgs": [
         "/p/workshops/jelly-1.jpg"
-      ]
-    },
-    {
-      "id": "lantern",
-      "en": "Song Brocade Mini Lantern",
-      "zh": "宋锦小夜灯",
-      "desc": "Wrap a small lamp in traditional Song brocade patterns: magpies, butterflies, rabbits.",
-      "now": 0,
-      "soon": 13,
-      "status": "soon",
-      "price": 25,
-      "tags": [
-        "Heritage craft",
-        "Gift"
-      ],
-      "art": "lantern",
-      "imgs": [
-        "/p/workshops/lantern-1.jpg"
       ]
     }
   ],
