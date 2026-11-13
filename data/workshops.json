@@ -1,5 +1,5 @@
 {
-  "asof": "2026-10-23",
+  "asof": "2026-11-13",
   "_note": "Mirrors the ICHIGO walk-in dashboard (stock sheet). now = kits in studio, soon = kits arriving, price = S$ per pax, imgs = /p/workshops/*.jpg. Do not edit by hand.",
   "workshops": [
     {
@@ -7,9 +7,9 @@
       "en": "Wood-Base Night-Light Dome · Style 1",
       "zh": "木底永生花玻璃罩小夜灯 · 款式一",
       "desc": "Arrange preserved roses and dried blooms under a round glass dome on a wooden LED base.",
-      "now": 0,
-      "soon": 20,
-      "status": "soon",
+      "now": 19,
+      "soon": 0,
+      "status": "now",
       "price": 35,
       "tags": [
         "Gift",
@@ -25,9 +25,9 @@
       "en": "Wood-Base Night-Light Dome · Style 2",
       "zh": "木底永生花玻璃罩小夜灯 · 款式二",
       "desc": "Choose a named colour set and build a glowing mini flower dome on a wooden LED base.",
-      "now": 0,
-      "soon": 12,
-      "status": "soon",
+      "now": 14,
+      "soon": 0,
+      "status": "now",
       "price": 35,
       "tags": [
         "Gift",
@@ -43,8 +43,8 @@
       "en": "Cork-Base Flower Dome",
       "zh": "软木底永生花玻璃罩",
       "desc": "A taller glass dome on a cork base, filled with a preserved rose and soft dried flowers.",
-      "now": 7,
-      "soon": 20,
+      "now": 27,
+      "soon": 0,
       "status": "now",
       "price": 35,
       "tags": [
@@ -61,8 +61,8 @@
       "en": "Dandelion Wish Dome",
       "zh": "蒲公英玻璃罩",
       "desc": "Seal a real preserved dandelion inside a mini glass dome. Small, quick and very giftable.",
-      "now": 5,
-      "soon": 22,
+      "now": 19,
+      "soon": 8,
       "status": "now",
       "price": 30,
       "tags": [
@@ -79,7 +79,7 @@
       "en": "Dried-Flower Picture Frame",
       "zh": "干花相框",
       "desc": "Press and arrange dried flowers into a keepsake picture frame.",
-      "now": 10,
+      "now": 9,
       "soon": 0,
       "status": "now",
       "price": 20,
@@ -97,7 +97,7 @@
       "en": "Wooden Frame Landscape",
       "zh": "木框立体微景观",
       "desc": "Build a layered botanical scene of moss, dried flowers and pebbles inside a deep wooden frame.",
-      "now": 10,
+      "now": 14,
       "soon": 0,
       "status": "now",
       "price": 45,
@@ -114,7 +114,7 @@
       "en": "Flower Hoop Wreath",
       "zh": "花环挂饰",
       "desc": "Wrap a colourful hoop with dried flowers and ribbons to hang on a wall or door.",
-      "now": 10,
+      "now": 9,
       "soon": 0,
       "status": "now",
       "price": 15,
@@ -132,9 +132,9 @@
       "en": "Mini Flower Basket",
       "zh": "迷你永生花花篮",
       "desc": "Fill a little woven basket with preserved roses and dried blooms. A sweet table piece or gift.",
-      "now": 0,
-      "soon": 20,
-      "status": "soon",
+      "now": 19,
+      "soon": 0,
+      "status": "now",
       "price": 20,
       "tags": [
         "Gift",
@@ -150,9 +150,9 @@
       "en": "Song Brocade Mini Lantern",
       "zh": "宋锦小夜灯",
       "desc": "Wrap a small lamp in traditional Song brocade patterns: magpies, butterflies, rabbits.",
-      "now": 0,
-      "soon": 13,
-      "status": "soon",
+      "now": 13,
+      "soon": 0,
+      "status": "now",
       "price": 25,
       "tags": [
         "Heritage craft",
@@ -168,9 +168,9 @@
       "en": "Christmas Rattan Wreath",
       "zh": "圣诞藤圈",
       "desc": "Dress a 20 cm rattan ring with seasonal sprigs, berries and ribbon.",
-      "now": 0,
-      "soon": 10,
-      "status": "soon",
+      "now": 10,
+      "soon": 0,
+      "status": "now",
       "price": 25,
       "tags": [
         "Seasonal",
@@ -186,9 +186,9 @@
       "en": "Paper Crane Lucky Charm",
       "zh": "千纸鹤福牌",
       "desc": "Fold paper cranes and hang them with a good-luck charm. A thoughtful gift for parents and teachers.",
-      "now": 0,
-      "soon": 12,
-      "status": "soon",
+      "now": 12,
+      "soon": 0,
+      "status": "now",
       "price": 15,
       "tags": [
         "Kids",
@@ -204,9 +204,9 @@
       "en": "Jellyfish Phone Charm",
       "zh": "水母手机挂饰",
       "desc": "String a dreamy jellyfish charm with clear beads and ribbon tails for your phone or bag.",
-      "now": 0,
-      "soon": 40,
-      "status": "soon",
+      "now": 40,
+      "soon": 0,
+      "status": "now",
       "price": 9,
       "tags": [
         "Kids",
@@ -216,6 +216,22 @@
       "imgs": [
         "/p/workshops/jelly-1.jpg"
       ]
+    },
+    {
+      "id": "candy",
+      "en": "Candy Garden Glass Dome",
+      "zh": "奶糖花园永生花玻璃罩",
+      "desc": "Our most luxurious dome: a full preserved-flower scene in a dessert colourway (Raspberry Bean, Caramel Champagne, Green Grape Cream or Peach Taro). Limited to 4 kits.",
+      "price": 80,
+      "tags": [
+        "Gift",
+        "Premium"
+      ],
+      "art": "dome",
+      "now": 4,
+      "soon": 0,
+      "status": "now",
+      "imgs": []
     }
   ],
   "instagram": [
