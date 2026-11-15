@@ -277,6 +277,7 @@
       </div>
       <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-top:32px;opacity:0;animation:fadeUp 1s 0.8s ease forwards;">
         <a href="#this-month" class="btn-primary">See this month's workshops</a>
+        <a href="https://www.eventbrite.sg/o/ichigo-studio-121966301304" class="btn-ghost" target="_blank" rel="noopener">Book on Eventbrite</a>
         <a href="https://wa.me/6580978928" class="btn-ghost" target="_blank" rel="noopener">Register on WhatsApp</a>
       </div>
     </div>
@@ -304,6 +305,12 @@
     .ev-promo span { color: var(--muted); display: block; margin-top: 4px; font-size: 0.74rem; }
     .ev-book { align-self: center; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; padding: 13px 22px; background: var(--ink); color: var(--off-white); border: 1px solid var(--ink); text-decoration: none; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; font-weight: 400; cursor: none; transition: background 0.25s, color 0.25s; }
     .ev-book:hover { background: transparent; color: var(--ink); }
+    .ev-books { align-self: center; display: flex; flex-direction: column; gap: 8px; align-items: stretch; }
+    .ev-books .ev-book { justify-content: space-between; }
+    .ev-wa { font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); text-decoration: none; font-family: 'DM Sans', sans-serif; text-align: center; border-bottom: 1px solid transparent; cursor: none; }
+    .ev-wa:hover { color: var(--ink); border-color: var(--ink); }
+    .ev-eb { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-top: 24px; padding: 18px 24px; background: var(--blush-light); }
+    .ev-eb p { font-size: 0.8rem; color: var(--ink); }
     .ev-where { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-top: 32px; padding: 20px 24px; border: 1px solid var(--border); background: var(--warm-white); }
     .ev-where p { font-size: 0.8rem; color: var(--ink); line-height: 1.7; }
     .ev-where p b { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 400; }
@@ -314,7 +321,7 @@
     .ev-term p { font-size: 0.78rem; line-height: 1.8; color: var(--ink); }
     @media (max-width: 900px) {
       .ev { grid-template-columns: 72px 1fr; gap: 18px; }
-      .ev-book { grid-column: 2; justify-self: start; margin-top: 4px; }
+      .ev-book, .ev-books { grid-column: 2; justify-self: start; margin-top: 4px; }
       .ev-day { font-size: 2rem; }
       .ev-terms { grid-template-columns: 1fr; }
     }
@@ -332,11 +339,12 @@
         <div class="section-number">00</div>
         <h2 class="section-title" id="evTitle">This month at<br><em>the Studio</em></h2>
       </div>
-      <p class="section-intro">Hands-on workshops at ICHIGO Studio, Anchorpoint. Seats are limited — tap Register to book on WhatsApp and we'll confirm your place. 名额有限，请通过 WhatsApp 报名。</p>
+      <p class="section-intro">Hands-on workshops at ICHIGO Studio, Anchorpoint. Seats are limited — book your session on Eventbrite, or message us on WhatsApp and we'll confirm your place. 名额有限，可通过 Eventbrite 或 WhatsApp 报名。</p>
     </div>
 
     <div class="ev-list" id="evList"></div>
     <div class="ev-terms" id="evTerms"></div>
+    <div class="ev-eb"><p>All our ticketed workshops are listed on Eventbrite. 所有工作坊均可在 Eventbrite 报名。</p><a class="btn-primary" href="https://www.eventbrite.sg/o/ichigo-studio-121966301304" target="_blank" rel="noopener">View all on Eventbrite</a></div>
 
     <div class="ev-where">
       <p><b>ICHIGO Studio · #B1-49/50 Anchorpoint</b><br>370 Alexandra Road, Singapore 159953 · In front of Rob Think &amp; Aureus, next to Nakanishi</p>
@@ -383,7 +391,7 @@
                 ${facts ? `<div class="ev-facts">${facts}</div>` : ''}
                 ${p ? `<div class="ev-promo"><strong>${esc(p.title_en)} · ${esc(p.title_zh)}</strong>${esc(p.text_en)}<span>${esc(p.text_zh)}</span></div>` : ''}
               </div>
-              <a class="ev-book" href="${waLink(e)}" target="_blank" rel="noopener">Register →</a>
+              ${(e.book || []).length ? `<div class="ev-books">${e.book.map(b => `<a class="ev-book" href="${esc(b.url)}" target="_blank" rel="noopener">Book ${esc(b.label)} →</a>`).join('')}<a class="ev-wa" href="${waLink(e)}" target="_blank" rel="noopener">or WhatsApp us</a></div>` : `<a class="ev-book" href="${waLink(e)}" target="_blank" rel="noopener">Register →</a>`}
             </article>`;
           }).join('');
           const t = s.terms || {};
