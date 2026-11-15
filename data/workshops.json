@@ -1,5 +1,5 @@
 {
-  "asof": "2026-11-14",
+  "asof": "2026-11-13",
   "_note": "Mirrors the ICHIGO walk-in dashboard (stock sheet). now = kits in studio, soon = kits arriving, price = S$ per pax, imgs = /p/workshops/*.jpg. Do not edit by hand.",
   "workshops": [
     {
@@ -235,47 +235,69 @@
     }
   ],
   "instagram": [
-    "https://www.instagram.com/p/Dex_ut2nYhU/",
-    "https://www.instagram.com/p/DerHB5zHRS4/"
+    "https://www.instagram.com/p/Dfq3cj8F4z9/",
+    "https://www.instagram.com/p/Dex_ut2nYhU/"
   ],
   "schedule": {
     "_note": "Monthly event calendar for workshop.html section 00. Optional fields per event (shown only when filled): time, duration, price, age, language, includes.",
-    "title_en": "November at the Studio",
-    "title_zh": "十一月工作坊",
-    "month": "2026-11",
+    "title_en": "December at the Studio",
+    "title_zh": "十二月工作坊",
+    "month": "2026-12",
     "events": [
       {
-        "id": "coaster",
-        "date": "2026-11-03",
-        "date_end": "2026-11-05",
-        "title_en": "Creative Coaster Workshops",
-        "title_zh": "创意杯垫工作坊",
-        "partner": "The PAL World",
-        "desc": "Explore snow casting, marbling and decoupage to make your own coasters."
+        "id": "xmas-wreath",
+        "date": "2026-12-05",
+        "date_end": "2026-12-06",
+        "time": "2:00 PM",
+        "title_en": "Christmas Wreath-Making Workshop",
+        "title_zh": "圣诞花环制作工作坊",
+        "desc": "Craft your very own festive wreath adorned with dried flowers and seasonal delights.",
+        "includes": "All materials provided · Beginners welcome",
+        "book": [
+          {
+            "label": "Sat 5 Dec",
+            "url": "https://www.eventbrite.sg/e/christmas-wreath-making-workshop-registration-2004580237452"
+          },
+          {
+            "label": "Sun 6 Dec",
+            "url": "https://www.eventbrite.sg/e/christmas-wreath-making-workshop-2-registration-2004637390398"
+          }
+        ]
       },
       {
-        "id": "incense-bracelet",
-        "date": "2026-11-07",
-        "title_en": "Traditional Incense Bead Bracelet Workshop",
-        "title_zh": "传统香珠手链工作坊",
-        "partner": "He Xiang Ji",
-        "desc": "Create your own traditional Chinese incense bead bracelet."
+        "id": "diamond-ornament",
+        "date": "2026-12-05",
+        "date_end": "2026-12-06",
+        "time": "4:30 PM",
+        "title_en": "Diamond Art Christmas Ornaments Workshop",
+        "title_zh": "钻石画圣诞挂饰工作坊",
+        "desc": "Add sparkle to your holiday décor with custom diamond-art ornaments you make yourself.",
+        "includes": "All materials provided · Beginners welcome",
+        "book": [
+          {
+            "label": "Sat 5 Dec",
+            "url": "https://www.eventbrite.sg/e/diamond-art-christmas-ornaments-workshop-registration-2004636925006"
+          },
+          {
+            "label": "Sun 6 Dec",
+            "url": "https://www.eventbrite.sg/e/diamond-art-christmas-ornaments-workshop-2-registration-2004760273946"
+          }
+        ]
       },
       {
-        "id": "incense-pendant",
-        "date": "2026-11-14",
-        "title_en": "Traditional Incense Pendant Workshop",
-        "title_zh": "传统香牌工作坊",
-        "partner": "He Xiang Ji",
-        "desc": "Explore traditional Chinese incense culture through pendant making."
-      },
-      {
-        "id": "preserved-holiday",
-        "date_label": "Late Nov · School holidays",
-        "title_en": "School Holiday Preserved Flower Workshops",
-        "title_zh": "学校假期永生花工作坊",
-        "desc": "Create your own floral wreath, flower basket or framed floral artwork — a relaxing hands-on activity for adults and children to enjoy together.",
-        "promo": "early-bird"
+        "id": "calendar-frame",
+        "date": "2026-12-26",
+        "time": "2:00 PM",
+        "title_en": "2027 Pressed Flower Calendar Frame Workshop",
+        "title_zh": "2027 压花日历相框工作坊",
+        "desc": "Welcome the new year with a botanical calendar frame made with pressed flowers.",
+        "includes": "All materials provided · Beginners welcome",
+        "book": [
+          {
+            "label": "Sat 26 Dec",
+            "url": "https://www.eventbrite.sg/e/2027-pressed-flower-calendar-frame-workshop-registration-2004637222897"
+          }
+        ]
       }
     ],
     "promos": {
@@ -286,6 +308,7 @@
         "text_zh": "预订两个名额，即送 DIY 水晶手机挂饰一个。限首 20 个符合条件的预订，只适用于 ICHIGO Studio 永生花工作坊。"
       }
     },
-    "terms": {}
+    "terms": {},
+    "eventbrite": "https://www.eventbrite.sg/o/ichigo-studio-121966301304"
   }
 }
