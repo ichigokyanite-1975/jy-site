@@ -415,6 +415,60 @@
       .modal-cta { flex-direction: column; align-items: flex-start; }
       footer.site-footer { padding: 22px 28px; }
     }
+
+    /* ── SORO SECTION ── */
+    .soro-section {
+      padding: 100px 56px 80px;
+      border-top: 1px solid rgba(14,12,12,0.08);
+      background: var(--off-white);
+    }
+    .soro-header {
+      max-width: 680px;
+      margin: 0 auto 48px;
+      text-align: center;
+    }
+    .soro-eyebrow {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--blush);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .soro-eyebrow::before,
+    .soro-eyebrow::after {
+      content: "";
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--blush);
+    }
+    .soro-title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--ink);
+      margin: 0 0 16px;
+    }
+    .soro-sub {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+    .soro-embed-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    @media (max-width: 600px) {
+      .soro-section { padding: 60px 24px 48px; }
+    }
   </style>
 </head>
 <body>
@@ -787,6 +841,20 @@
       </div>
     </div>
   </div>
+
+
+  <!-- SORO FROM THE FIELD -->
+  <section class="soro-section">
+    <div class="soro-header">
+      <div class="soro-eyebrow">From the Field</div>
+      <h2 class="soro-title">Further <em>reading</em></h2>
+      <p class="soro-sub">Guides, how-tos and field notes on florals, aromatherapy and working with AI — updated regularly.</p>
+    </div>
+    <div class="soro-embed-wrap">
+      <div id="soro-blog"></div>
+      <script src="https://app.trysoro.com/api/embed/4e566dce-d375-42a8-a14f-133d48961b8f" defer></script>
+    </div>
+  </section>
 
   <!-- SITE FOOTER -->
   <footer class="site-footer">
