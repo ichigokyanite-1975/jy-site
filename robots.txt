@@ -11,6 +11,7 @@ Allow: /aromatherapy.html
 Allow: /conservatory.html
 Allow: /workshop.html
 Allow: /links.html
+Allow: /founder.html
 Allow: /blog/
 
 # Sitemap
