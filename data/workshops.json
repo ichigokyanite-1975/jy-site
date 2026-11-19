@@ -1,5 +1,5 @@
 {
-  "asof": "2026-11-18",
+  "asof": "2026-11-19",
   "_note": "Mirrors the ICHIGO walk-in dashboard (stock sheet). now = kits in studio, soon = kits arriving, price = S$ per pax, imgs = /p/workshops/*.jpg. Do not edit by hand.",
   "workshops": [
     {
