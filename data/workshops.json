@@ -164,24 +164,6 @@
       ]
     },
     {
-      "id": "wreath",
-      "en": "Christmas Rattan Wreath",
-      "zh": "圣诞藤圈",
-      "desc": "Dress a 20 cm rattan ring with seasonal sprigs, berries and ribbon.",
-      "now": 10,
-      "soon": 0,
-      "status": "now",
-      "price": 25,
-      "tags": [
-        "Seasonal",
-        "Door décor"
-      ],
-      "art": "wreath",
-      "imgs": [
-        "/p/workshops/wreath-1.jpg"
-      ]
-    },
-    {
       "id": "crane",
       "en": "Paper Crane Lucky Charm",
       "zh": "千纸鹤福牌",
