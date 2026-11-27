@@ -1,5 +1,5 @@
 {
-  "asof": "2026-11-15",
+  "asof": "2026-11-28",
   "_note": "Mirrors the ICHIGO walk-in dashboard (stock sheet). now = kits in studio, soon = kits arriving, price = S$ per pax, imgs = /p/workshops/*.jpg. Do not edit by hand.",
   "workshops": [
     {
@@ -43,7 +43,7 @@
       "en": "Cork-Base Flower Dome",
       "zh": "软木底永生花玻璃罩",
       "desc": "A taller glass dome on a cork base, filled with a preserved rose and soft dried flowers.",
-      "now": 27,
+      "now": 26,
       "soon": 0,
       "status": "now",
       "price": 35,
@@ -61,7 +61,7 @@
       "en": "Dandelion Wish Dome",
       "zh": "蒲公英玻璃罩",
       "desc": "Seal a real preserved dandelion inside a mini glass dome. Small, quick and very giftable.",
-      "now": 19,
+      "now": 18,
       "soon": 8,
       "status": "now",
       "price": 30,
@@ -114,7 +114,7 @@
       "en": "Flower Hoop Wreath",
       "zh": "花环挂饰",
       "desc": "Wrap a colourful hoop with dried flowers and ribbons to hang on a wall or door.",
-      "now": 9,
+      "now": 8,
       "soon": 0,
       "status": "now",
       "price": 15,
@@ -168,9 +168,9 @@
       "en": "Christmas Rattan Wreath",
       "zh": "圣诞藤圈",
       "desc": "Dress a 20 cm rattan ring with seasonal sprigs, berries and ribbon.",
-      "now": 0,
+      "now": 10,
       "soon": 0,
-      "status": "sold-out",
+      "status": "now",
       "tags": [
         "Seasonal",
         "Door décor"
@@ -203,7 +203,7 @@
       "en": "Jellyfish Phone Charm",
       "zh": "水母手机挂饰",
       "desc": "String a dreamy jellyfish charm with clear beads and ribbon tails for your phone or bag.",
-      "now": 40,
+      "now": 78,
       "soon": 0,
       "status": "now",
       "price": 9,
