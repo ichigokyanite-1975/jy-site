@@ -1,5 +1,5 @@
 {
-  "asof": "2026-11-26",
+  "asof": "2026-11-15",
   "_note": "Mirrors the ICHIGO walk-in dashboard (stock sheet). now = kits in studio, soon = kits arriving, price = S$ per pax, imgs = /p/workshops/*.jpg. Do not edit by hand.",
   "workshops": [
     {
@@ -168,9 +168,9 @@
       "en": "Christmas Rattan Wreath",
       "zh": "圣诞藤圈",
       "desc": "Dress a 20 cm rattan ring with seasonal sprigs, berries and ribbon.",
-      "now": 10,
+      "now": 0,
       "soon": 0,
-      "status": "now",
+      "status": "sold-out",
       "price": 25,
       "tags": [
         "Seasonal",
